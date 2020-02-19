@@ -5,25 +5,25 @@ import 'package:meowflux/extensions/channel.dart';
 import 'package:meowflux/worker/watcher.dart';
 import 'package:meowflux/worker/worker_context.dart';
  
-Middleware<S> WorkerMiddleware<S>(
+Middleware WorkerMiddleware<S>(
   List<Watcher<Action, S>> watchers
 ) => (
   Dispatcher dispatcher,
-  S Function() getState,
+  Function() getState,
   Dispatcher next
 ) {
-  final context = WorkerContext(
+  final context = WorkerContext<S>(
     dispatcher: dispatcher,
     state: getState
   );
   final channel = StateChannel<Action>();
-  final actionStream = channel.asStream();
   
-  watchers.forEach((watcher) async {
-    await watcher.watch(actionStream, context);
+  watchers.forEach((Watcher<Action, S> watcher) {
+    watcher.watch(channel.asStream(shouldEmitPreviousData: false), context);
   });
 
   return (Action action) {
+    channel.send(action);
     next(action);
   };
 };

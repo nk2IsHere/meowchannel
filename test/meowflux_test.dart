@@ -1,7 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:meowflux/meowflux.dart';
 
+import '2_watcher/values_actions.dart';
+import '2_watcher/values_reducer.dart';
+import '2_watcher/values_state.dart';
+import '2_watcher/values_ui.dart';
+import '2_watcher/values_ui_watcher.dart';
+import '2_watcher/values_watcher.dart';
 import 'common/store_logger.dart';
 
 import '1_basic_store/root_actions.dart';
@@ -30,7 +38,33 @@ void main() {
     
     print('TEST retrieve value');
     final resultState = await store.getState();
-    print('TESTe value: $resultState');
+    print('TEST value: $resultState');
     expect(resultState.value, 1);
+  });
+
+  test('2. workers and watchers test', () async {
+    final ui = ValuesUi();
+    final store = BaseStore(
+      reducer: valuesReducer,
+      initialState: ValuesState(values: []),
+      middleware: [
+        storeLogger,
+        WorkerMiddleware<ValuesState>([
+          ValuesUiWatcher(ValuesUiWorker(ui)),
+          ValuesWatcher(ValuesWorker)
+        ])
+      ]
+    );
+
+    print('RUN workers:');
+    store.dispatch(ValuesAddValueAction(value: "apple"));
+    store.dispatch(ValuesAddValueAction(value: "koala"));
+    store.dispatch(ValuesAddValueAction(value: "browney"));
+    store.dispatch(ValuesAddValueAction(value: "watch"));
+
+    await Future.delayed(Duration(seconds: 7), () => "");
+    print("'ui' shows this: ${ui.render()}");
+
+    expect(ui.render(), "APPLEKOALABROWNEYWATCH");
   });
 }

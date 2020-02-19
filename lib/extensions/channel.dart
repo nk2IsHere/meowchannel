@@ -12,19 +12,36 @@ class StateChannel<T> {
   final _data = _Stack<T>(
     cachedItems: _kDefaultCachedStates
   );
-
   final _completers = Queue<Completer<T>>();
+  final _streams = Queue<StreamController<T>>();
 
   bool _isClosed = false;
+  bool get isClosed => _isClosed;
 
-  @override
+  void _send() {
+    if (_data.isEmpty) return;
+
+    _streams.forEach((stream) { 
+      stream.add(_data.top());
+    });
+
+    for (int i = 0; i < _completers.length; i++) {
+      final completer = _completers.removeFirst();
+      final data = _data.top();
+      completer.complete(data);
+    }
+  }
+
   void send(T value) {
     if (isClosed) throw Exception('Channel is closed');
     _data.push(value);
     _send();
   }
 
-  @override
+  T valueOrNull() {
+    return _data.top();
+  }
+
   Future<T> receive() async {
     if (_isClosed && _data.isEmpty) {
       return null;
@@ -40,40 +57,22 @@ class StateChannel<T> {
     return completer.future;
   }
 
-  @override
-  Stream<T> asStream() {
-    final controller = StreamController<T>();
-
-    void loop() async {
-      bool isCancelled = false;
-      controller.onCancel = () {
-        isCancelled = true;
-      };
-
-      while (true) {
-        if (_data.isEmpty && _isClosed) {
-          await controller.close();
-          break;
-        }
-
-        final data = await receive();
-        if (isCancelled) {
-          await controller.close();
-          break;
-        }
-        controller.add(data);
+  Stream<T> asStream({ bool shouldEmitPreviousData = false }) {
+    StreamController<T> controller;
+    controller = StreamController<T>.broadcast(onListen: () {
+      if(shouldEmitPreviousData) {
+        this._data.data.forEach((T item) {
+          controller.add(item);
+        });
       }
-    }
+    }, onCancel: () {
+      this._streams.remove(controller);
+    });
 
-    loop();
-
+    this._streams.add(controller);
     return controller.stream;
   }
 
-  @override
-  bool get isClosed => _isClosed;
-
-  @override
   void close() {
     _isClosed = true;
     _send();
@@ -84,16 +83,6 @@ class StateChannel<T> {
         _data.isNotEmpty? _data.top()
           : null
       );
-    }
-  }
-
-  void _send() {
-    if (_data.isEmpty || _completers.isEmpty) return;
-
-    for (int i = 0; i < _completers.length; i++) {
-      final completer = _completers.removeFirst();
-      final data = _data.top();
-      completer.complete(data);
     }
   }
 }
@@ -113,6 +102,8 @@ class _Stack<T> {
 
   bool get isEmpty => _list.isEmpty;
   bool get isNotEmpty => _list.isNotEmpty;
+
+  List<T> get data => _list.toList();
 
   void push(T e) {
     _list.addLast(e);

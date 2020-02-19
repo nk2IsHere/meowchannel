@@ -2,10 +2,10 @@ import 'package:meowflux/core/action.dart';
 import 'package:meowflux/core/dispatcher.dart';
 import 'package:meowflux/core/middleware.dart';
 import 'package:meowflux/core/reducer.dart';
-import 'package:meowflux/core/store.dart';
 import 'package:meowflux/extensions/channel.dart';
 
 import '_actions.dart';
+import '_store.dart';
 
 class BaseStore<S> extends Store<S> {
   final Reducer<S> reducer;
@@ -14,7 +14,7 @@ class BaseStore<S> extends Store<S> {
 
   final StateChannel<S> _stateChannel = StateChannel();
 
-  Dispatcher dispatcher;
+  Dispatcher _dispatcher;
 
   BaseStore({
     this.reducer,
@@ -24,11 +24,10 @@ class BaseStore<S> extends Store<S> {
     if(initialState != null)
       _stateChannel.send(initialState);
 
-    dispatcher = middleware.reversed.fold<Dispatcher>((action) async {
-      S state = await _stateChannel.receive();
-      _stateChannel.send(reducer(action, state));
+    _dispatcher = middleware.reversed.fold<Dispatcher>((action) async {
+      _stateChannel.send(reducer(action, _stateChannel.valueOrNull()));
     }, (previousDispatcher, nextMiddleware) => 
-      nextMiddleware(_dispatchRoot, _stateChannel.receive, previousDispatcher)
+      nextMiddleware(_dispatchRoot, _stateChannel.valueOrNull, previousDispatcher)
     );
 
     stateStream = _stateChannel.asStream();
@@ -37,13 +36,12 @@ class BaseStore<S> extends Store<S> {
   }
 
   void _dispatchRoot(Action action) {
-    dispatcher(action);
+    _dispatcher(action);
   }
-
 
   @override
   Future dispatch(Action action) async {
-    dispatcher(action);
+    _dispatcher(action);
   }
 
   @override

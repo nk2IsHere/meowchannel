@@ -4,7 +4,6 @@ export 'core/action.dart';
 export 'core/dispatcher.dart';
 export 'core/middleware.dart';
 export 'core/reducer.dart';
-export 'core/store.dart';
 export 'core/base_store.dart';
 
 export 'extensions/stream_extensions.dart';
