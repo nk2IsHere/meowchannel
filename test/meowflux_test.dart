@@ -56,14 +56,16 @@ void main() {
       ]
     );
 
-    print('RUN workers:');
+    print('TEST run worker:');
     store.dispatch(ValuesAddValueAction(value: "apple"));
     store.dispatch(ValuesAddValueAction(value: "koala"));
     store.dispatch(ValuesAddValueAction(value: "browney"));
     store.dispatch(ValuesAddValueAction(value: "watch"));
 
+    print('TEST await all workers to finish');
     await Future.delayed(Duration(seconds: 7), () => "");
-    print("'ui' shows this: ${ui.render()}");
+
+    print("TEST 'ui' shows this: ${ui.render()}");
 
     expect(ui.render(), "APPLEKOALABROWNEYWATCH");
   });

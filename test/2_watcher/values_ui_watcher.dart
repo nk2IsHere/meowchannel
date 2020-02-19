@@ -6,7 +6,9 @@ import 'values_ui.dart';
 
 //
 //  Since in flutter it is not allowed to explicitly say "RUN IN UI THREAD"
-//  be sure to double-check that Workers/Middlewares interacting with Ui are only showing data, not tampering with it
+//  be sure to double-check that Workers/Middlewares interacting with Ui are only showing data, not tampering with it.
+//
+//  The most intended way to update ui is by using store 'channel' property
 //
 Worker<ValuesUiAction, ValuesState> ValuesUiWorker(
   //BuildContext..

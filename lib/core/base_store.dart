@@ -14,6 +14,8 @@ class BaseStore<S> extends Store<S> {
 
   final StateChannel<S> _stateChannel = StateChannel();
 
+  Stream<S> get channel => _stateChannel.asStream();
+
   Dispatcher _dispatcher;
 
   BaseStore({
