@@ -14,13 +14,13 @@ class ValuesAddValueAction extends _$ValuesAddValueAction {
   });
 }
 
-class ValuesUiAction extends Action {}
+class ValuesTesterAction extends Action {}
 
 @dataClass
-class ValuesUiAddValueAction extends _$ValuesUiAddValueAction {
+class ValuesTesterAddValueAction extends _$ValuesTesterAddValueAction {
   final String value;
 
-  ValuesUiAddValueAction({
+  ValuesTesterAddValueAction({
     this.value
   });
 }

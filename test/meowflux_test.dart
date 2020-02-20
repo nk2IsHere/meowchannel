@@ -7,8 +7,8 @@ import 'package:meowflux/meowflux.dart';
 import '2_watcher/values_actions.dart';
 import '2_watcher/values_reducer.dart';
 import '2_watcher/values_state.dart';
-import '2_watcher/values_ui.dart';
-import '2_watcher/values_ui_watcher.dart';
+import '2_watcher/values_tester.dart';
+import '2_watcher/values_tester_watcher.dart';
 import '2_watcher/values_watcher.dart';
 import 'common/store_logger.dart';
 
@@ -43,14 +43,14 @@ void main() {
   });
 
   test('2. workers and watchers test', () async {
-    final ui = ValuesUi();
+    final ui = ValuesTester();
     final store = Store(
       reducer: valuesReducer,
       initialState: ValuesState(values: []),
       middleware: [
         storeLogger,
         WorkerMiddleware<ValuesState>([
-          ValuesUiWatcher(ValuesUiWorker(ui)),
+          ValuesTesterWatcher(ValuesTesterWorker(ui)),
           ValuesWatcher(ValuesWorker)
         ])
       ]

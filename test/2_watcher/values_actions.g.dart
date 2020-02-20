@@ -32,13 +32,13 @@ abstract class _$ValuesAddValueAction extends ValuesAction {
   }
 }
 
-abstract class _$ValuesUiAddValueAction extends ValuesUiAction {
-  _$ValuesUiAddValueAction();
+abstract class _$ValuesTesterAddValueAction extends ValuesTesterAction {
+  _$ValuesTesterAddValueAction();
 
   String get value;
   bool operator ==(other) {
     if (identical(this, other)) return true;
-    if (other is! ValuesUiAddValueAction) return false;
+    if (other is! ValuesTesterAddValueAction) return false;
 
     return true && this.value == other.value;
   }
@@ -48,11 +48,11 @@ abstract class _$ValuesUiAddValueAction extends ValuesUiAction {
   }
 
   String toString() {
-    return 'ValuesUiAddValueAction <\'value\': ${this.value},>';
+    return 'ValuesTesterAddValueAction <\'value\': ${this.value},>';
   }
 
-  ValuesUiAddValueAction copyWith({String value}) {
-    return ValuesUiAddValueAction(
+  ValuesTesterAddValueAction copyWith({String value}) {
+    return ValuesTesterAddValueAction(
       value: value ?? this.value,
     );
   }

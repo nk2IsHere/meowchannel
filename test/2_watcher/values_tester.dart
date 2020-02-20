@@ -3,7 +3,7 @@
 //
 // I can show values!
 //
-class ValuesUi {
+class ValuesTester {
   String _values = "";
 
   void showValue(String value) {

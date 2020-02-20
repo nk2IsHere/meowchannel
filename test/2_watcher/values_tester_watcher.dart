@@ -2,7 +2,7 @@ import 'package:meowflux/meowflux.dart';
 
 import 'values_actions.dart';
 import 'values_state.dart';
-import 'values_ui.dart';
+import 'values_tester.dart';
 
 //
 //  Since in flutter it is not allowed to explicitly say "RUN IN UI THREAD"
@@ -10,19 +10,19 @@ import 'values_ui.dart';
 //
 //  The most intended way to update ui is by using store 'channel' property
 //
-Worker<ValuesUiAction, ValuesState> ValuesUiWorker(
-  ValuesUi ui
+Worker<ValuesTesterAction, ValuesState> ValuesTesterWorker(
+  ValuesTester ui
 ) => 
   worker((context, action) async {
-    if(action is ValuesUiAddValueAction)
+    if(action is ValuesTesterAddValueAction)
       //Show the results
       ui.showValue(action.value);
   });
 
-Watcher<ValuesUiAction, ValuesState> ValuesUiWatcher(
-  Worker<ValuesUiAction, ValuesState> worker
+Watcher<ValuesTesterAction, ValuesState> ValuesTesterWatcher(
+  Worker<ValuesTesterAction, ValuesState> worker
 ) =>
   watcher(worker, (actionStream, context) {
-    return actionStream.where((action) => action is ValuesUiAction)
-      .cast<ValuesUiAction>();
+    return actionStream.where((action) => action is ValuesTesterAction)
+      .cast<ValuesTesterAction>();
   });

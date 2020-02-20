@@ -8,7 +8,7 @@ final Worker<ValuesAction, ValuesState> ValuesWorker =
     //Workload
     await Future.delayed(Duration(seconds: 1), () => "");
     if(action is ValuesAddValueAction)
-      context.put(ValuesUiAddValueAction(value: action.value.toUpperCase()));
+      context.put(ValuesTesterAddValueAction(value: action.value.toUpperCase()));
   });
 
 Watcher<ValuesAction, ValuesState> ValuesWatcher(
