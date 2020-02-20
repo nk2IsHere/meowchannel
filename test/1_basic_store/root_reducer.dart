@@ -10,7 +10,7 @@ final Reducer<RootState> RootReducer =
   TypedReducer<RootAction, RootState>(RootState(value: 0), (RootAction action, RootState previousState) {    
     return previousState.copyWith(
       value: action is RootIncreaseAction? previousState.value + 1 
-        : action is RootDescreaseAction? previousState.value - 1 
+        : action is RootDecreaseAction? previousState.value - 1 
         : previousState.value
     );
   });

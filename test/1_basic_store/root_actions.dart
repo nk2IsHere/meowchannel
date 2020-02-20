@@ -1,6 +1,6 @@
-import 'package:meowflux/core/action.dart';
+import 'package:meowflux/meowflux.dart';
 
 class RootAction extends Action {}
 
-class RootDescreaseAction extends RootAction {}
+class RootDecreaseAction extends RootAction {}
 class RootIncreaseAction extends RootAction {}

@@ -15,3 +15,7 @@ export 'worker/worker_context.dart';
 export 'worker/worker_middleware.dart';
 export 'worker/watcher.dart';
 export 'worker/cached_watcher.dart';
+
+export 'extensions/flutter/store_provider_mixin.dart';
+export 'extensions/flutter/store_provider.dart';
+export 'extensions/flutter/multi_store_provider.dart';

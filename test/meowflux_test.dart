@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:meowflux/meowflux.dart';
@@ -15,6 +16,7 @@ import '3_ui/note_list_reducer.dart';
 import '3_ui/note_list_state.dart';
 import '3_ui/note_list_worker.dart';
 import '3_ui/note_model.dart';
+import '4_provider/application_widget.dart';
 import 'common/store_logger.dart';
 
 import '1_basic_store/root_actions.dart';
@@ -39,7 +41,7 @@ void main() {
     print('TEST edit value');
     await store.dispatch(RootIncreaseAction());
     await store.dispatch(RootIncreaseAction());
-    await store.dispatch(RootDescreaseAction());
+    await store.dispatch(RootDecreaseAction());
     
     print('TEST retrieve value');
     final resultState = await store.getState();
@@ -114,4 +116,50 @@ void main() {
       Note(id: 3, title: "3. Finish!", text: "Your bets, please, gentlemen.")
     ]);
   });
+
+  //
+  // This test reuses structures from #1 test
+  //
+  testWidgets('4. flutter provider test', (tester) async {      
+    await tester.pumpWidget(
+      StoreProvider<RootState>(
+        create: (context) =>
+          Store<RootState>(
+            reducer: RootReducer,
+            initialState: RootState(value: 0),
+            middleware: [
+              storeLogger
+            ]
+          ),
+        child: MaterialApp(
+          home: ApplicationWidget()
+        ),
+      ),
+    );
+
+    print('TEST edit value');
+        
+    await tester.tap(find.byKey(Key('button-decrease')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-decrease')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+
+    Text valueText = tester.widget(find.byKey(Key('text-value')));
+
+    print('TEST retrieve value');
+    print('TEST value: ${valueText.data}');
+
+    expect(valueText.data, "1");
+  });
+
 }
