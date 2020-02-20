@@ -1,5 +1,5 @@
 import 'package:dataclass/dataclass.dart';
-import 'package:meowflux/core/action.dart';
+import 'package:meowflux/meowflux.dart';
 
 part 'values_actions.g.dart';
 

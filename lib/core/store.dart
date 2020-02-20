@@ -14,8 +14,6 @@ class Store<S> extends AbstractStore<S> {
 
   final StateChannel<S> _stateChannel = StateChannel();
 
-  Stream<S> get channel => _stateChannel.asStream();
-
   Dispatcher _dispatcher;
 
   Store({
@@ -32,7 +30,7 @@ class Store<S> extends AbstractStore<S> {
       nextMiddleware(_dispatchRoot, _stateChannel.valueOrNull, previousDispatcher)
     );
 
-    stateStream = _stateChannel.asStream();
+    channel = _stateChannel.asStream();
 
     dispatch(MeowFluxInit()); 
   }

@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   dataclass: ^0.3.0+1
+  rxdart: ^0.23.1
+
 
 dev_dependencies:
   flutter_test:

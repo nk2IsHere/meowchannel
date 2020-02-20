@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:math';
 
-//
-// Based on top of https://github.com/desktop-dart/channel
-//
+import 'package:rxdart/subjects.dart';
 
 const _kDefaultCachedStates = 5;
 
@@ -21,8 +19,8 @@ class StateChannel<T> {
   void _send() {
     if (_data.isEmpty) return;
 
-    _streams.forEach((stream) { 
-      stream.add(_data.top());
+    _streams.forEach((controller) { 
+      controller.add(_data.top());
     });
 
     for (int i = 0; i < _completers.length; i++) {
@@ -57,17 +55,8 @@ class StateChannel<T> {
     return completer.future;
   }
 
-  Stream<T> asStream({ bool shouldEmitPreviousData = false }) {
-    StreamController<T> controller;
-    controller = StreamController<T>.broadcast(onListen: () {
-      if(shouldEmitPreviousData) {
-        this._data.data.forEach((T item) {
-          controller.add(item);
-        });
-      }
-    }, onCancel: () {
-      this._streams.remove(controller);
-    });
+  Stream<T> asStream() {
+    StreamController<T> controller = BehaviorSubject();
 
     this._streams.add(controller);
     return controller.stream;
