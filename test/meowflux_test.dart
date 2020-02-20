@@ -43,14 +43,14 @@ void main() {
   });
 
   test('2. workers and watchers test', () async {
-    final ui = ValuesTester();
+    final tester = ValuesTester();
     final store = Store(
       reducer: valuesReducer,
       initialState: ValuesState(values: []),
       middleware: [
         storeLogger,
         WorkerMiddleware<ValuesState>([
-          ValuesTesterWatcher(ValuesTesterWorker(ui)),
+          ValuesTesterWatcher(ValuesTesterWorker(tester)),
           ValuesWatcher(ValuesWorker)
         ])
       ]
@@ -65,8 +65,8 @@ void main() {
     print('TEST await all workers to finish');
     await Future.delayed(Duration(seconds: 7), () => "");
 
-    print("TEST 'ui' shows this: ${ui.render()}");
+    print("TEST 'tester' shows this: ${tester.render()}");
 
-    expect(ui.render(), "APPLEKOALABROWNEYWATCH");
+    expect(tester.render(), "APPLEKOALABROWNEYWATCH");
   });
 }
