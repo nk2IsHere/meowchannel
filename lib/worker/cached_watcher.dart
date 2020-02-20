@@ -20,8 +20,8 @@ Watcher<A, S> cachedWatcher<A extends Action, S>(
   DateTime validUntil;
   
   return Watcher<A, S>()
-    ..watch = (Stream<Action> actionStream, WorkerContext<S> context) {
-      applyWorker(
+    ..watch = (Stream<Action> actionStream, WorkerContext<S> context) async {
+      await applyWorker(
         select(
           actionStream
             .where((action) => action != null && action is CachedAction)

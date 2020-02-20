@@ -84,6 +84,11 @@ class StateChannel<T> {
           : null
       );
     }
+    
+    while(_streams.isNotEmpty) {
+      final controller = _streams.removeFirst();
+      controller.close();
+    }
   }
 }
 

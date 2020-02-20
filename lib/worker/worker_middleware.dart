@@ -2,6 +2,7 @@ import 'package:meowflux/core/action.dart';
 import 'package:meowflux/core/dispatcher.dart';
 import 'package:meowflux/core/middleware.dart';
 import 'package:meowflux/extensions/channel.dart';
+import 'package:meowflux/meowflux.dart';
 import 'package:meowflux/worker/watcher.dart';
 import 'package:meowflux/worker/worker_context.dart';
  
@@ -19,11 +20,15 @@ Middleware WorkerMiddleware<S>(
   final channel = StateChannel<Action>();
   
   watchers.forEach((Watcher<Action, S> watcher) {
-    watcher.watch(channel.asStream(shouldEmitPreviousData: false), context);
+    watcher.watch(channel.asStream(), context);
   });
 
   return (Action action) {
-    channel.send(action);
+    if(action is MeowFluxClose)
+      channel.close();
+    else
+      channel.send(action);
+      
     next(action);
   };
 };

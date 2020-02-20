@@ -1,10 +1,11 @@
 library meowflux;
 
 export 'core/action.dart';
+export 'core/actions.dart';
 export 'core/dispatcher.dart';
 export 'core/middleware.dart';
 export 'core/reducer.dart';
-export 'core/base_store.dart';
+export 'core/store.dart';
 
 export 'extensions/stream_extensions.dart';
 export 'extensions/typed_reducer.dart';

@@ -18,7 +18,7 @@ import '1_basic_store/root_state.dart';
 
 void main() {
   test('1. basic counter test', () async {
-    final store = BaseStore(
+    final store = Store(
       reducer: rootReducer,
       initialState: RootState(value: 0),
       middleware: [
@@ -44,7 +44,7 @@ void main() {
 
   test('2. workers and watchers test', () async {
     final ui = ValuesUi();
-    final store = BaseStore(
+    final store = Store(
       reducer: valuesReducer,
       initialState: ValuesState(values: []),
       middleware: [
