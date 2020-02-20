@@ -3,6 +3,9 @@ import 'package:meowflux/meowflux.dart';
 
 import 'note_model.dart';
 
+///
+/// Every action must extend [Action]
+///
 class NoteListAction extends Action {}
 
 class NoteListAddAction extends NoteListAction {

@@ -18,8 +18,14 @@ class NoteListPageWidget extends StatefulWidget {
     _NoteListPageWidgetState();
 }
 
+///
+/// Every stateful widget that should be updated using states has to extend from [StoreState] and [WidgetStoreProviderMixin]
+///
 class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with WidgetStoreProviderMixin {
 
+  ///
+  /// Here are the declared stores that will be available to this stateful widget
+  ///
   @override
   List<Store> requireStores(BuildContext context) => [
     StoreProvider.of<NoteListState>(context)
@@ -27,7 +33,13 @@ class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with Widge
 
   @override
   Widget build(BuildContext context) {
+    ///
+    /// Every declared store can be accessed by using [getStore<State>()]
+    ///
     final Store<NoteListState> store = getStore<NoteListState>();
+    ///
+    /// Every declared store's state can be accessed by using [getState<State>()]
+    ///
     NoteListState state = getState<NoteListState>();
 
     return Scaffold(
@@ -84,6 +96,9 @@ class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with Widge
                       child: Icon(Icons.delete),
                       padding: EdgeInsets.all(0.0),
                       onPressed: () {
+                        ///
+                        /// [Store.dispatch] is used to send action to store
+                        ///
                         store.dispatch(NoteListRemoveAction(
                           id: state?.noteList[index]?.id
                         ));

@@ -6,7 +6,6 @@ import 'package:meowflux/extensions/flutter/widget_store_provider.dart';
 import 'note_application.dart';
 import 'note_list_store/note_list_actions.dart';
 import 'note_list_store/note_list_state.dart';
-import 'note_list_store/note_model.dart';
 
 class NoteDetailsPageWidget extends StatefulWidget {
   @override
