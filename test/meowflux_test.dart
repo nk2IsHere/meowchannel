@@ -17,6 +17,9 @@ import '3_ui/note_list_state.dart';
 import '3_ui/note_list_worker.dart';
 import '3_ui/note_model.dart';
 import '4_provider/application_widget.dart';
+import '5_multi_provider/multi_application_widget.dart';
+import '5_multi_provider/root_reducer.dart';
+import '5_multi_provider/root_state.dart';
 import 'common/store_logger.dart';
 
 import '1_basic_store/root_actions.dart';
@@ -160,6 +163,86 @@ void main() {
     print('TEST value: ${valueText.data}');
 
     expect(valueText.data, "1");
+  });
+
+  testWidgets('5. flutter multi provider test', (tester) async {      
+    await tester.pumpWidget(
+      MultiStoreProvider(
+        providers: [
+          StoreProvider<FirstRootState>(
+            create: (context) =>
+              Store<FirstRootState>(
+                reducer: FirstRootReducer,
+                initialState: FirstRootState(value: 0),
+                middleware: [
+                  storeLogger
+                ]
+              ),
+          ),
+          StoreProvider<SecondRootState>(
+            create: (context) =>
+              Store<SecondRootState>(
+                reducer: SecondRootReducer,
+                initialState: SecondRootState(value: 0),
+                middleware: [
+                  storeLogger
+                ]
+              ),
+          )
+        ],
+        child: MaterialApp(
+          home: MultiApplicationWidget()
+        ),
+      ),
+    );
+
+    print('TEST edit values');
+
+    await tester.tap(find.byKey(Key('first-button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('second-button-decrease')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('first-button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('second-button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('first-button-decrease')));
+    await tester.pumpAndSettle();
+        
+    await tester.tap(find.byKey(Key('second-button-decrease')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('first-button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('second-button-decrease')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('first-button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('second-button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('first-button-decrease')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('second-button-increase')));
+    await tester.pumpAndSettle();
+
+    Text firstValueText = tester.widget(find.byKey(Key('first-text-value')));
+    Text secondValueText = tester.widget(find.byKey(Key('second-text-value')));
+
+    print('TEST retrieve values');
+    print('TEST first value: ${firstValueText.data}');
+    print('TEST second value: ${secondValueText.data}');
+
+    expect(firstValueText.data, "2");
+    expect(secondValueText.data, "0");
   });
 
 }
