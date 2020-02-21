@@ -277,13 +277,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.6"
-  meowflux:
+  meowchannel:
     dependency: "direct main"
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a27a28b1fdbe32dc0957cdab3c997cdf431d9e40
-      url: "https://github.com/nk2IsHere/meowflux.git"
+      resolved-ref: cc1a3270480475ab9046ddcd19dd9a0cab58d337
+      url: "https://github.com/nk2IsHere/meowchannel.git"
     source: git
     version: "0.0.1"
   meta:

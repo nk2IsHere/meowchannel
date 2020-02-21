@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:meowflux/core/store.dart';
-import 'package:meowflux/extensions/flutter/widget_store_provider.dart';
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/core/store.dart';
+import 'package:meowchannel/extensions/flutter/widget_store_provider.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import 'note_application.dart';
 import 'note_list_store/note_list_actions.dart';

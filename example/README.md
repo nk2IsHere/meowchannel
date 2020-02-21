@@ -1,3 +1,3 @@
 # example
 
-😼Simple notes app example using meowflux.
+😼Simple notes app example using meowchannel.

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import 'note_list_store/note_list_reducer.dart';
 import 'note_list_store/note_list_state.dart';
@@ -24,7 +24,13 @@ void main() => runApp(MaterialApp(
         create: (context) =>
           ///
           /// This is [Store]
-          /// TODO
+          /// Oh, wait...
+          /// This 100% similar to Redux Store!
+          /// 
+          /// Same reducers, same middlewares
+          /// Adapted for flutter!
+          /// 
+          /// Caution: only one Store<StateType> can be present in Provider and its children
           ///
           Store<NoteListState>(
             initialState: NoteListState(noteList: []),
