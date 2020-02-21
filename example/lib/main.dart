@@ -25,7 +25,7 @@ void main() => runApp(MaterialApp(
           ///
           /// This is [Store]
           /// Oh, wait...
-          /// This 100% similar to Redux Store!
+          /// This is 100% similar to Redux Store!
           /// 
           /// Same reducers, same middlewares
           /// Adapted for flutter!
