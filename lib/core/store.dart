@@ -1,9 +1,9 @@
-import 'package:meowflux/core/action.dart';
-import 'package:meowflux/core/actions.dart';
-import 'package:meowflux/core/dispatcher.dart';
-import 'package:meowflux/core/middleware.dart';
-import 'package:meowflux/core/reducer.dart';
-import 'package:meowflux/extensions/channel.dart';
+import 'package:meowchannel/core/action.dart';
+import 'package:meowchannel/core/actions.dart';
+import 'package:meowchannel/core/dispatcher.dart';
+import 'package:meowchannel/core/middleware.dart';
+import 'package:meowchannel/core/reducer.dart';
+import 'package:meowchannel/extensions/channel.dart';
 
 import '_store.dart';
 
@@ -32,7 +32,7 @@ class Store<S> extends AbstractStore<S> {
 
     channel = _stateChannel.asStream();
 
-    dispatch(MeowFluxInit()); 
+    dispatch(MeowChannelInit()); 
   }
 
   void _dispatchRoot(Action action) {
@@ -52,7 +52,7 @@ class Store<S> extends AbstractStore<S> {
 
   @override
   void close() {
-    this.dispatch(MeowFluxClose());
+    this.dispatch(MeowChannelClose());
     _stateChannel.close();
   }
 }

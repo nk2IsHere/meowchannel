@@ -1,4 +1,4 @@
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import 'note_list_actions.dart';
 import 'note_list_state.dart';

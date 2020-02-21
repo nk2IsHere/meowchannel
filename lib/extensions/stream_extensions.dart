@@ -1,6 +1,6 @@
-import 'package:meowflux/core/action.dart';
-import 'package:meowflux/worker/worker.dart';
-import 'package:meowflux/worker/worker_context.dart';
+import 'package:meowchannel/core/action.dart';
+import 'package:meowchannel/worker/worker.dart';
+import 'package:meowchannel/worker/worker_context.dart';
 
 Future applyWorker<A extends Action, S>(
   Stream<A> actionStream,

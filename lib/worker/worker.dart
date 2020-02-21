@@ -1,5 +1,5 @@
-import 'package:meowflux/core/action.dart';
-import 'package:meowflux/worker/worker_context.dart';
+import 'package:meowchannel/core/action.dart';
+import 'package:meowchannel/worker/worker_context.dart';
 
 typedef _Work<A extends Action, S> = Future<Null> Function(WorkerContext<S> workerContext, A action);
 

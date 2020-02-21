@@ -6,9 +6,9 @@ import 'note_model.dart';
 
 
 ///
-/// This is a worker
-/// It recieves [Action] filtered by [Watcher] does heavy work (database manipulations, api calls, etc.) and puts [Action]
-/// Multiple workers can be chained by putting [Action] accepted by another [Watcher] and [Worker] pair
+/// This is a [Worker<ActionType, State>]
+/// It recieves [Action] filtered by [Watcher] does heavy work (database manipulations, api calls, etc.) and dispatches [Action]
+/// Multiple workers can be chained by dispatching [Action] accepted by another [Watcher] and [Worker] pair
 /// It is asynchronous
 ///
 final Worker<NoteListAction, NoteListState> NoteListWorker =
@@ -38,7 +38,10 @@ final Worker<NoteListAction, NoteListState> NoteListWorker =
     }
   });
 
-
+///
+/// This is a [Watcher<ActionType, State>].
+/// It recieves distinct stream of [Action] which needs to be filtered and casted into desired [ActionType]
+///
 Watcher<NoteListAction, NoteListState> NoteListWatcher(
   Worker<NoteListAction, NoteListState> worker
 ) =>

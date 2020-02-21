@@ -1,4 +1,4 @@
-library meowflux;
+library meowchannel;
 
 export 'core/action.dart';
 export 'core/actions.dart';

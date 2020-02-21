@@ -1,10 +1,10 @@
-import 'package:meowflux/core/action.dart';
-import 'package:meowflux/core/dispatcher.dart';
-import 'package:meowflux/core/middleware.dart';
-import 'package:meowflux/extensions/channel.dart';
-import 'package:meowflux/meowflux.dart';
-import 'package:meowflux/worker/watcher.dart';
-import 'package:meowflux/worker/worker_context.dart';
+import 'package:meowchannel/core/action.dart';
+import 'package:meowchannel/core/dispatcher.dart';
+import 'package:meowchannel/core/middleware.dart';
+import 'package:meowchannel/extensions/channel.dart';
+import 'package:meowchannel/meowchannel.dart';
+import 'package:meowchannel/worker/watcher.dart';
+import 'package:meowchannel/worker/worker_context.dart';
  
 Middleware WorkerMiddleware<S>(
   List<Watcher<Action, S>> watchers
@@ -24,7 +24,7 @@ Middleware WorkerMiddleware<S>(
   });
 
   return (Action action) {
-    if(action is MeowFluxClose)
+    if(action is MeowChannelClose)
       channel.close();
     else
       channel.send(action);

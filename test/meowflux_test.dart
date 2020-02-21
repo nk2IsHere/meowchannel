@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import '2_watcher/values_actions.dart';
 import '2_watcher/values_reducer.dart';

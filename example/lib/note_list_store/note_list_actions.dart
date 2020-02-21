@@ -1,10 +1,10 @@
 import 'package:dataclass/dataclass.dart';
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import 'note_model.dart';
 
 ///
-/// Every action must extend [Action]
+/// Every custom action must extend [Action]
 ///
 class NoteListAction extends Action {}
 

@@ -22,6 +22,10 @@ void main() => runApp(MaterialApp(
     providers: [
       StoreProvider<NoteListState>(
         create: (context) =>
+          ///
+          /// This is [Store]
+          /// TODO
+          ///
           Store<NoteListState>(
             initialState: NoteListState(noteList: []),
             reducer: NoteListReducer,

@@ -1,5 +1,5 @@
-import 'package:meowflux/core/action.dart';
-import 'package:meowflux/core/reducer.dart';
+import 'package:meowchannel/core/action.dart';
+import 'package:meowchannel/core/reducer.dart';
 
 Reducer<S> TypedReducer<A extends Action, S>(
   S initialState, 

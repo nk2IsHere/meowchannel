@@ -1,5 +1,5 @@
-import 'package:meowflux/core/reducer.dart';
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/core/reducer.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import 'root_actions.dart';
 import 'root_state.dart';

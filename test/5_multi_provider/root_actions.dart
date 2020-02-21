@@ -1,5 +1,5 @@
 
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 class FirstRootAction extends Action {}
 

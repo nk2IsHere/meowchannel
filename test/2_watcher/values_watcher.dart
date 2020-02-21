@@ -1,4 +1,4 @@
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import 'values_actions.dart';
 import 'values_state.dart';

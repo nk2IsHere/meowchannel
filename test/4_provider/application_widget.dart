@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meowflux/extensions/flutter/widget_store_provider.dart';
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/extensions/flutter/widget_store_provider.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import '../1_basic_store/root_actions.dart';
 import '../1_basic_store/root_state.dart';

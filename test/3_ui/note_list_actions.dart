@@ -1,5 +1,5 @@
 import 'package:dataclass/dataclass.dart';
-import 'package:meowflux/meowflux.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import 'note_model.dart';
 

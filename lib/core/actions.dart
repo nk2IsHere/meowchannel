@@ -1,4 +1,4 @@
-import 'package:meowflux/core/action.dart';
+import 'package:meowchannel/core/action.dart';
 
-class MeowFluxInit extends Action {}
-class MeowFluxClose extends Action {}
+class MeowChannelInit extends Action {}
+class MeowChannelClose extends Action {}

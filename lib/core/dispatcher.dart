@@ -1,4 +1,4 @@
-import 'package:meowflux/core/action.dart';
+import 'package:meowchannel/core/action.dart';
 
 abstract class StoreDispatcher {
   Future dispatch(Action action); 

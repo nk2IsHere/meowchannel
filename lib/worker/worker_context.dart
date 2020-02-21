@@ -1,6 +1,6 @@
 import 'package:dataclass/dataclass.dart';
-import 'package:meowflux/core/action.dart';
-import 'package:meowflux/core/dispatcher.dart';
+import 'package:meowchannel/core/action.dart';
+import 'package:meowchannel/core/dispatcher.dart';
 
 part 'worker_context.g.dart';
 

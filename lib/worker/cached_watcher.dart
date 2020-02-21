@@ -1,8 +1,8 @@
-import 'package:meowflux/core/action.dart';
-import 'package:meowflux/extensions/stream_extensions.dart';
-import 'package:meowflux/worker/watcher.dart';
-import 'package:meowflux/worker/worker.dart';
-import 'package:meowflux/worker/worker_context.dart';
+import 'package:meowchannel/core/action.dart';
+import 'package:meowchannel/extensions/stream_extensions.dart';
+import 'package:meowchannel/worker/watcher.dart';
+import 'package:meowchannel/worker/worker.dart';
+import 'package:meowchannel/worker/worker_context.dart';
 
 class CachedAction extends Action {
   final bool skipCache;

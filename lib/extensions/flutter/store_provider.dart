@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meowflux/core/store.dart';
-import 'package:meowflux/extensions/flutter/store_provider_mixin.dart';
+import 'package:meowchannel/core/store.dart';
+import 'package:meowchannel/extensions/flutter/store_provider_mixin.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:meowflux/core/store.dart';
+import 'package:meowchannel/core/store.dart';
 
 Type _typeOf<T>() => T;
 

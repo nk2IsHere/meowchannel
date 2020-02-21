@@ -1,4 +1,4 @@
-# meowflux
+# meowchannel
 
 A new Flutter package project.
 
