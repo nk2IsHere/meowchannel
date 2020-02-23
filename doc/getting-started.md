@@ -308,7 +308,7 @@ class TodoApplicationWidget extends StatefulWidget {
 
 
 /// You should extend from StoreState and use WidgetStoreProviderMixin
-class _TodoApplicationWidgetState extends StoreState<combinedApplicationWidget> with WidgetStoreProviderMixin {
+class _TodoApplicationWidgetState extends StoreState<TodoApplicationWidget> with WidgetStoreProviderMixin {
 
   /// Here all Stores which are required by the Widget can be specified
   @override
