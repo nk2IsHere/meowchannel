@@ -1,3 +1,4 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - Initial release
 
-* TODO: Describe initial release.
+* Redux implementation for Dart with Workers.
+* :3
