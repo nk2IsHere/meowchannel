@@ -20,6 +20,7 @@ import '4_provider/application_widget.dart';
 import '5_multi_provider/multi_application_widget.dart';
 import '5_multi_provider/root_reducer.dart';
 import '5_multi_provider/root_state.dart';
+import '6_combine_reducers/motd_actions.dart';
 import 'common/store_logger.dart';
 
 import '1_basic_store/root_actions.dart';
@@ -42,9 +43,9 @@ void main() {
     expect(initialState.value, 0);
 
     print('TEST edit value');
-    await store.dispatch(RootIncreaseAction());
-    await store.dispatch(RootIncreaseAction());
-    await store.dispatch(RootDecreaseAction());
+    store.dispatch(RootIncreaseAction());
+    store.dispatch(RootIncreaseAction());
+    store.dispatch(RootDecreaseAction());
     
     print('TEST retrieve value');
     final resultState = await store.getState();
@@ -243,6 +244,31 @@ void main() {
 
     expect(firstValueText.data, "2");
     expect(secondValueText.data, "0");
+  });
+
+  test('6. combine reducers', () async {
+    final store = Store<String>(
+      reducer: CombinedReducer<String>([
+        TypedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pen"),
+        TypedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pineapple"),
+        TypedReducer<MotdSecondHalfAction, String>((action, String previousState) => "$previousState apple"),
+        TypedReducer<MotdSecondHalfAction, String>((action, String previousState) => "$previousState pen!")
+      ]),
+      initialState: "MOTD:",
+      middleware: [
+        storeLogger
+      ]
+    );
+
+    print('TEST edit motd');
+    store.dispatch(MotdFirstHalfAction());
+    store.dispatch(MotdSecondHalfAction());
+
+    print('TEST retrieve motd');
+    final motd = await store.getState();
+
+    print('TEST retrieved motd: $motd');
+    expect(motd, "MOTD: pen pineapple apple pen!");
   });
 
 }

@@ -40,7 +40,7 @@ class Store<S> extends AbstractStore<S> {
   }
 
   @override
-  Future dispatch(Action action) async {
+  void dispatch(Action action) {
     _dispatcher(action);
   }
 

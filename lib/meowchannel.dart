@@ -19,3 +19,5 @@ export 'worker/cached_watcher.dart';
 export 'extensions/flutter/store_provider_mixin.dart';
 export 'extensions/flutter/store_provider.dart';
 export 'extensions/flutter/multi_store_provider.dart';
+
+export 'extensions/combined_reducer.dart';
