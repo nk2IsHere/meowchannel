@@ -74,6 +74,7 @@ Worker<TodoAction, TodoState> TodoWorker(
     })),
     TypedWorker<TodoAction, TodoAddAction, TodoState>(worker((context, action) async {
       final todo = await todoRepository.add(
+        id: action.id,
         title: action.title,
         text: action.text
       );

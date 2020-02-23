@@ -15,13 +15,16 @@ class TodoGetAction extends TodoAction {
 }
 
 class TodoAddAction extends TodoAction {
+  final int id;
   final String title;
   final String text;
 
   TodoAddAction({
+    this.id,
     this.title,
     this.text
-  }): assert(title != null),
+  }): assert(id != null),
+    assert(title != null),
     assert(text != null);
 }
 

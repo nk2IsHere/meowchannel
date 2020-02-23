@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'todo_store.dart';
 
-int kMaxId = 1000000;
-
 class TodoRepository {
   List<Todo> _todos = [];
 
@@ -12,7 +10,7 @@ class TodoRepository {
     return _todos;
   }
 
-  Future<Todo> get({
+  Future<Todo> getTodo({
     int id
   }) async {
     return _todos.firstWhere(
@@ -22,11 +20,12 @@ class TodoRepository {
   }
 
   Future<Todo> add({
+    int id,
     String title,
     String text
   }) async {
     final todo = Todo(
-      id: Random().nextInt(kMaxId),
+      id: id,
       title: title,
       text: text
     );
@@ -40,7 +39,7 @@ class TodoRepository {
     String title,
     String text
   }) async {
-    final oldTodo = await this.get(
+    final oldTodo = await this.getTodo(
       id: id
     );
     final todo = Todo(

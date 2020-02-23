@@ -21,6 +21,9 @@ import '5_multi_provider/multi_application_widget.dart';
 import '5_multi_provider/root_reducer.dart';
 import '5_multi_provider/root_state.dart';
 import '6_combined_reducers/motd_actions.dart';
+import '7_combined_workers/todo_actions.dart';
+import '7_combined_workers/todo_fakes.dart';
+import '7_combined_workers/todo_store.dart';
 import 'common/store_logger.dart';
 
 import '1_basic_store/root_actions.dart';
@@ -246,7 +249,7 @@ void main() {
     expect(secondValueText.data, "0");
   });
 
-  test('6. combine reducers', () async {
+  test('6. combined reducers', () async {
     final store = Store<String>(
       reducer: CombinedReducer<String>([
         TypedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pen"),
@@ -271,4 +274,54 @@ void main() {
     expect(motd, "MOTD: pen pineapple apple pen!");
   });
 
+  test('7. combined workers', () async {
+    List<Todo> ui = [];
+
+    final store = Store<TodoState>(
+      reducer: TodoReducer,
+      initialState: TodoState(),
+      middleware: [
+        WorkerMiddleware([
+          TodoWatcher(TodoWorker(
+            TodoRepository()
+          ))
+        ])
+      ]
+    );
+
+    store.channel
+      .listen((state) { 
+        ui = state.todos;
+      });
+
+    print('TEST update todos');
+    store.dispatch(TodoListAction());
+    
+    await Future.delayed(Duration(milliseconds: 100), () => "");
+    store.dispatch(TodoAddAction(id: 1, title: "1. Run test!", text: "Hope this works..."));
+
+    await Future.delayed(Duration(milliseconds: 100), () => "");
+    store.dispatch(TodoAddAction(id: 2, title: "2. Wait for test to finish!", text: "State is changing... at least"));
+    
+    await Future.delayed(Duration(milliseconds: 100), () => "");
+    store.dispatch(TodoRemoveAction(id: 1));
+
+    await Future.delayed(Duration(milliseconds: 100), () => "");
+    store.dispatch(TodoAddAction(id: 1, title: "1. Run UI test!", text: "Hope this works #2..."));
+
+    await Future.delayed(Duration(milliseconds: 100), () => "");
+    store.dispatch(TodoAddAction(id: 3, title: "3. Finish!", text: "Your bets, please, gentlemen."));
+
+    await Future.delayed(Duration(milliseconds: 100), () => "");
+    store.dispatch(TodoEditAction(id: 1, text: "Hope workers work as intended..."));
+
+    await Future.delayed(Duration(milliseconds: 100), () => "");
+    print("TEST 'ui' shows this: $ui");
+
+    expect(ui, [
+      Todo(id: 3, title: "3. Finish!", text: "Your bets, please, gentlemen."),
+      Todo(id: 1, title: "1. Run UI test!", text: "Hope workers work as intended..."),
+      Todo(id: 2, title: "2. Wait for test to finish!", text: "State is changing... at least")
+    ]);
+  });
 }
