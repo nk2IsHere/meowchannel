@@ -6,7 +6,7 @@ import 'package:meowchannel/meowchannel.dart';
 import 'package:meowchannel/worker/watcher.dart';
 import 'package:meowchannel/worker/worker_context.dart';
  
-Middleware WorkerMiddleware<S>(
+Middleware workerMiddleware<S>(
   List<Watcher<Action, S>> watchers
 ) => (
   Dispatcher dispatcher,

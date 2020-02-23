@@ -34,14 +34,14 @@ void main() => runApp(MaterialApp(
           ///
           Store<NoteListState>(
             initialState: NoteListState(noteList: []),
-            reducer: NoteListReducer,
+            reducer: noteListReducer,
             middleware: [
               ///
               /// [WorkerMiddleware] is a wrapper for a group of workers allowing them to receive actions on one channel
               /// (see [NoteListWorker] and its [NoteListWatcher])
               ///
               WorkerMiddleware([
-                NoteListWatcher(NoteListWorker)
+                noteListWatcher(noteListWorker)
               ]),
               storeLogger
             ]

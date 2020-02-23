@@ -10,7 +10,7 @@ import 'values_tester.dart';
 //
 //  The most intended way to update ui is by using store 'channel' property
 //
-Worker<ValuesTesterAction, ValuesState> ValuesTesterWorker(
+Worker<ValuesTesterAction, ValuesState> valuesTesterWorker(
   ValuesTester ui
 ) => 
   worker((context, action) async {
@@ -19,7 +19,7 @@ Worker<ValuesTesterAction, ValuesState> ValuesTesterWorker(
       ui.showValue(action.value);
   });
 
-Watcher<ValuesTesterAction, ValuesState> ValuesTesterWatcher(
+Watcher<ValuesTesterAction, ValuesState> valuesTesterWatcher(
   Worker<ValuesTesterAction, ValuesState> worker
 ) =>
   watcher(worker, (actionStream, context) {

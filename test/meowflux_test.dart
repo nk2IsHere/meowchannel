@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -33,7 +31,7 @@ import '1_basic_store/root_state.dart';
 void main() {
   test('1. basic counter test', () async {
     final store = Store(
-      reducer: RootReducer,
+      reducer: rootReducer,
       initialState: RootState(value: 0),
       middleware: [
         storeLogger
@@ -59,13 +57,13 @@ void main() {
   test('2. workers and watchers communication test', () async {
     final tester = ValuesTester();
     final store = Store(
-      reducer: ValuesReducer,
+      reducer: valuesReducer,
       initialState: ValuesState(values: []),
       middleware: [
         storeLogger,
-        WorkerMiddleware<ValuesState>([
-          ValuesTesterWatcher(ValuesTesterWorker(tester)),
-          ValuesWatcher(ValuesWorker)
+        workerMiddleware<ValuesState>([
+          valuesTesterWatcher(valuesTesterWorker(tester)),
+          valuesWatcher(valuesWorker)
         ])
       ]
     );
@@ -91,12 +89,12 @@ void main() {
     List<Note> ui = [];
 
     final store = Store(
-      reducer: NoteListReducer,
+      reducer: noteListReducer,
       initialState: NoteListState(noteList: []),
       middleware: [
         storeLogger,
-        WorkerMiddleware<NoteListState>([
-          NoteListWatcher(NoteListWorker)
+        workerMiddleware<NoteListState>([
+          noteListWatcher(noteListWorker)
         ])
       ]
     );
@@ -132,7 +130,7 @@ void main() {
       StoreProvider<RootState>(
         create: (context) =>
           Store<RootState>(
-            reducer: RootReducer,
+            reducer: rootReducer,
             initialState: RootState(value: 0),
             middleware: [
               storeLogger
@@ -176,7 +174,7 @@ void main() {
           StoreProvider<FirstRootState>(
             create: (context) =>
               Store<FirstRootState>(
-                reducer: FirstRootReducer,
+                reducer: firstRootReducer,
                 initialState: FirstRootState(value: 0),
                 middleware: [
                   storeLogger
@@ -186,7 +184,7 @@ void main() {
           StoreProvider<SecondRootState>(
             create: (context) =>
               Store<SecondRootState>(
-                reducer: SecondRootReducer,
+                reducer: secondRootReducer,
                 initialState: SecondRootState(value: 0),
                 middleware: [
                   storeLogger
@@ -251,11 +249,11 @@ void main() {
 
   test('6. combined reducers', () async {
     final store = Store<String>(
-      reducer: CombinedReducer<String>([
-        TypedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pen"),
-        TypedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pineapple"),
-        TypedReducer<MotdSecondHalfAction, String>((action, String previousState) => "$previousState apple"),
-        TypedReducer<MotdSecondHalfAction, String>((action, String previousState) => "$previousState pen!")
+      reducer: combinedReducer<String>([
+        typedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pen"),
+        typedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pineapple"),
+        typedReducer<MotdSecondHalfAction, String>((action, String previousState) => "$previousState apple"),
+        typedReducer<MotdSecondHalfAction, String>((action, String previousState) => "$previousState pen!")
       ]),
       initialState: "MOTD:",
       middleware: [
@@ -278,11 +276,11 @@ void main() {
     List<Todo> ui = [];
 
     final store = Store<TodoState>(
-      reducer: TodoReducer,
+      reducer: todoReducer,
       initialState: TodoState(),
       middleware: [
-        WorkerMiddleware([
-          TodoWatcher(TodoWorker(
+        workerMiddleware([
+          todoWatcher(todoWorker(
             TodoRepository()
           ))
         ])

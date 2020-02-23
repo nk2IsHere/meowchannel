@@ -3,7 +3,7 @@ import 'package:meowchannel/meowchannel.dart';
 import 'values_actions.dart';
 import 'values_state.dart';
 
-final Worker<ValuesAction, ValuesState> ValuesWorker = 
+final Worker<ValuesAction, ValuesState> valuesWorker = 
   worker((context, action) async {
     //Workload
     await Future.delayed(Duration(seconds: 1), () => "");
@@ -11,7 +11,7 @@ final Worker<ValuesAction, ValuesState> ValuesWorker =
       context.put(ValuesTesterAddValueAction(value: action.value.toUpperCase()));
   });
 
-Watcher<ValuesAction, ValuesState> ValuesWatcher(
+Watcher<ValuesAction, ValuesState> valuesWatcher(
   Worker<ValuesAction, ValuesState> worker
 ) =>
   watcher(worker, (actionStream, context) {

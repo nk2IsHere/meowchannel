@@ -28,24 +28,24 @@ class TodoState extends _$TodoState {
   });
 }
 
-final Reducer<TodoState> TodoReducer = CombinedReducer<TodoState>([
-  TypedReducer<TodoUpdateUiAction, TodoState>(
+final Reducer<TodoState> todoReducer = combinedReducer<TodoState>([
+  typedReducer<TodoUpdateUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: action.todos
     )
   ),
-  TypedReducer<TodoAddUiAction, TodoState>(
+  typedReducer<TodoAddUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: [action.todo] + previousState.todos
     )
   ),
-  TypedReducer<TodoEditUiAction, TodoState>(
+  typedReducer<TodoEditUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: previousState.todos.map((todo) => todo.id == action.id? action.todo : todo)
         .toList()
     )
   ),
-  TypedReducer<TodoRemoveUiAction, TodoState>(
+  typedReducer<TodoRemoveUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: previousState.todos.where((todo) => todo.id != action.id)
         .toList()
@@ -53,7 +53,7 @@ final Reducer<TodoState> TodoReducer = CombinedReducer<TodoState>([
   ),
 ]);
 
-Watcher<TodoAction, TodoState> TodoWatcher(
+Watcher<TodoAction, TodoState> todoWatcher(
   Worker<TodoAction, TodoState> worker
 ) =>
   watcher(worker, (actionStream, context) {
@@ -61,18 +61,18 @@ Watcher<TodoAction, TodoState> TodoWatcher(
       .cast<TodoAction>();
   });
 
-Worker<TodoAction, TodoState> TodoWorker(
+Worker<TodoAction, TodoState> todoWorker(
   TodoRepository todoRepository
 ) =>
-  CombinedWorker([
-    TypedWorker<TodoAction, TodoListAction, TodoState>(worker((context, action) async {
+  combinedWorker([
+    typedWorker<TodoAction, TodoListAction, TodoState>(worker((context, action) async {
       final todos = await todoRepository.list();
 
       context.put(TodoUpdateUiAction(
         todos: todos
       ));
     })),
-    TypedWorker<TodoAction, TodoAddAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoAddAction, TodoState>(worker((context, action) async {
       final todo = await todoRepository.add(
         id: action.id,
         title: action.title,
@@ -83,7 +83,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         todo: todo
       ));
     })),
-    TypedWorker<TodoAction, TodoEditAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoEditAction, TodoState>(worker((context, action) async {
       final todo = await todoRepository.edit(
         id: action.id,
         title: action.title,
@@ -95,7 +95,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         todo: todo
       ));
     })),
-    TypedWorker<TodoAction, TodoRemoveAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoRemoveAction, TodoState>(worker((context, action) async {
       await todoRepository.remove(
         id: action.id
       );

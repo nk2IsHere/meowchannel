@@ -1,6 +1,6 @@
 name: meowchannel
-description: state manager
-version: 1.0.0
+description: Lightweight Redux implementation for Flutter with async workers, combiners... and cats!
+version: 1.0.0+1
 author: nk2 <nikkoz893@gmail.com>
 homepage: https://nk2.eu
 

@@ -8,7 +8,7 @@ import 'note_list_state.dart';
 /// Be sure to double-check that the Reducer does not mutate data and state and has no side-effects 
 /// It does not run in asynchronous thread
 ///
-final Reducer<NoteListState> NoteListReducer =
+final Reducer<NoteListState> noteListReducer =
   TypedReducer(NoteListState(noteList: []), (Action action, NoteListState previousState) {
     return previousState.copyWith(
       noteList: action is NoteListUpdateStateAction? action.noteList

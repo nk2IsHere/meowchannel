@@ -11,7 +11,7 @@ import 'note_model.dart';
 /// Multiple workers can be chained by dispatching [Action] accepted by another [Watcher] and [Worker] pair
 /// It is asynchronous
 ///
-final Worker<NoteListAction, NoteListState> NoteListWorker =
+final Worker<NoteListAction, NoteListState> noteListWorker =
   worker((context, action) async {
     final currentState = context.state();
     if(action is NoteListAddAction) {
@@ -42,7 +42,7 @@ final Worker<NoteListAction, NoteListState> NoteListWorker =
 /// This is a [Watcher<ActionType, State>].
 /// It recieves distinct stream of [Action] which needs to be filtered and casted into desired [ActionType]
 ///
-Watcher<NoteListAction, NoteListState> NoteListWatcher(
+Watcher<NoteListAction, NoteListState> noteListWatcher(
   Worker<NoteListAction, NoteListState> worker
 ) =>
   watcher(worker, (actionStream, context) {

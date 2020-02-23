@@ -179,26 +179,26 @@ Now we should create 3 things:
 - `Watcher` and `Worker` pair
 
 ```
-/// Reducer is going to be a stack of TypedReducers<ActionType, State> (basically reducers which say: if this Action is ActionType then make new state else just pass) what will replace if-else hell
+/// Reducer is going to be a stack of typedReducers<ActionType, State> (basically reducers which say: if this Action is ActionType then make new state else just pass) what will replace if-else hell
 fi
-final Reducer<TodoState> TodoReducer = CombinedReducer<TodoState>([
-  TypedReducer<TodoUpdateUiAction, TodoState>(
+final Reducer<TodoState> TodoReducer = combinedReducer<TodoState>([
+  typedReducer<TodoUpdateUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: action.todos
     )
   ),
-  TypedReducer<TodoAddUiAction, TodoState>(
+  typedReducer<TodoAddUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: [action.todo] + previousState.todos
     )
   ),
-  TypedReducer<TodoEditUiAction, TodoState>(
+  typedReducer<TodoEditUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: previousState.todos.map((todo) => todo.id == action.id? action.todo : todo)
         .toList()
     )
   ),
-  TypedReducer<TodoRemoveUiAction, TodoState>(
+  typedReducer<TodoRemoveUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: previousState.todos.where((todo) => todo.id != action.id)
         .toList()
@@ -220,19 +220,19 @@ Watcher<TodoAction, TodoState> TodoWatcher(
 
 /// Worker can have side-effects and handle complex tasks
 /// because it is async!
-/// CombinedWorker is logically same as CombinedReducer, but for workers
+/// combinedWorker is logically same as combinedReducer, but for workers
 Worker<TodoAction, TodoState> TodoWorker(
   TodoRepository todoRepository
 ) =>
-  CombinedWorker([
-    TypedWorker<TodoAction, TodoListAction, TodoState>(worker((context, action) async {
+  combinedWorker([
+    typedWorker<TodoAction, TodoListAction, TodoState>(worker((context, action) async {
       final todos = await todoRepository.list();
 
       context.put(TodoUpdateUiAction(
         todos: todos
       ));
     })),
-    TypedWorker<TodoAction, TodoAddAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoAddAction, TodoState>(worker((context, action) async {
       final todo = await todoRepository.add(
         title: action.title,
         text: action.text
@@ -242,7 +242,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         todo: todo
       ));
     })),
-    TypedWorker<TodoAction, TodoEditAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoEditAction, TodoState>(worker((context, action) async {
       final todo = await todoRepository.edit(
         id: action.id,
         title: action.title,
@@ -254,7 +254,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         todo: todo
       ));
     })),
-    TypedWorker<TodoAction, TodoRemoveAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoRemoveAction, TodoState>(worker((context, action) async {
       await todoRepository.remove(
         id: action.id
       );
@@ -308,7 +308,7 @@ class TodoApplicationWidget extends StatefulWidget {
 
 
 /// You should extend from StoreState and use WidgetStoreProviderMixin
-class _TodoApplicationWidgetState extends StoreState<CombinedApplicationWidget> with WidgetStoreProviderMixin {
+class _TodoApplicationWidgetState extends StoreState<combinedApplicationWidget> with WidgetStoreProviderMixin {
 
   /// Here all Stores which are required by the Widget can be specified
   @override
