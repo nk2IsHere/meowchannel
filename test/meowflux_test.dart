@@ -20,7 +20,7 @@ import '4_provider/application_widget.dart';
 import '5_multi_provider/multi_application_widget.dart';
 import '5_multi_provider/root_reducer.dart';
 import '5_multi_provider/root_state.dart';
-import '6_combine_reducers/motd_actions.dart';
+import '6_combined_reducers/motd_actions.dart';
 import 'common/store_logger.dart';
 
 import '1_basic_store/root_actions.dart';
