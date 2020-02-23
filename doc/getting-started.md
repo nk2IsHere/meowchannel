@@ -4,7 +4,7 @@ Lightweight [Redux](https://redux.js.org/) implementation for Flutter with worke
 ... and *cats*! 😼
 
 ## Overview
-<img src="https://raw.githubusercontent.com/nk2IsHere/meowchannel/master/docs/overview.png"/>
+<img src="https://raw.githubusercontent.com/nk2IsHere/meowchannel/master/doc/overview.png"/>
 
 ### **Where:**   
 **Actions** - Payloads with data sent from **view** to **Store** or from **Middleware** to **Store** describing the fact that something happened. You can send them using `dispatch(action)`.  
