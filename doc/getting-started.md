@@ -180,7 +180,7 @@ Now we should create 3 things:
 
 ```
 /// Reducer is going to be a stack of typedReducers<ActionType, State> (basically reducers which say: if this Action is ActionType then make new state else just pass) what will replace if-else hell
-fi
+
 final Reducer<TodoState> TodoReducer = combinedReducer<TodoState>([
   typedReducer<TodoUpdateUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
