@@ -297,6 +297,7 @@ How to access Store and State in Widgets?
 ```
 /// For any Widget you can use StoreProvider.of<Store<StateType>>()
 /// to get Store of desired state
+StoreProvider.of<Store<TodoState>>(context);
 
 /// For any StatefulWidget that needs to be rebuilt on each new state arrival
 class TodoApplicationWidget extends StatefulWidget {
@@ -307,8 +308,8 @@ class TodoApplicationWidget extends StatefulWidget {
 }
 
 
-/// You should extend from StoreState and use WidgetStoreProviderMixin
-class _TodoApplicationWidgetState extends StoreState<TodoApplicationWidget> with WidgetStoreProviderMixin {
+/// You should extend from StoreState in order to subscribe to stores automagically
+class _TodoApplicationWidgetState extends StoreState<TodoApplicationWidget> {
 
   /// Here all Stores which are required by the Widget can be specified
   @override

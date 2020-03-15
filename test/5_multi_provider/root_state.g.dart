@@ -32,7 +32,6 @@ abstract class _$FirstRootState {
   }
 }
 
-
 abstract class _$SecondRootState {
   const _$SecondRootState();
 

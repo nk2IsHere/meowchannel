@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meowchannel/extensions/flutter/widget_store_provider.dart';
 import 'package:meowchannel/meowchannel.dart';
 
 import '../1_basic_store/root_actions.dart';
@@ -12,7 +11,7 @@ class ApplicationWidget extends StatefulWidget {
     _ApplicationWidgetState();
 }
 
-class _ApplicationWidgetState extends StoreState<ApplicationWidget> with WidgetStoreProviderMixin<ApplicationWidget> {
+class _ApplicationWidgetState extends StoreState<ApplicationWidget> {
 
   @override
   List<Store> requireStores(BuildContext context) => [

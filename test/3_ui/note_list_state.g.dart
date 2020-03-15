@@ -1,7 +1,13 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'note_list_state.dart';
 
+// **************************************************************************
+// DataClassGenerator
+// **************************************************************************
+
 abstract class _$NoteListState {
-  _$NoteListState();
+  const _$NoteListState();
 
   List<Note> get noteList;
   bool operator ==(other) {
@@ -16,7 +22,7 @@ abstract class _$NoteListState {
   }
 
   String toString() {
-    return 'NoteListUpdateStateAction <\'noteList\': ${this.noteList},>';
+    return 'NoteListState <\'noteList\': ${this.noteList},>';
   }
 
   NoteListState copyWith({List<Note> noteList}) {

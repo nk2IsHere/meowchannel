@@ -1,12 +1,8 @@
-import 'package:dataclass/dataclass.dart';
 import 'package:meowchannel/meowchannel.dart';
-
-part 'values_actions.g.dart';
 
 class ValuesAction extends Action {}
 
-@dataClass
-class ValuesAddValueAction extends _$ValuesAddValueAction {
+class ValuesAddValueAction extends ValuesAction {
   final String value;
 
   ValuesAddValueAction({
@@ -16,8 +12,7 @@ class ValuesAddValueAction extends _$ValuesAddValueAction {
 
 class ValuesTesterAction extends Action {}
 
-@dataClass
-class ValuesTesterAddValueAction extends _$ValuesTesterAddValueAction {
+class ValuesTesterAddValueAction extends ValuesTesterAction {
   final String value;
 
   ValuesTesterAddValueAction({

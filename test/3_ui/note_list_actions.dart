@@ -1,14 +1,10 @@
-import 'package:dataclass/dataclass.dart';
 import 'package:meowchannel/meowchannel.dart';
 
 import 'note_model.dart';
 
-part 'note_list_actions.g.dart';
-
 class NoteListAction extends Action {}
 
-@dataClass
-class NoteListAddAction extends _$NoteListAddAction {
+class NoteListAddAction extends NoteListAction {
   final int id;
   final String title;
   final String text;
@@ -22,8 +18,7 @@ class NoteListAddAction extends _$NoteListAddAction {
     assert(text != null);
 }
 
-@dataClass
-class NoteListRemoveAction extends _$NoteListRemoveAction {
+class NoteListRemoveAction extends NoteListAction {
   final int id;
 
   NoteListRemoveAction({
@@ -31,8 +26,7 @@ class NoteListRemoveAction extends _$NoteListRemoveAction {
   }): assert(id != null);
 }
 
-@dataClass
-class NoteListEditAction extends _$NoteListEditAction {
+class NoteListEditAction extends NoteListAction {
   final int id;
   final String title;
   final String text;
@@ -46,8 +40,7 @@ class NoteListEditAction extends _$NoteListEditAction {
 
 class NoteListStateAction extends Action {}
 
-@dataClass
-class NoteListUpdateStateAction extends _$NoteListUpdateStateAction {
+class NoteListUpdateStateAction extends NoteListStateAction {
   final List<Note> noteList;
 
   NoteListUpdateStateAction({

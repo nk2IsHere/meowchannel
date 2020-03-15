@@ -55,7 +55,7 @@ abstract class _$TodoState {
   }
 
   String toString() {
-    return 'NoteListState <\'noteList\': ${this.todos},>';
+    return 'TodoState <\'todos\': ${this.todos},>';
   }
 
   TodoState copyWith({List<Todo> todos}) {

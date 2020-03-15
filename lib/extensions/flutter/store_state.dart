@@ -6,10 +6,6 @@ import 'package:meowchannel/core/store.dart';
 Type _typeOf<T>() => T;
 
 abstract class StoreState<W extends StatefulWidget> extends State<W> {
-  List<Store> requireStores(BuildContext context);
-}
-
-mixin WidgetStoreProviderMixin<W extends StatefulWidget> on StoreState<W> {
   final Map<String, Store> _storeByType = Map();
   final Map<String, dynamic> _stateByType = Map();
   final List<StreamSubscription> _subscriptions = [];
@@ -54,4 +50,5 @@ mixin WidgetStoreProviderMixin<W extends StatefulWidget> on StoreState<W> {
     return _storeByType[_typeOf<Store<S>>().toString()];
   }
 
+  List<Store> requireStores(BuildContext context);
 }

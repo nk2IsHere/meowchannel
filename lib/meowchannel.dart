@@ -18,9 +18,14 @@ export 'worker/watcher.dart';
 export 'extensions/flutter/store_provider_mixin.dart';
 export 'extensions/flutter/store_provider.dart';
 export 'extensions/flutter/multi_store_provider.dart';
-export 'extensions/flutter/widget_store_provider.dart';
+export 'extensions/flutter/store_state.dart';
 
 export 'extensions/combined_reducer.dart';
 
 export 'extensions/typed_worker.dart';
 export 'extensions/combined_worker.dart';
+
+export 'extensions/cached_worker/cache_registry.dart';
+export 'extensions/cached_worker/cache_state.dart';
+export 'extensions/cached_worker/cached_action.dart';
+export 'extensions/cached_worker/store_cache_registry.dart';
