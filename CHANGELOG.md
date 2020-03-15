@@ -11,3 +11,7 @@
 
 * Merged WidgetStoreProviderMixin and StoreProvider together
 * Removed redundant cache implementation
+
+## [1.0.2] - Store hooks
+
+* Added store hooks

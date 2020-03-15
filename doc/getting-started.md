@@ -326,6 +326,16 @@ class _TodoApplicationWidgetState extends StoreState<TodoApplicationWidget> {
     ...
     /// Here goes your creativity!
   }
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// Store hooks can be added to track state updates out of widget context
+    hookTo<TodoState>((store, state) {
+
+    });
+  }
 }
 
 ```
