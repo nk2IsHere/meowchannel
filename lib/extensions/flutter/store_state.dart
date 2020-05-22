@@ -18,6 +18,7 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
 
     requireStores(context).forEach((store) { 
       _storeByType.putIfAbsent(store.runtimeType.toString(), () => store);
+      _stateByType.putIfAbsent(store.runtimeType.toString(), () => store.initialState);
       _storeHooks.putIfAbsent(store.runtimeType.toString(), () => []);
 
       _subscriptions.add(
