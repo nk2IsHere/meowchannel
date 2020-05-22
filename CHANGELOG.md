@@ -16,7 +16,7 @@
 
 * Added store hooks
 
-## [1.0.3] - Bug fixes
+## [1.0.3, 1.0.3+1] - Bug fixes
 
 * Fixed a bug, where the first build of `StoreState` gets null in `getState()`
 * Updated dependencies

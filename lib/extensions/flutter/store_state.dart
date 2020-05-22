@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
-import 'package:meowchannel/core/store.dart';
-import 'package:meowchannel/extensions/flutter/store_hook.dart';
+import 'package:flutter/material.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 Type _typeOf<T>() => T;
 
@@ -16,27 +15,32 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
   void initState() {
     super.initState();
 
-    requireStores(context).forEach((store) { 
+    requireStores(context).forEach((store) {
       _storeByType.putIfAbsent(store.runtimeType.toString(), () => store);
-      _stateByType.putIfAbsent(store.runtimeType.toString(), () => store.initialState);
+      if(store.initialState != null) {
+        _stateByType.putIfAbsent(
+          store.initialState.runtimeType.toString(),
+          () => store.initialState
+        );
+      }
       _storeHooks.putIfAbsent(store.runtimeType.toString(), () => []);
 
       _subscriptions.add(
-        store.channel
-          .listen((state) {
-            if(this.mounted) {
-              setState(() {
-                _stateByType.update(
-                  state.runtimeType.toString(), 
-                  (_) => state, 
-                  ifAbsent: () => state
-                );
-              });
+          store.channel
+              .listen((state) {
+                if(this.mounted) {
+                  setState(() {
+                    _stateByType.update(
+                        state.runtimeType.toString(),
+                            (_) => state,
+                        ifAbsent: () => state
+                    );
+                  });
 
-              _storeHooks[store.runtimeType.toString()]?.forEach((hook) { 
-                hook(store, state);
-              });
-            }
+                  _storeHooks[store.runtimeType.toString()]?.forEach((hook) {
+                    hook(store, state);
+                  });
+                }
           })
       );
     });
@@ -48,7 +52,7 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
       final subscription = _subscriptions.removeLast();
       subscription.cancel();
     }
-    
+
     super.dispose();
   }
 
