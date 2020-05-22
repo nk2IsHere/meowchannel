@@ -65,7 +65,7 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
     return _storeByType[_typeOf<Store<S>>().toString()];
   }
 
-  void hookTo<S>(StoreHook hook) {
+  void hookTo<S>(StoreHook<S> hook) {
     final hooks = _storeHooks[_typeOf<Store<S>>().toString()];
 
     if(hooks == null) {

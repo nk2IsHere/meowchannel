@@ -1,6 +1,6 @@
 name: meowchannel
 description: Lightweight Redux implementation for Flutter with async workers, combiners... and cats!
-version: 1.0.3+1
+version: 1.0.3+2
 author: nk2 <nikkoz893@gmail.com>
 homepage: https://github.com/nk2ishere/meowchannel
 
@@ -13,7 +13,6 @@ dependencies:
   dataclass: ^0.3.0+1
   rxdart: ^0.24.1
   provider: ^4.0.4
-
 
 dev_dependencies:
   flutter_test:
