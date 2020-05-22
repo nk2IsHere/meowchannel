@@ -16,7 +16,7 @@
 
 * Added store hooks
 
-## [1.0.3, 1.0.3+1, 1.0.3+2] - Bug fixes
+## [1.0.3, 1.0.3+1, 1.0.3+2, 1.0.3+3] - Bug fixes
 
 * Fixed a bug, where the first build of `StoreState` gets null in `getState()`
 * Fixed a bug with type infer of `StoreHook`

@@ -19,8 +19,8 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
       _storeByType.putIfAbsent(store.runtimeType.toString(), () => store);
       if(store.initialState != null) {
         _stateByType.putIfAbsent(
-          store.initialState.runtimeType.toString(),
-          () => store.initialState
+            store.initialState.runtimeType.toString(),
+                () => store.initialState
         );
       }
       _storeHooks.putIfAbsent(store.runtimeType.toString(), () => []);
@@ -28,19 +28,19 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
       _subscriptions.add(
           store.channel
               .listen((state) {
-                if(this.mounted) {
-                  setState(() {
-                    _stateByType.update(
-                        state.runtimeType.toString(),
-                            (_) => state,
-                        ifAbsent: () => state
-                    );
-                  });
+            if(this.mounted) {
+              setState(() {
+                _stateByType.update(
+                    state.runtimeType.toString(),
+                        (_) => state,
+                    ifAbsent: () => state
+                );
+              });
 
-                  _storeHooks[store.runtimeType.toString()]?.forEach((hook) {
-                    hook(store, state);
-                  });
-                }
+              _storeHooks[store.runtimeType.toString()]?.forEach((hook) {
+                hook(store, state);
+              });
+            }
           })
       );
     });
@@ -75,7 +75,9 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
         Be sure to check this!
       """);
     } else {
-      hooks.add(hook);
+      hooks.add((store, state) {
+        hook(store, state);
+      });
     }
   }
 
