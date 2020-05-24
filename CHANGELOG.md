@@ -21,3 +21,7 @@
 * Fixed a bug, where the first build of `StoreState` gets null in `getState()`
 * Fixed a bug with type infer of `StoreHook`
 * Updated dependencies
+
+## [1.0.4] - get the state right now!
+
+* Added a way to get current state in store without awaiting

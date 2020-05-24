@@ -45,6 +45,11 @@ class Store<S> extends AbstractStore<S> {
   }
 
   @override
+  S getStateUnsafe() {
+    return _stateChannel.valueOrNull();
+  }
+
+  @override
   Future<S> getState() async {
     S state = await _stateChannel.receive();
     return state;
