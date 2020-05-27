@@ -25,3 +25,7 @@
 ## [1.0.4] - get the state right now!
 
 * Added a way to get current state in store without awaiting
+
+## [1.0.5] - stay new!
+
+* Fixed `StoreState` getting older or even initialState when calling `build` first time
