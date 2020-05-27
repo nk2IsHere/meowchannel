@@ -17,7 +17,13 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
 
     requireStores(context).forEach((store) {
       _storeByType.putIfAbsent(store.runtimeType.toString(), () => store);
-      if(store.initialState != null) {
+
+      if(store.getStateUnsafe() != null) {
+        _stateByType.putIfAbsent(
+            store.initialState.runtimeType.toString(),
+                () => store.getStateUnsafe()
+        );
+      } else if(store.initialState != null) {
         _stateByType.putIfAbsent(
             store.initialState.runtimeType.toString(),
                 () => store.initialState
