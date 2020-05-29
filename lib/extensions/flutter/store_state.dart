@@ -20,13 +20,13 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
 
       if(store.getStateUnsafe() != null) {
         _stateByType.putIfAbsent(
-            store.initialState.runtimeType.toString(),
-                () => store.getStateUnsafe()
+          store.initialState.runtimeType.toString(),
+          () => store.getStateUnsafe()
         );
       } else if(store.initialState != null) {
         _stateByType.putIfAbsent(
-            store.initialState.runtimeType.toString(),
-                () => store.initialState
+          store.initialState.runtimeType.toString(),
+          () => store.initialState
         );
       }
       _storeHooks.putIfAbsent(store.runtimeType.toString(), () => []);
@@ -37,9 +37,9 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
             if(this.mounted) {
               setState(() {
                 _stateByType.update(
-                    state.runtimeType.toString(),
-                        (_) => state,
-                    ifAbsent: () => state
+                  state.runtimeType.toString(),
+                  (_) => state,
+                  ifAbsent: () => state
                 );
               });
 

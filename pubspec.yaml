@@ -1,6 +1,6 @@
 name: meowchannel
 description: Lightweight Redux implementation for Flutter with async workers, combiners... and cats!
-version: 1.0.5
+version: 1.1.0
 author: nk2 <nikkoz893@gmail.com>
 homepage: https://github.com/nk2ishere/meowchannel
 

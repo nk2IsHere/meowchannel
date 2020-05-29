@@ -22,6 +22,7 @@ import '6_combined_reducers/motd_actions.dart';
 import '7_combined_workers/todo_actions.dart';
 import '7_combined_workers/todo_fakes.dart';
 import '7_combined_workers/todo_store.dart';
+import '8_store_builder/application_widget.dart';
 import 'common/store_logger.dart';
 
 import '1_basic_store/root_actions.dart';
@@ -321,5 +322,59 @@ void main() {
       Todo(id: 1, title: "1. Run UI test!", text: "Hope workers work as intended..."),
       Todo(id: 2, title: "2. Wait for test to finish!", text: "State is changing... at least")
     ]);
+  });
+
+  //
+  // This test reuses structures from #1 test
+  //
+  testWidgets('8. flutter store builder widget test', (tester) async {      
+    await tester.pumpWidget(
+      StoreProvider<RootState>(
+        create: (context) =>
+          Store<RootState>(
+            reducer: rootReducer,
+            initialState: RootState(value: 0),
+            middleware: [
+              storeLogger
+            ]
+          ),
+        child: MaterialApp(
+          home: BuilderApplicationWidget()
+        ),
+      ),
+    );
+
+    print('TEST edit value');
+        
+    await tester.tap(find.byKey(Key('button-decrease')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-decrease')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+    
+    await tester.tap(find.byKey(Key('button-increase')));
+    await tester.pumpAndSettle();
+
+    Text valueText = tester.widget(find.byKey(Key('text-value')));
+
+    print('TEST retrieve value');
+    print('TEST value: ${valueText.data}');
+
+    expect(valueText.data, "4");
   });
 }

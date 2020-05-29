@@ -1,4 +1,4 @@
-# meowchannel
+# meowchannel `v1.1.0-production`
 
 Lightweight [Redux](https://redux.js.org/) implementation for Flutter with workers  
 ... and *cats*! 😼
@@ -340,6 +340,36 @@ class _TodoApplicationWidgetState extends StoreState<TodoApplicationWidget> {
 
 ```
 
+Any other way to access state changes out of StoreState?
+> Sure thing!
+
+```
+
+class SomeWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<SomeState>(context); /// To get access to store
+
+    return StoreBuilder<SomeState>(
+      store: store,
+      condition: (previous, current) => previous?.value != current?.value, /// Apply custom change checkers if needed
+      builder: (context, state) {
+        return Scaffold(
+          body: Column(
+            children: <Widget>[
+              ...
+              /// Here goes your creativity!
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+```
+
 ## Credits:
 
-This page has many connections with [Redux docs](https://redux.js.org/basics/actions)
+* This page has many connections with [Redux docs](https://redux.js.org/basics/actions)
+* Shoutouts to `flutter_bloc` for lots of cool and working ideas that I've ported here [Link](https://github.com/felangel/bloc/tree/master/packages/flutter_bloc)

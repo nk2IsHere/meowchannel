@@ -32,7 +32,7 @@ class _MultiApplicationWidgetState extends StoreState<MultiApplicationWidget> {
           Column(
             children: <Widget>[
               Text(
-                firstState?.value.toString(),
+                firstState.value.toString(),
                 key: Key('first-text-value'),
               ),
               RaisedButton(
@@ -54,7 +54,7 @@ class _MultiApplicationWidgetState extends StoreState<MultiApplicationWidget> {
           Column(
             children: <Widget>[
               Text(
-                secondState?.value.toString(),
+                secondState.value.toString(),
                 key: Key('second-text-value'),
               ),
               RaisedButton(

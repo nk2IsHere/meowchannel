@@ -27,7 +27,7 @@ class _ApplicationWidgetState extends StoreState<ApplicationWidget> {
       body: Column(
         children: <Widget>[
           Text(
-            state?.value.toString(),
+            state.value.toString(),
             key: Key('text-value'),
           ),
           RaisedButton(

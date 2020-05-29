@@ -34,6 +34,10 @@ class StateChannel<T> {
     _data.push(value);
     _send();
   }
+  
+  T previousValueOrNull() {
+    return _data.beforeTop();
+  }
 
   T valueOrNull() {
     return _data.top();
@@ -114,5 +118,11 @@ class _Stack<T> {
 
   T top() {
     return _list.last;
+  }
+
+  T beforeTop() {
+    return _list.length >= 2?
+      _list.elementAt(_list.length - 2)
+      : null;
   }
 }

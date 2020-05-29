@@ -29,3 +29,9 @@
 ## [1.0.5] - stay new!
 
 * Fixed `StoreState` getting older or even initialState when calling `build` first time
+
+## [1.1.0] - state changes out of StoreState
+
+* Removed null checks in tests (deprecated in `1.0.5`)
+* Updated credits and docs
+* Added `StoreBuilder`: a widget that hooks to Store channel and listens to changes out of StoreState

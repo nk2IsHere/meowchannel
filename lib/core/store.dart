@@ -45,6 +45,11 @@ class Store<S> extends AbstractStore<S> {
   }
 
   @override
+  S getPreviousStateUnsafe() {
+    return _stateChannel.previousValueOrNull();
+  }
+
+  @override
   S getStateUnsafe() {
     return _stateChannel.valueOrNull();
   }
