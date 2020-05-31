@@ -30,7 +30,7 @@
 
 * Fixed `StoreState` getting older or even initialState when calling `build` first time
 
-## [1.1.0] - state changes out of StoreState
+## [1.1.0, 1.1.0+0] - state changes out of StoreState
 
 * Removed null checks in tests (deprecated in `1.0.5`)
 * Updated credits and docs
