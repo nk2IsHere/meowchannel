@@ -33,21 +33,21 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
 
       _subscriptions.add(
           store.channel
-              .listen((state) {
-            if(this.mounted) {
-              setState(() {
-                _stateByType.update(
-                  state.runtimeType.toString(),
-                  (_) => state,
-                  ifAbsent: () => state
-                );
-              });
+            .listen((state) {
+              if(this.mounted) {
+                setState(() {
+                  _stateByType.update(
+                    state.runtimeType.toString(),
+                    (_) => state,
+                    ifAbsent: () => state
+                  );
+                });
 
-              _storeHooks[store.runtimeType.toString()]?.forEach((hook) {
-                hook(store, state);
-              });
-            }
-          })
+                _storeHooks[store.runtimeType.toString()]?.forEach((hook) {
+                  hook(store, state);
+                });
+              }
+            })
       );
     });
   }

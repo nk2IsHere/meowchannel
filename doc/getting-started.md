@@ -5,7 +5,7 @@ Lightweight [Redux](https://redux.js.org/) implementation for Flutter with worke
 
 ## Migration from `v1.1.0`
   new release introduces non-blocking reducers and dispatcher to improve app performance\
-  all blocking Reducers must be wrapped in syncedReducer\
+  all blocking Reducers must be wrapped in `syncedReducer`\
   all workers must `await` any action put in context in order to ensure that it is posted\
   all middlewares must return `Future<void>`
 

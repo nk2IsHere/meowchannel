@@ -40,7 +40,7 @@ void main() => runApp(MaterialApp(
               /// [WorkerMiddleware] is a wrapper for a group of workers allowing them to receive actions on one channel
               /// (see [NoteListWorker] and its [NoteListWatcher])
               ///
-              WorkerMiddleware([
+              workerMiddleware([
                 noteListWatcher(noteListWorker)
               ]),
               storeLogger

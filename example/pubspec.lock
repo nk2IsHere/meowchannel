@@ -280,12 +280,10 @@ packages:
   meowchannel:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: cc1a3270480475ab9046ddcd19dd9a0cab58d337
-      url: "https://github.com/nk2IsHere/meowchannel.git"
-    source: git
-    version: "0.0.1"
+      name: meowchannel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   meta:
     dependency: transitive
     description:
@@ -390,7 +388,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.23.1"
+    version: "0.24.1"
   shelf:
     dependency: transitive
     description:
@@ -509,5 +507,5 @@ packages:
     source: hosted
     version: "2.2.0"
 sdks:
-  dart: ">=2.6.0 <3.0.0"
+  dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.1"

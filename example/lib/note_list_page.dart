@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:meowchannel/core/store.dart';
-import 'package:meowchannel/extensions/flutter/widget_store_provider.dart';
 import 'package:meowchannel/meowchannel.dart';
 
 import 'note_application.dart';
@@ -21,7 +20,7 @@ class NoteListPageWidget extends StatefulWidget {
 ///
 /// Every stateful widget that should be updated using states has to extend from [StoreState] and [WidgetStoreProviderMixin]
 ///
-class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with WidgetStoreProviderMixin {
+class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> {
 
   ///
   /// Here are the declared stores that will be available to this stateful widget

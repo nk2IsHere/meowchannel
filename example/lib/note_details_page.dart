@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meowchannel/core/store.dart';
-import 'package:meowchannel/extensions/flutter/store_provider.dart';
-import 'package:meowchannel/extensions/flutter/widget_store_provider.dart';
+import 'package:meowchannel/meowchannel.dart';
 
 import 'note_application.dart';
 import 'note_list_store/note_list_actions.dart';
@@ -13,7 +11,7 @@ class NoteDetailsPageWidget extends StatefulWidget {
     _NoteDetailsPageWidgetState();
 }
 
-class _NoteDetailsPageWidgetState extends StoreState<NoteDetailsPageWidget> with WidgetStoreProviderMixin {
+class _NoteDetailsPageWidgetState extends StoreState<NoteDetailsPageWidget> {
 
   @override
   List<Store> requireStores(BuildContext context) => [
