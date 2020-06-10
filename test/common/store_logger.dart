@@ -1,8 +1,8 @@
 import 'package:meowchannel/meowchannel.dart';
 
 final Middleware storeLogger = (dispatcher, state, next) {
-  return (Action action) {
+  return (Action action) async {
     print('STORE ${state()} <- $action');
-    return next(action);
+    return await next(action);
   };
 };

@@ -30,3 +30,5 @@ export 'extensions/cached_worker/cache_registry.dart';
 export 'extensions/cached_worker/cache_state.dart';
 export 'extensions/cached_worker/cached_action.dart';
 export 'extensions/cached_worker/store_cache_registry.dart';
+
+export 'extensions/synced_reducer.dart';

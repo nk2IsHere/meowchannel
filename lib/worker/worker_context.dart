@@ -18,7 +18,7 @@ class WorkerContext<S> extends _$WorkerContext {
     return selector(state());
   }
 
-  void put(Action action) {
-    dispatcher(action);
+  Future<void> put(Action action) async {
+    await dispatcher(action);
   }
 }

@@ -8,19 +8,19 @@ final Worker<NoteListAction, NoteListState> noteListWorker =
   worker((context, action) async {
     final currentState = context.state();
     if(action is NoteListAddAction) {
-      context.put(NoteListUpdateStateAction(
+      await context.put(NoteListUpdateStateAction(
         noteList: currentState.noteList + [Note(id: action.id, title: action.title, text: action.text)]
       ));
     }
     if(action is NoteListRemoveAction) {
-      context.put(NoteListUpdateStateAction(
+      await context.put(NoteListUpdateStateAction(
         noteList: currentState.noteList
           .where((note) => note.id != action.id)
           .toList()
       ));
     }
     if(action is NoteListEditAction) {
-      context.put(NoteListUpdateStateAction(
+      await context.put(NoteListUpdateStateAction(
         noteList: currentState.noteList
           .map((note) => 
             note.id == action.id?

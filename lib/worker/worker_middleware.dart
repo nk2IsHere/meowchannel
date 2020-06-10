@@ -23,12 +23,12 @@ Middleware workerMiddleware<S>(
     watcher.watch(channel.asStream(), context);
   });
 
-  return (Action action) {
+  return (Action action) async {
     if(action is MeowChannelClose)
       channel.close();
     else
       channel.send(action);
       
-    next(action);
+    await next(action);
   };
 };

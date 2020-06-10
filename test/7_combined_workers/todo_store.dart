@@ -29,28 +29,28 @@ class TodoState extends _$TodoState {
 }
 
 final Reducer<TodoState> todoReducer = combinedReducer<TodoState>([
-  typedReducer<TodoUpdateUiAction, TodoState>(
+  typedReducer<TodoUpdateUiAction, TodoState>(syncedReducer<TodoUpdateUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: action.todos
     )
-  ),
-  typedReducer<TodoAddUiAction, TodoState>(
+  )),
+  typedReducer<TodoAddUiAction, TodoState>(syncedReducer<TodoAddUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: [action.todo] + previousState.todos
     )
-  ),
-  typedReducer<TodoEditUiAction, TodoState>(
+  )),
+  typedReducer<TodoEditUiAction, TodoState>(syncedReducer<TodoEditUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: previousState.todos.map((todo) => todo.id == action.id? action.todo : todo)
         .toList()
     )
-  ),
-  typedReducer<TodoRemoveUiAction, TodoState>(
+  )),
+  typedReducer<TodoRemoveUiAction, TodoState>(syncedReducer<TodoRemoveUiAction, TodoState>(
     (action, previousState) => previousState.copyWith(
       todos: previousState.todos.where((todo) => todo.id != action.id)
         .toList()
     )
-  ),
+  )),
 ]);
 
 Watcher<TodoAction, TodoState> todoWatcher(
@@ -68,7 +68,7 @@ Worker<TodoAction, TodoState> todoWorker(
     typedWorker<TodoAction, TodoListAction, TodoState>(worker((context, action) async {
       final todos = await todoRepository.list();
 
-      context.put(TodoUpdateUiAction(
+      await context.put(TodoUpdateUiAction(
         todos: todos
       ));
     })),
@@ -79,7 +79,7 @@ Worker<TodoAction, TodoState> todoWorker(
         text: action.text
       );
 
-      context.put(TodoAddUiAction(
+      await context.put(TodoAddUiAction(
         todo: todo
       ));
     })),
@@ -90,7 +90,7 @@ Worker<TodoAction, TodoState> todoWorker(
         text: action.text
       );
 
-      context.put(TodoEditUiAction(
+      await context.put(TodoEditUiAction(
         id: action.id,
         todo: todo
       ));
@@ -100,7 +100,7 @@ Worker<TodoAction, TodoState> todoWorker(
         id: action.id
       );
 
-      context.put(TodoRemoveUiAction(
+      await context.put(TodoRemoveUiAction(
         id: action.id
       ));
     }))

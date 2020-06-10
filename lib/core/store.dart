@@ -24,8 +24,8 @@ class Store<S> extends AbstractStore<S> {
     if(initialState != null)
       _stateChannel.send(initialState);
 
-    _dispatcher = middleware.reversed.fold<Dispatcher>((action) {
-      _stateChannel.send(reducer(action, _stateChannel.valueOrNull()));
+    _dispatcher = middleware.reversed.fold<Dispatcher>((action) async {
+      return _stateChannel.send(await reducer(action, _stateChannel.valueOrNull()));
     }, (previousDispatcher, nextMiddleware) => 
       nextMiddleware(_dispatchRoot, _stateChannel.valueOrNull, previousDispatcher)
     );
@@ -35,13 +35,13 @@ class Store<S> extends AbstractStore<S> {
     dispatch(MeowChannelInit()); 
   }
 
-  void _dispatchRoot(Action action) {
-    _dispatcher(action);
+  Future<void> _dispatchRoot(Action action) async {
+    await _dispatcher(action);
   }
 
   @override
-  void dispatch(Action action) {
-    _dispatcher(action);
+  Future<void> dispatch(Action action) async {
+    await _dispatcher(action);
   }
 
   @override
@@ -61,8 +61,8 @@ class Store<S> extends AbstractStore<S> {
   }
 
   @override
-  void close() {
-    this.dispatch(MeowChannelClose());
+  Future<void> close() async {
+    await this.dispatch(MeowChannelClose());
     _stateChannel.close();
   }
 }

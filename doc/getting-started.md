@@ -1,7 +1,13 @@
-# meowchannel `v1.1.0-production`
+# meowchannel `v1.2.0`
 
 Lightweight [Redux](https://redux.js.org/) implementation for Flutter with workers  
 ... and *cats*! 😼
+
+## Migration from `v1.1.0`
+  new release introduces non-blocking reducers and dispatcher to improve app performance\
+  all blocking Reducers must be wrapped in syncedReducer\
+  all workers must `await` any action put in context in order to ensure that it is posted\
+  all middlewares must return `Future<void>`
 
 ## Overview
 <img src="https://raw.githubusercontent.com/nk2IsHere/meowchannel/master/doc/overview.png"/>
@@ -12,24 +18,24 @@ Every action must extend from `Action` class.
 
 **State** - Single structure describing everything required by the application to show its `views` to user.  
 
-**Reducer** - Pure function that takes latest dispatched `Action` and previous `State` and creates (not modifies!) a new `State`  
+**Reducer** - Pure non-blocking function that takes latest dispatched `Action` and previous `State` and creates (not modifies!) a new `State`  
 In pseudo-code:  
 ```Reducer stateReducer = (Action action, State previousState) => newState```  
 It is really important to understand that:
 - `Reducer` is a **pure** function: no side-effects, like calling api or any other external non-pure functions should be present
-- `Reducer` is not called in async thread: no long and complex tasks should be done in it (use `Worker` for this!)
+- Although `Reducer` is called in an async thread, no(!) long and complex tasks should be done in it (use `Worker` for this!)
 - `State` is immutable: every action `Reducer` should produce a modified copy of previous `State` or return old one without mutations
 
 **Middleware** - Function that intercepts `Actions` before they reach `Reducer`. It is **not** pure - it can produce side-effects including dispatching other `Actions`.
 In pseudo-code:   
 ```
-Middleware<State> example = (Dispatcher dispatcher, Function<State> getState, Dispatcher next) => (Action action) {
+Middleware<State> example = (Dispatcher dispatcher, Function<State> getState, Dispatcher next) => (Action action) async {
  doSomething();
- next(action);
+ await next(action);
 }
 ```
 
-- `Middleware` itself is not called in async thread, but it can create any side-effect including new threads
+- `Middleware` is called in async thread
 
 - `WorkerMiddleware` is an extension to `Store` bringing asynchronous `Workers` to consume actions, do some work and dispatch new actions with results
 
@@ -182,28 +188,28 @@ Now we should create 3 things:
 /// Reducer is going to be a stack of typedReducers<ActionType, State> (basically reducers which say: if this Action is ActionType then make new state else just pass) what will replace if-else hell
 
 final Reducer<TodoState> TodoReducer = combinedReducer<TodoState>([
-  typedReducer<TodoUpdateUiAction, TodoState>(
+  typedReducer<TodoUpdateUiAction, TodoState>(syncedReducer(
     (action, previousState) => previousState.copyWith(
       todos: action.todos
     )
-  ),
-  typedReducer<TodoAddUiAction, TodoState>(
+  )),
+  typedReducer<TodoAddUiAction, TodoState>(syncedReducer(
     (action, previousState) => previousState.copyWith(
       todos: [action.todo] + previousState.todos
     )
-  ),
-  typedReducer<TodoEditUiAction, TodoState>(
+  )),
+  typedReducer<TodoEditUiAction, TodoState>(syncedReducer(
     (action, previousState) => previousState.copyWith(
       todos: previousState.todos.map((todo) => todo.id == action.id? action.todo : todo)
         .toList()
     )
-  ),
-  typedReducer<TodoRemoveUiAction, TodoState>(
+  )),
+  typedReducer<TodoRemoveUiAction, TodoState>(syncedReducer(
     (action, previousState) => previousState.copyWith(
       todos: previousState.todos.where((todo) => todo.id != action.id)
         .toList()
     )
-  ),
+  )),
 ]);
 ```
 
@@ -228,7 +234,7 @@ Worker<TodoAction, TodoState> TodoWorker(
     typedWorker<TodoAction, TodoListAction, TodoState>(worker((context, action) async {
       final todos = await todoRepository.list();
 
-      context.put(TodoUpdateUiAction(
+      await context.put(TodoUpdateUiAction(
         todos: todos
       ));
     })),
@@ -238,7 +244,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         text: action.text
       );
 
-      context.put(TodoAddUiAction(
+      await context.put(TodoAddUiAction(
         todo: todo
       ));
     })),
@@ -249,7 +255,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         text: action.text
       );
 
-      context.put(TodoEditUiAction(
+      await context.put(TodoEditUiAction(
         id: action.id,
         todo: todo
       ));
@@ -259,7 +265,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         id: action.id
       );
 
-      context.put(TodoRemoveUiAction(
+      await context.put(TodoRemoveUiAction(
         id: action.id
       ));
     }))
@@ -340,8 +346,8 @@ class _TodoApplicationWidgetState extends StoreState<TodoApplicationWidget> {
 
 ```
 
-Any other way to access state changes out of StoreState?
-> Sure thing!
+Any other way to access state changes out of StoreState?\
+Sure thing!
 
 ```
 

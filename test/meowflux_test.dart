@@ -45,9 +45,9 @@ void main() {
     expect(initialState.value, 0);
 
     print('TEST edit value');
-    store.dispatch(RootIncreaseAction());
-    store.dispatch(RootIncreaseAction());
-    store.dispatch(RootDecreaseAction());
+    await store.dispatch(RootIncreaseAction());
+    await store.dispatch(RootIncreaseAction());
+    await store.dispatch(RootDecreaseAction());
     
     print('TEST retrieve value');
     final resultState = await store.getState();
@@ -70,13 +70,13 @@ void main() {
     );
 
     print('TEST run worker:');
-    store.dispatch(ValuesAddValueAction(value: "apple"));
-    store.dispatch(ValuesAddValueAction(value: "koala"));
-    store.dispatch(ValuesAddValueAction(value: "browney"));
-    store.dispatch(ValuesAddValueAction(value: "watch"));
+    await store.dispatch(ValuesAddValueAction(value: "apple"));
+    await store.dispatch(ValuesAddValueAction(value: "koala"));
+    await store.dispatch(ValuesAddValueAction(value: "browney"));
+    await store.dispatch(ValuesAddValueAction(value: "watch"));
 
     print('TEST await all workers to finish');
-    await Future.delayed(Duration(seconds: 7), () => "");
+    await Future.delayed(Duration(seconds: 3));
 
     print("TEST 'tester' shows this: ${tester.render()}");
 
@@ -107,14 +107,19 @@ void main() {
       });
 
     print('TEST update notes');
-    store.dispatch(NoteListAddAction(id: 1, title: "1. Run test!", text: "Hope this works..."));
-    store.dispatch(NoteListAddAction(id: 2, title: "2. Wait for test to finish!", text: "State is changing... at least"));
-    store.dispatch(NoteListRemoveAction(id: 1));
-    store.dispatch(NoteListAddAction(id: 1, title: "1. Run UI test!", text: "Hope this works #2..."));
-    store.dispatch(NoteListAddAction(id: 3, title: "3. Finish!", text: "Your bets, please, gentlemen."));
-    store.dispatch(NoteListEditAction(id: 1, text: "Hope workers work as intended..."));
+    await store.dispatch(NoteListAddAction(id: 1, title: "1. Run test!", text: "Hope this works..."));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(NoteListAddAction(id: 2, title: "2. Wait for test to finish!", text: "State is changing... at least"));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(NoteListRemoveAction(id: 1));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(NoteListAddAction(id: 1, title: "1. Run UI test!", text: "Hope this works #2..."));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(NoteListAddAction(id: 3, title: "3. Finish!", text: "Your bets, please, gentlemen."));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(NoteListEditAction(id: 1, text: "Hope workers work as intended..."));
+    await Future.delayed(Duration(milliseconds: 10));
 
-    await Future.delayed(Duration(seconds: 3), () => "");
     print("TEST 'ui' shows this: $ui");
     expect(ui, [
       Note(id: 2, title: "2. Wait for test to finish!", text: "State is changing... at least"),
@@ -251,10 +256,10 @@ void main() {
   test('6. combined reducers', () async {
     final store = Store<String>(
       reducer: combinedReducer<String>([
-        typedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pen"),
-        typedReducer<MotdFirstHalfAction, String>((action, String previousState) => "$previousState pineapple"),
-        typedReducer<MotdSecondHalfAction, String>((action, String previousState) => "$previousState apple"),
-        typedReducer<MotdSecondHalfAction, String>((action, String previousState) => "$previousState pen!")
+        typedReducer<MotdFirstHalfAction, String>(syncedReducer((action, String previousState) => "$previousState pen")),
+        typedReducer<MotdFirstHalfAction, String>(syncedReducer((action, String previousState) => "$previousState pineapple")),
+        typedReducer<MotdSecondHalfAction, String>(syncedReducer((action, String previousState) => "$previousState apple")),
+        typedReducer<MotdSecondHalfAction, String>(syncedReducer((action, String previousState) => "$previousState pen!"))
       ]),
       initialState: "MOTD:",
       middleware: [
@@ -263,8 +268,8 @@ void main() {
     );
 
     print('TEST edit motd');
-    store.dispatch(MotdFirstHalfAction());
-    store.dispatch(MotdSecondHalfAction());
+    await store.dispatch(MotdFirstHalfAction());
+    await store.dispatch(MotdSecondHalfAction());
 
     print('TEST retrieve motd');
     final motd = await store.getState();
@@ -284,7 +289,8 @@ void main() {
           todoWatcher(todoWorker(
             TodoRepository()
           ))
-        ])
+        ]),
+        storeLogger
       ]
     );
 
@@ -294,27 +300,21 @@ void main() {
       });
 
     print('TEST update todos');
-    store.dispatch(TodoListAction());
+    await store.dispatch(TodoListAction());
+    await Future.delayed(Duration(milliseconds: 10));
     
-    await Future.delayed(Duration(milliseconds: 100), () => "");
-    store.dispatch(TodoAddAction(id: 1, title: "1. Run test!", text: "Hope this works..."));
-
-    await Future.delayed(Duration(milliseconds: 100), () => "");
-    store.dispatch(TodoAddAction(id: 2, title: "2. Wait for test to finish!", text: "State is changing... at least"));
-    
-    await Future.delayed(Duration(milliseconds: 100), () => "");
-    store.dispatch(TodoRemoveAction(id: 1));
-
-    await Future.delayed(Duration(milliseconds: 100), () => "");
-    store.dispatch(TodoAddAction(id: 1, title: "1. Run UI test!", text: "Hope this works #2..."));
-
-    await Future.delayed(Duration(milliseconds: 100), () => "");
-    store.dispatch(TodoAddAction(id: 3, title: "3. Finish!", text: "Your bets, please, gentlemen."));
-
-    await Future.delayed(Duration(milliseconds: 100), () => "");
-    store.dispatch(TodoEditAction(id: 1, text: "Hope workers work as intended..."));
-
-    await Future.delayed(Duration(milliseconds: 100), () => "");
+    await store.dispatch(TodoAddAction(id: 1, title: "1. Run test!", text: "Hope this works..."));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(TodoAddAction(id: 2, title: "2. Wait for test to finish!", text: "State is changing... at least"));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(TodoRemoveAction(id: 1));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(TodoAddAction(id: 1, title: "1. Run UI test!", text: "Hope this works #2..."));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(TodoAddAction(id: 3, title: "3. Finish!", text: "Your bets, please, gentlemen."));
+    await Future.delayed(Duration(milliseconds: 10));
+    await store.dispatch(TodoEditAction(id: 1, text: "Hope workers work as intended..."));
+    await Future.delayed(Duration(milliseconds: 10));
     print("TEST 'ui' shows this: $ui");
 
     expect(ui, [

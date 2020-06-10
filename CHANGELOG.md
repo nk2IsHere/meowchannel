@@ -35,3 +35,11 @@
 * Removed null checks in tests (deprecated in `1.0.5`)
 * Updated credits and docs
 * Added `StoreBuilder`: a widget that hooks to Store channel and listens to changes out of StoreState
+
+## [1.2.0] - dispatcher goes async
+* `Dispatcher` now will act as an async function\
+ (basically blocking old-flavoured `Dispatcher` is now wrapped into async beauty)
+* THIS IS A BREAKING CHANGE:\
+  all blocking Reducers must be wrapped in syncedReducer\
+  all workers must `await` any action put in context in order to ensure that it is posted\
+  all middlewares must return `Future<void>`
