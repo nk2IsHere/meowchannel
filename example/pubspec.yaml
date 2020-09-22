@@ -14,13 +14,17 @@ description: meowchannel example
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">2.9.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  dataclass: ^0.3.0+1
-  meowchannel: ^1.2.0
+  dataclass:
+    git:
+      url: https://github.com/nk2IsHere/dart_dataclass.git
+      path: dataclass
+  meowchannel:
+    path: ../
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -30,7 +34,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^1.7.4
-  dataclass_generator: ^0.3.0+2
+  dataclass_generator:
+    git:
+      url: https://github.com/nk2IsHere/dart_dataclass.git
+      path: dataclass_generator
 
 
 # For information on the generic Dart part of this file, see the

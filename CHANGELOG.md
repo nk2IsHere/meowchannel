@@ -44,6 +44,6 @@
   all workers must `await` any action put in context in order to ensure that it is posted\
   all middlewares must return `Future<void>`
 
-## [1.2.1] - fix StoreState
+## [1.2.1, 1.2.1+0] - fix StoreState
 * fix StoreState putting actions called on `dispose()` to `setState()`
 * fix example
