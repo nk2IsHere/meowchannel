@@ -4,13 +4,13 @@ import 'package:meowchannel/utils/type_utils.dart';
 
 class StoreRepeater<S> {
   final Function(Store<S>) _closure;
-  final int _millis;
+  final Duration _duration;
 
   bool _shouldStop = false;
 
-  StoreRepeater(this._closure, this._millis):
+  StoreRepeater(this._closure, this._duration):
     assert(_closure != null),
-    assert(_millis != null);
+    assert(_duration != null);
 
   String get type => typeOf<S>().toString();
 
@@ -20,6 +20,6 @@ class StoreRepeater<S> {
     while(!_shouldStop) {
       _closure(store);
     }
-    await Future.delayed(Duration(milliseconds: _millis));
+    await Future.delayed(_duration);
   }
 }
