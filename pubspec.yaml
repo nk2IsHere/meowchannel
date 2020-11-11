@@ -1,6 +1,6 @@
 name: meowchannel
 description: Simple&Async state manager with middlewares and workers! And yes, you CAN have more than one store in state without depth struggles!
-version: 1.3.3
+version: 1.3.3+0
 author: nk2 <nikkoz893@gmail.com>
 homepage: https://github.com/nk2ishere/meowchannel
 

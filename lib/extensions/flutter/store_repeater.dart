@@ -17,9 +17,9 @@ class StoreRepeater<S> {
 
   void stop() => _shouldStop = true;
 
-  Future<void> apply(Store<S> store, S Function() state) async {
+  Future<void> apply(Store<S> store, dynamic Function() state) async {
     while(!_shouldStop) {
-      _closure(store, state());
+      _closure(store, state() as S);
       await Future.delayed(_duration);
     }
   }
