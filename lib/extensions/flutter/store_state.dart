@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:meowchannel/extensions/flutter/store_initializer.dart';
 import 'package:meowchannel/extensions/flutter/store_repeater.dart';
 import 'package:meowchannel/meowchannel.dart';
 import 'package:meowchannel/utils/iterable_utils.dart';
@@ -11,6 +12,7 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
   final Map<String, dynamic> _stateByType = Map();
   final List<StreamSubscription> _subscriptions = [];
 
+  final List<StoreInitializer> _storeInitializers = [];
   final Map<String, List<StoreHook>> _storeHooks = Map();
   final List<StoreRepeater> _storeRepeatedHooks = [];
 
@@ -20,7 +22,7 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
 
     _storeHooks.addAll(
       requireHooks(context)
-        .groupBy((e) => e.type)
+        .groupBy((e) => e.storeType)
     );
 
     requireStores(context).forEach((store) {
@@ -58,9 +60,14 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
       );
     });
 
+    _storeInitializers.addAll(
+      requireInitializers(context)
+        .map((e) => e..apply(_storeByType[e.storeType]))
+    );
+
     _storeRepeatedHooks.addAll(
       requireRepeatedHooks(context)
-        .map((e) => e..apply(_storeByType[e.type]))
+        .map((e) => e..apply(_storeByType[e.storeType], _stateByType[e.stateType]))
     );
   }
 
@@ -80,9 +87,9 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
   S getState<S>() => _stateByType[typeOf<S>().toString()];
   Store<S> getStore<S>() => _storeByType[typeOf<Store<S>>().toString()];
 
-
   List<Store> requireStores(BuildContext context);
 
+  List<StoreInitializer> requireInitializers(BuildContext context) => [];
   List<StoreHook> requireHooks(BuildContext context) => [];
   List<StoreRepeater> requireRepeatedHooks(BuildContext context) => [];
 }

@@ -3,7 +3,7 @@ import 'package:meowchannel/core/store.dart';
 import 'package:meowchannel/utils/type_utils.dart';
 
 class StoreRepeater<S> {
-  final Function(Store<S>) _closure;
+  final Function(Store<S>, S) _closure;
   final Duration _duration;
 
   bool _shouldStop = false;
@@ -12,13 +12,14 @@ class StoreRepeater<S> {
     assert(_closure != null),
     assert(_duration != null);
 
-  String get type => typeOf<S>().toString();
+  String get storeType => typeOf<Store<S>>().toString();
+  String get stateType => typeOf<S>().toString();
 
   void stop() => _shouldStop = true;
 
-  Future<void> apply(Store<S> store) async {
+  Future<void> apply(Store<S> store, S state) async {
     while(!_shouldStop) {
-      _closure(store);
+      _closure(store, state);
     }
     await Future.delayed(_duration);
   }
