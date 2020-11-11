@@ -20,7 +20,7 @@ class StoreRepeater<S> {
   Future<void> apply(Store<S> store, S Function() state) async {
     while(!_shouldStop) {
       _closure(store, state());
+      await Future.delayed(_duration);
     }
-    await Future.delayed(_duration);
   }
 }

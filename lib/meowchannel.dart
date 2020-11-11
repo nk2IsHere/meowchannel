@@ -21,6 +21,7 @@ export 'extensions/flutter/multi_store_provider.dart';
 export 'extensions/flutter/store_state.dart';
 export 'extensions/flutter/store_hook.dart';
 export 'extensions/flutter/store_repeater.dart';
+export 'extensions/flutter/store_initializer.dart';
 
 export 'extensions/combined_reducer.dart';
 
