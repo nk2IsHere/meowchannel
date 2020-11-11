@@ -1,8 +1,7 @@
-import 'package:meowchannel/core/action.dart';
 import 'package:meowchannel/worker/worker.dart';
 
-Worker<A, S> typedWorker<A extends Action, TypedA extends A, S>(
-  Worker<TypedA, S> _worker
+Worker<A, S> typedWorker<A, TA extends A, S>(
+  Worker<TA, S> _worker
 ) => worker((context, action) async {
-  if(action is TypedA) await _worker.work(context, action);
+  if(action is TA) await _worker.work(context, action);
 });

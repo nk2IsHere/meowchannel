@@ -1,4 +1,3 @@
-import 'package:meowchannel/core/action.dart';
 import 'package:meowchannel/core/dispatcher.dart';
 import 'package:meowchannel/core/middleware.dart';
 import 'package:meowchannel/extensions/channel.dart';
@@ -7,7 +6,7 @@ import 'package:meowchannel/worker/watcher.dart';
 import 'package:meowchannel/worker/worker_context.dart';
  
 Middleware workerMiddleware<S>(
-  List<Watcher<Action, S>> watchers
+  List<Watcher<dynamic, S>> watchers
 ) => (
   Dispatcher dispatcher,
   Function() getState,
@@ -17,13 +16,13 @@ Middleware workerMiddleware<S>(
     dispatcher: dispatcher,
     state: getState
   );
-  final channel = StateChannel<Action>();
+  final channel = StateChannel<dynamic>();
   
-  watchers.forEach((Watcher<Action, S> watcher) {
+  watchers.forEach((Watcher<dynamic, S> watcher) {
     watcher.watch(channel.asStream(), context);
   });
 
-  return (Action action) async {
+  return (dynamic action) async {
     if(action is MeowChannelClose)
       channel.close();
     else

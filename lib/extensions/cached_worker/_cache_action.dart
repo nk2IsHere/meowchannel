@@ -1,6 +1,5 @@
-import 'package:meowchannel/core/action.dart';
 
-class CacheAction extends Action {
+class CacheAction {
 }
 
 class SetCacheAction extends CacheAction {

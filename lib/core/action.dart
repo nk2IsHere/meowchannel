@@ -1,1 +1,3 @@
+
+@deprecated
 class Action {}

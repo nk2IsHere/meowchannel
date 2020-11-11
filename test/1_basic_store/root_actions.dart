@@ -1,6 +1,6 @@
 import 'package:meowchannel/meowchannel.dart';
 
-class RootAction extends Action {}
+class RootAction {}
 
 class RootDecreaseAction extends RootAction {}
 class RootIncreaseAction extends RootAction {}

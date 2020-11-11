@@ -1,19 +1,18 @@
-import 'package:meowchannel/core/action.dart';
 import 'package:meowchannel/extensions/stream_extensions.dart';
 import 'package:meowchannel/worker/worker.dart';
 import 'package:meowchannel/worker/worker_context.dart';
 
-typedef _Watch<A extends Action, S> = Future<Null> Function(Stream<A> actionStream, WorkerContext<S> context);
+typedef _Watch<A, S> = Future<Null> Function(Stream<A> actionStream, WorkerContext<S> context);
 
-class Watcher<A extends Action, S> {
-  _Watch<Action, S> watch;
+class Watcher<A, S> {
+  _Watch<dynamic, S> watch;
 }
 
-Watcher<A, S> watcher<A extends Action, S>(
+Watcher<A, S> watcher<A, S>(
   Worker<A, S> worker,
-  Stream<Action> Function(Stream<Action> actionStream, WorkerContext<S> context) select 
+  Stream<dynamic> Function(Stream<dynamic> actionStream, WorkerContext<S> context) select
 ) => Watcher<A, S>()
-  ..watch = (Stream<Action> actionStream, WorkerContext<S> context) async {
+  ..watch = (Stream<dynamic> actionStream, WorkerContext<S> context) async {
     await applyWorker<A, S>(
       select(actionStream, context), 
       context, 

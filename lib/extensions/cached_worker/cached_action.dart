@@ -1,6 +1,5 @@
-import 'package:meowchannel/core/action.dart';
 
-abstract class CachedAction extends Action {
+abstract class CachedAction {
   final bool skipCache;
 
   CachedAction({

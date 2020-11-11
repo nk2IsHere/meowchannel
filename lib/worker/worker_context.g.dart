@@ -9,7 +9,7 @@ part of 'worker_context.dart';
 abstract class _$WorkerContext<S> {
   const _$WorkerContext();
 
-  void Function(Action) get dispatcher;
+  void Function(dynamic) get dispatcher;
   S Function() get state;
   bool operator ==(other) {
     if (identical(this, other)) return true;
@@ -29,7 +29,7 @@ abstract class _$WorkerContext<S> {
   }
 
   WorkerContext copyWith(
-      {void Function(Action) dispatcher, S Function() state}) {
+      {void Function(dynamic) dispatcher, S Function() state}) {
     return WorkerContext<S>(
       dispatcher: dispatcher ?? this.dispatcher,
       state: state ?? this.state,

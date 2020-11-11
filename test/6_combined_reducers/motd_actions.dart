@@ -1,6 +1,6 @@
 import 'package:meowchannel/meowchannel.dart';
 
-class MotdAction extends Action {}
+class MotdAction {}
 
 class MotdFirstHalfAction extends MotdAction {}
 class MotdSecondHalfAction extends MotdAction {}

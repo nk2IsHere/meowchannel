@@ -1,6 +1,6 @@
 import 'package:meowchannel/meowchannel.dart';
 
-class ValuesAction extends Action {}
+class ValuesAction {}
 
 class ValuesAddValueAction extends ValuesAction {
   final String value;
@@ -10,7 +10,7 @@ class ValuesAddValueAction extends ValuesAction {
   });
 }
 
-class ValuesTesterAction extends Action {}
+class ValuesTesterAction {}
 
 class ValuesTesterAddValueAction extends ValuesTesterAction {
   final String value;

@@ -1,7 +1,6 @@
-import 'package:meowchannel/core/action.dart';
 
 abstract class StoreDispatcher {
-  Future<void> dispatch(Action action); 
+  Future<void> dispatch(dynamic action);
 }
 
-typedef Dispatcher = Future<void> Function(Action action);
+typedef Dispatcher = Future<void> Function(dynamic action);

@@ -2,7 +2,7 @@ import 'package:meowchannel/meowchannel.dart';
 
 import 'note_model.dart';
 
-class NoteListAction extends Action {}
+class NoteListAction {}
 
 class NoteListAddAction extends NoteListAction {
   final int id;
@@ -38,7 +38,7 @@ class NoteListEditAction extends NoteListAction {
   }): assert(id != null);
 }
 
-class NoteListStateAction extends Action {}
+class NoteListStateAction {}
 
 class NoteListUpdateStateAction extends NoteListStateAction {
   final List<Note> noteList;

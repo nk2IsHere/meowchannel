@@ -1,4 +1,3 @@
-import 'package:meowchannel/core/action.dart';
 import 'package:meowchannel/core/actions.dart';
 import 'package:meowchannel/core/dispatcher.dart';
 import 'package:meowchannel/core/middleware.dart';
@@ -35,12 +34,12 @@ class Store<S> extends AbstractStore<S> {
     dispatch(MeowChannelInit()); 
   }
 
-  Future<void> _dispatchRoot(Action action) async {
+  Future<void> _dispatchRoot(dynamic action) async {
     await _dispatcher(action);
   }
 
   @override
-  Future<void> dispatch(Action action) async {
+  Future<void> dispatch(dynamic action) async {
     await _dispatcher(action);
   }
 

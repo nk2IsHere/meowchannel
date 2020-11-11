@@ -1,5 +1,4 @@
 import 'package:dataclass_beta/dataclass_beta.dart';
-import 'package:meowchannel/core/action.dart';
 import 'package:meowchannel/core/dispatcher.dart';
 
 part 'worker_context.g.dart';
@@ -18,7 +17,7 @@ class WorkerContext<S> extends _$WorkerContext {
     return selector(state());
   }
 
-  Future<void> put(Action action) async {
+  Future<void> put(dynamic action) async {
     await dispatcher(action);
   }
 }

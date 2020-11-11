@@ -2,7 +2,7 @@ import 'package:meowchannel/meowchannel.dart';
 
 import 'todo_store.dart';
 
-class TodoAction extends Action {}
+class TodoAction {}
 
 class TodoListAction extends TodoAction {}
 
