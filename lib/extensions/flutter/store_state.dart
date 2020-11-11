@@ -67,7 +67,7 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
 
     _storeRepeatedHooks.addAll(
       requireRepeatedHooks(context)
-        .map((e) => e..apply(_storeByType[e.storeType], _stateByType[e.stateType]))
+        .map((e) => e..apply(_storeByType[e.storeType], () => _stateByType[e.stateType]))
     );
   }
 
