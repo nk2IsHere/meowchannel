@@ -1,4 +1,4 @@
-import 'package:dataclass/dataclass.dart';
+import 'package:dataclass_beta/dataclass_beta.dart';
 import 'package:meowchannel/core/action.dart';
 import 'package:meowchannel/core/dispatcher.dart';
 

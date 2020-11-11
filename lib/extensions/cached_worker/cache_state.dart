@@ -1,5 +1,5 @@
 
-import 'package:dataclass/dataclass.dart';
+import 'package:dataclass_beta/dataclass_beta.dart';
 import 'package:meowchannel/extensions/combined_reducer.dart';
 import 'package:meowchannel/extensions/synced_reducer.dart';
 import 'package:meowchannel/extensions/typed_reducer.dart';

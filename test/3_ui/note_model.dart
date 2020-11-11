@@ -1,5 +1,5 @@
 
-import 'package:dataclass/dataclass.dart';
+import 'package:dataclass_beta/dataclass_beta.dart';
 
 part 'note_model.g.dart';
 

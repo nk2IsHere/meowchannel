@@ -1,0 +1,2 @@
+
+Type typeOf<T>() => T;
