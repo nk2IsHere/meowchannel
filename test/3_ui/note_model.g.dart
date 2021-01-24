@@ -27,7 +27,7 @@ abstract class _$Note {
   }
 
   String toString() {
-    return 'Note <\'id\': ${this.id},\'title\': ${this.title},\'text\': ${this.text},>';
+    return 'Note(id=${this.id},title=${this.title},text=${this.text},)';
   }
 
   Note copyWith({int id, String title, String text}) {

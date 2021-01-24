@@ -27,7 +27,7 @@ abstract class _$Todo {
   }
 
   String toString() {
-    return 'Todo <\'id\': ${this.id},\'title\': ${this.title},\'text\': ${this.text},>';
+    return 'Todo(id=${this.id},title=${this.title},text=${this.text},)';
   }
 
   Todo copyWith({int id, String title, String text}) {
@@ -55,7 +55,7 @@ abstract class _$TodoState {
   }
 
   String toString() {
-    return 'TodoState <\'todos\': ${this.todos},>';
+    return 'TodoState(todos=${this.todos},)';
   }
 
   TodoState copyWith({List<Todo> todos}) {

@@ -22,7 +22,7 @@ abstract class _$NoteListState {
   }
 
   String toString() {
-    return 'NoteListState <\'noteList\': ${this.noteList},>';
+    return 'NoteListState(noteList=${this.noteList},)';
   }
 
   NoteListState copyWith({List<Note> noteList}) {

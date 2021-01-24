@@ -22,7 +22,7 @@ abstract class _$RootState {
   }
 
   String toString() {
-    return 'RootState <\'value\': ${this.value},>';
+    return 'RootState(value=${this.value},)';
   }
 
   RootState copyWith({int value}) {

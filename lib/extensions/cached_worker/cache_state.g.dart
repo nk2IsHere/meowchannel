@@ -22,7 +22,7 @@ abstract class _$CacheState {
   }
 
   String toString() {
-    return 'CacheState <\'caches\': ${this.caches},>';
+    return 'CacheState(caches=${this.caches},)';
   }
 
   CacheState copyWith({Map<List<String>, DateTime> caches}) {

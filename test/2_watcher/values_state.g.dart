@@ -22,7 +22,7 @@ abstract class _$ValuesState {
   }
 
   String toString() {
-    return 'ValuesState <\'values\': ${this.values},>';
+    return 'ValuesState(values=${this.values},)';
   }
 
   ValuesState copyWith({List<String> values}) {

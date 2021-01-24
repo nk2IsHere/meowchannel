@@ -22,7 +22,7 @@ abstract class _$FirstRootState {
   }
 
   String toString() {
-    return 'FirstRootState <\'value\': ${this.value},>';
+    return 'FirstRootState(value=${this.value},)';
   }
 
   FirstRootState copyWith({int value}) {
@@ -48,7 +48,7 @@ abstract class _$SecondRootState {
   }
 
   String toString() {
-    return 'SecondRootState <\'value\': ${this.value},>';
+    return 'SecondRootState(value=${this.value},)';
   }
 
   SecondRootState copyWith({int value}) {

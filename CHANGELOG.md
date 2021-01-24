@@ -47,3 +47,13 @@
 ## [1.2.1, 1.2.1+0] - fix StoreState
 * fix StoreState putting actions called on `dispose()` to `setState()`
 * fix example
+
+## [1.3.3, 1.3.3+0]
+
+* fix StoreRepeater
+
+## [1.3.4]
+
+* add computeN function to worker
+* add initialize function
+* bump rxdart version

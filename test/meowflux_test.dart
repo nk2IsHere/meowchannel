@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:meowchannel/core/initialization.dart';
 
 import 'package:meowchannel/meowchannel.dart';
 
@@ -31,6 +32,8 @@ import '1_basic_store/root_state.dart';
 
 void main() {
   test('1. basic counter test', () async {
+    await initializeMeowChannel();
+
     final store = Store(
       reducer: rootReducer,
       initialState: RootState(value: 0),
@@ -56,6 +59,8 @@ void main() {
   });
 
   test('2. workers and watchers communication test', () async {
+    await initializeMeowChannel();
+
     final tester = ValuesTester();
     final store = Store(
       reducer: valuesReducer,
@@ -84,6 +89,8 @@ void main() {
   });
 
   test('3. worker and ui listening test', () async {
+    await initializeMeowChannel();
+
     //
     //Note that we are going to block the test thread, so all state updates are expected to arrive late
     //
@@ -131,7 +138,9 @@ void main() {
   //
   // This test reuses structures from #1 test
   //
-  testWidgets('4. flutter provider test', (tester) async {      
+  testWidgets('4. flutter provider test', (tester) async {
+    await initializeMeowChannel();
+
     await tester.pumpWidget(
       StoreProvider<RootState>(
         create: (context) =>
@@ -173,7 +182,9 @@ void main() {
     expect(valueText.data, "1");
   });
 
-  testWidgets('5. flutter multi provider test', (tester) async {      
+  testWidgets('5. flutter multi provider test', (tester) async {
+    await initializeMeowChannel();
+
     await tester.pumpWidget(
       MultiStoreProvider(
         providers: [
@@ -254,6 +265,8 @@ void main() {
   });
 
   test('6. combined reducers', () async {
+    await initializeMeowChannel();
+
     final store = Store<String>(
       reducer: combinedReducer<String>([
         typedReducer<MotdFirstHalfAction, String>(syncedReducer((action, String previousState) => "$previousState pen")),
@@ -279,6 +292,8 @@ void main() {
   });
 
   test('7. combined workers', () async {
+    await initializeMeowChannel();
+
     List<Todo> ui = [];
 
     final store = Store<TodoState>(
@@ -327,7 +342,9 @@ void main() {
   //
   // This test reuses structures from #1 test
   //
-  testWidgets('8. flutter store builder widget test', (tester) async {      
+  testWidgets('8. flutter store builder widget test', (tester) async {
+    await initializeMeowChannel();
+
     await tester.pumpWidget(
       StoreProvider<RootState>(
         create: (context) =>
