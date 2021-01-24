@@ -1,7 +1,10 @@
-# meowchannel `v1.2.0`
+# meowchannel `v1.3.4`
 
 Lightweight [Redux](https://redux.js.org/) implementation for Flutter with workers  
 ... and *cats*! 😼
+
+## Migration from `v1.2.0`
+  `await initializeMeowChannel();` should be added to initialize meowchannel
 
 ## Migration from `v1.1.0`
   new release introduces non-blocking reducers and dispatcher to improve app performance\
@@ -275,6 +278,9 @@ Worker<TodoAction, TodoState> TodoWorker(
 Finally, let's create Store and StoreProvider
 
 ```
+//Don't forget to initialize meowchannel
+await initializeMeowChannel();
+
 runApp(
   StoreProvider<TodoState>(
     create: (context) =>

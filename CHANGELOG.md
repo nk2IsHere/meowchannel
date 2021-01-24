@@ -52,7 +52,7 @@
 
 * fix StoreRepeater
 
-## [1.3.4]
+## [1.3.4, 1.3.4+0]
 
 * add computeN function to worker
 * add initialize function
