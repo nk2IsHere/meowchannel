@@ -57,3 +57,10 @@
 * add computeN function to worker
 * add initialize function
 * bump rxdart version
+
+## [1.4.0]
+
+* fix `WorkerContext` compute* functions
+* add `computedModule`: vue-like computed variables accessible on build
+* add `storeLoggerModule`
+* migrate `Middleware` -> `Module`

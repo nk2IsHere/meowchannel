@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meowchannel/core/initialization.dart';
+import 'package:meowchannel/extensions/flutter/logger/store_logger_module.dart';
 
 import 'package:meowchannel/meowchannel.dart';
 
@@ -24,7 +25,6 @@ import '7_combined_workers/todo_actions.dart';
 import '7_combined_workers/todo_fakes.dart';
 import '7_combined_workers/todo_store.dart';
 import '8_store_builder/application_widget.dart';
-import 'common/store_logger.dart';
 
 import '1_basic_store/root_actions.dart';
 import '1_basic_store/root_reducer.dart';
@@ -32,20 +32,20 @@ import '1_basic_store/root_state.dart';
 
 void main() {
   test('1. basic counter test', () async {
-    await initializeMeowChannel();
+    // await initializeMeowChannel();
 
-    final store = Store(
+    final store = Store<RootState>(
       reducer: rootReducer,
       initialState: RootState(value: 0),
-      middleware: [
-        storeLogger
+      modules: [
+        storeLoggerModule('rootState')
       ]
     );
 
     print('TEST retrieve value');
     final initialState = await store.getState();
     print('TEST value: $initialState');
-    expect(initialState.value, 0);
+    expect(initialState.state.value, 0);
 
     print('TEST edit value');
     await store.dispatch(RootIncreaseAction());
@@ -55,19 +55,19 @@ void main() {
     print('TEST retrieve value');
     final resultState = await store.getState();
     print('TEST value: $resultState');
-    expect(resultState.value, 1);
+    expect(resultState.state.value, 1);
   });
 
   test('2. workers and watchers communication test', () async {
-    await initializeMeowChannel();
+    // await initializeMeowChannel();
 
     final tester = ValuesTester();
-    final store = Store(
+    final store = Store<ValuesState>(
       reducer: valuesReducer,
       initialState: ValuesState(values: []),
-      middleware: [
-        storeLogger,
-        workerMiddleware<ValuesState>([
+      modules: [
+        storeLoggerModule('valuesStore'),
+        workerModule<ValuesState>([
           valuesTesterWatcher(valuesTesterWorker(tester)),
           valuesWatcher(valuesWorker)
         ])
@@ -89,19 +89,19 @@ void main() {
   });
 
   test('3. worker and ui listening test', () async {
-    await initializeMeowChannel();
+    // await initializeMeowChannel();
 
     //
     //Note that we are going to block the test thread, so all state updates are expected to arrive late
     //
     List<Note> ui = [];
 
-    final store = Store(
+    final store = Store<NoteListState>(
       reducer: noteListReducer,
       initialState: NoteListState(noteList: []),
-      middleware: [
-        storeLogger,
-        workerMiddleware<NoteListState>([
+      modules: [
+        storeLoggerModule('noteListModule'),
+        workerModule<NoteListState>([
           noteListWatcher(noteListWorker)
         ])
       ]
@@ -109,8 +109,8 @@ void main() {
 
     store.channel
       .listen((state) { 
-        print('TEST update notes: ${state.noteList}');
-        ui = state.noteList;
+        print('TEST update notes: ${state.state.noteList}');
+        ui = state.state.noteList;
       });
 
     print('TEST update notes');
@@ -139,7 +139,7 @@ void main() {
   // This test reuses structures from #1 test
   //
   testWidgets('4. flutter provider test', (tester) async {
-    await initializeMeowChannel();
+    // await initializeMeowChannel();
 
     await tester.pumpWidget(
       StoreProvider<RootState>(
@@ -147,8 +147,8 @@ void main() {
           Store<RootState>(
             reducer: rootReducer,
             initialState: RootState(value: 0),
-            middleware: [
-              storeLogger
+            modules: [
+              storeLoggerModule('rootState')
             ]
           ),
         child: MaterialApp(
@@ -183,7 +183,7 @@ void main() {
   });
 
   testWidgets('5. flutter multi provider test', (tester) async {
-    await initializeMeowChannel();
+    // await initializeMeowChannel();
 
     await tester.pumpWidget(
       MultiStoreProvider(
@@ -193,8 +193,8 @@ void main() {
               Store<FirstRootState>(
                 reducer: firstRootReducer,
                 initialState: FirstRootState(value: 0),
-                middleware: [
-                  storeLogger
+                modules: [
+                  storeLoggerModule('firstRootState')
                 ]
               ),
           ),
@@ -203,8 +203,8 @@ void main() {
               Store<SecondRootState>(
                 reducer: secondRootReducer,
                 initialState: SecondRootState(value: 0),
-                middleware: [
-                  storeLogger
+                modules: [
+                  storeLoggerModule('secondRootState')
                 ]
               ),
           )
@@ -265,7 +265,7 @@ void main() {
   });
 
   test('6. combined reducers', () async {
-    await initializeMeowChannel();
+    // await initializeMeowChannel();
 
     final store = Store<String>(
       reducer: combinedReducer<String>([
@@ -275,8 +275,8 @@ void main() {
         typedReducer<MotdSecondHalfAction, String>(syncedReducer((action, String previousState) => "$previousState pen!"))
       ]),
       initialState: "MOTD:",
-      middleware: [
-        storeLogger
+      modules: [
+        storeLoggerModule('string')
       ]
     );
 
@@ -285,33 +285,33 @@ void main() {
     await store.dispatch(MotdSecondHalfAction());
 
     print('TEST retrieve motd');
-    final motd = await store.getState();
+    final motd = (await store.getState()).state;
 
     print('TEST retrieved motd: $motd');
     expect(motd, "MOTD: pen pineapple apple pen!");
   });
 
   test('7. combined workers', () async {
-    await initializeMeowChannel();
+    // await initializeMeowChannel();
 
     List<Todo> ui = [];
 
     final store = Store<TodoState>(
       reducer: todoReducer,
       initialState: TodoState(),
-      middleware: [
-        workerMiddleware([
+      modules: [
+        workerModule([
           todoWatcher(todoWorker(
             TodoRepository()
           ))
         ]),
-        storeLogger
+        storeLoggerModule('todoState')
       ]
     );
 
     store.channel
       .listen((state) { 
-        ui = state.todos;
+        ui = state.state.todos;
       });
 
     print('TEST update todos');
@@ -343,7 +343,7 @@ void main() {
   // This test reuses structures from #1 test
   //
   testWidgets('8. flutter store builder widget test', (tester) async {
-    await initializeMeowChannel();
+    // await initializeMeowChannel();
 
     await tester.pumpWidget(
       StoreProvider<RootState>(
@@ -351,8 +351,8 @@ void main() {
           Store<RootState>(
             reducer: rootReducer,
             initialState: RootState(value: 0),
-            middleware: [
-              storeLogger
+            modules: [
+              storeLoggerModule('rootStore')
             ]
           ),
         child: MaterialApp(

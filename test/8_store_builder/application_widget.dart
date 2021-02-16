@@ -20,8 +20,8 @@ class _ApplicationWidgetState extends State<BuilderApplicationWidget> {
 
     return StoreBuilder<RootState>(
       store: rootStore,
-      condition: (previous, current) => previous?.value != current?.value,
-      builder: (context, state) {
+      condition: (previous, current) => previous?.state?.value != current?.state?.value,
+      builder: (context, state, action) {
         return Scaffold(
           body: Column(
             children: <Widget>[

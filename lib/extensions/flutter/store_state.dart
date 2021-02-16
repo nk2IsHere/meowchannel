@@ -16,6 +16,8 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
   final Map<String, List<StoreHook>> _storeHooks = Map();
   final List<StoreRepeater> _storeRepeatedHooks = [];
 
+  @protected final List<StoreHook> mixinGlobalHooks = [];
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +33,7 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
       if(store.getStateUnsafe() != null) {
         _stateByType.putIfAbsent(
           store.initialState.runtimeType.toString(),
-          () => store.getStateUnsafe()
+          () => store.getStateUnsafe().state
         );
       } else if(store.initialState != null) {
         _stateByType.putIfAbsent(
@@ -46,14 +48,17 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
           if(this.mounted) {
             setState(() {
               _stateByType.update(
-                state.runtimeType.toString(),
-                (_) => state,
-                ifAbsent: () => state
+                state.state.runtimeType.toString(),
+                (_) => state.state,
+                ifAbsent: () => state.state
               );
             });
 
             _storeHooks[store.runtimeType.toString()]?.forEach((hook) {
-              hook.apply(store, state);
+              hook.apply(store, state.state, state.action);
+            });
+            mixinGlobalHooks.forEach((hook) {
+              hook.apply(store, state.state, state.action);
             });
           }
         })

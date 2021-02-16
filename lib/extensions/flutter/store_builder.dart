@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:meowchannel/core/state_action.dart';
 import 'package:meowchannel/core/store.dart';
 import 'package:meowchannel/extensions/flutter/store_provider.dart';
 
@@ -10,8 +11,8 @@ import 'package:meowchannel/extensions/flutter/store_provider.dart';
 /// https://github.com/felangel/bloc/blob/master/packages/flutter_bloc/lib/src/bloc_builder.dart
 ///
 
-typedef StoreWidgetBuilder<S> = Widget Function(BuildContext context, S state);
-typedef StoreBuilderCondition<S> = bool Function(S previous, S current);
+typedef StoreWidgetBuilder<S> = Widget Function(BuildContext context, S state, dynamic action);
+typedef StoreBuilderCondition<S> = bool Function(StateAction<S, dynamic> previous, StateAction<S, dynamic> current);
 
 class StoreBuilder<S> extends StoreBuilderBase<S> {
   final StoreWidgetBuilder<S> builder;
@@ -25,7 +26,7 @@ class StoreBuilder<S> extends StoreBuilderBase<S> {
     super(key: key, store: store, condition: condition);
 
   @override
-  Widget build(BuildContext context, S state) => builder(context, state);
+  Widget build(BuildContext context, StateAction<S, dynamic> state) => builder(context, state?.state, state?.action);
 }
 
 abstract class StoreBuilderBase<S> extends StatefulWidget {
@@ -37,16 +38,16 @@ abstract class StoreBuilderBase<S> extends StatefulWidget {
 
   final Store<S> store;
   final StoreBuilderCondition<S> condition;
-  Widget build(BuildContext context, S state);
+  Widget build(BuildContext context, StateAction<S, dynamic> state);
 
   @override
   State<StoreBuilderBase<S>> createState() => _StoreBuilderBaseState<S>();
 }
 
 class _StoreBuilderBaseState<S> extends State<StoreBuilderBase<S>> {
-  StreamSubscription<S> _subscription;
-  S _previousState;
-  S _state;
+  StreamSubscription<StateAction<S, dynamic>> _subscription;
+  StateAction<S, dynamic> _previousState;
+  StateAction<S, dynamic> _state;
   Store<S> _store;
 
   @override

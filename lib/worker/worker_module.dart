@@ -1,5 +1,4 @@
-import 'package:meowchannel/core/dispatcher.dart';
-import 'package:meowchannel/core/middleware.dart';
+import 'package:meowchannel/core/module.dart';
 import 'package:meowchannel/extensions/channel.dart';
 import 'package:meowchannel/meowchannel.dart';
 import 'package:meowchannel/worker/watcher.dart';
@@ -11,14 +10,10 @@ class SetWatchersAction<S> {
   SetWatchersAction(this.watchers);
 }
 
-Middleware workerMiddleware<S>(
+Module<S> workerModule<S>(
   List<Watcher<dynamic, S>> watchers
-) => (
-  Dispatcher dispatcher,
-  Function() getState,
-  Dispatcher next
-) {
-  final context = WorkerContext<S>(dispatcher, getState);
+) => Module('workerModule', (dispatcher, initialize, state, next) {
+  final context = WorkerContext<S>(dispatcher, () => state.valueOrNull().state);
   final channel = StateChannel<dynamic>();
 
   watchers.forEach((Watcher<dynamic, S> watcher) {
@@ -34,4 +29,4 @@ Middleware workerMiddleware<S>(
 
     await next(action);
   };
-};
+});

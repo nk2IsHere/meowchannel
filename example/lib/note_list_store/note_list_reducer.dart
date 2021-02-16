@@ -9,7 +9,7 @@ import 'note_list_state.dart';
 /// It does not run in asynchronous thread
 ///
 final Reducer<NoteListState> noteListReducer =
-  typedReducer(syncedReducer((Action action, NoteListState previousState) {
+  typedReducer(syncedReducer((dynamic action, NoteListState previousState) {
     return previousState.copyWith(
       noteList: action is NoteListUpdateStateAction? action.noteList
         : previousState.noteList

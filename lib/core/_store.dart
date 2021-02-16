@@ -1,9 +1,10 @@
 import 'package:meowchannel/core/dispatcher.dart';
+import 'package:meowchannel/core/state_action.dart';
 
 abstract class AbstractStore<S> extends StoreDispatcher {
   Future<void> close();
-  Future<S> getState();
-  S getPreviousStateUnsafe();
-  S getStateUnsafe();
-  Stream<S> channel;
+  Future<StateAction<S, dynamic>> getState();
+  StateAction<S, dynamic> getPreviousStateUnsafe();
+  StateAction<S, dynamic> getStateUnsafe();
+  Stream<StateAction<S, dynamic>> channel;
 }

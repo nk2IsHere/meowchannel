@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:meowchannel/computed/flutter/store_state_mixin.dart';
 import 'package:meowchannel/core/store.dart';
 import 'package:meowchannel/meowchannel.dart';
 
@@ -20,7 +21,7 @@ class NoteListPageWidget extends StatefulWidget {
 ///
 /// Every stateful widget that should be updated using states has to extend from [StoreState] and [WidgetStoreProviderMixin]
 ///
-class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> {
+class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with ComputedStoreStateMixin {
 
   ///
   /// Here are the declared stores that will be available to this stateful widget
@@ -40,11 +41,12 @@ class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> {
     /// Every declared store's state can be accessed by using [getState<State>()]
     ///
     NoteListState state = getState<NoteListState>();
+    print(getComputed<NoteListState, int>('count'));
 
     return Scaffold(
       appBar: AppBar(title: Text("Notes!"),),
       body: ListView.builder(
-        itemCount: state?.noteList?.length ?? 0,
+        itemCount: state.noteList.length,
         itemBuilder: (context, index) =>
           InkWell(
             child: Padding(
@@ -56,12 +58,12 @@ class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "id: ${state?.noteList[index]?.id}",
+                          "id: ${state.noteList[index].id}",
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 16.0, color: Colors.black54),
                         ),
                         Text(
-                          state?.noteList[index]?.title, 
+                          state?.noteList[index].title,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w800),
                         ),

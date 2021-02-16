@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meowchannel/computed/computed.dart';
+import 'package:meowchannel/computed/computed_module.dart';
+import 'package:meowchannel/extensions/flutter/logger/store_logger_module.dart';
 import 'package:meowchannel/meowchannel.dart';
 
 import 'note_list_store/note_list_reducer.dart';
@@ -6,7 +9,6 @@ import 'note_list_store/note_list_state.dart';
 import 'note_list_store/note_list_worker.dart';
 
 import 'note_application.dart';
-import 'store_logger.dart';
 
 void main() => runApp(MaterialApp(
   title: 'Notes!',
@@ -35,15 +37,18 @@ void main() => runApp(MaterialApp(
           Store<NoteListState>(
             initialState: NoteListState(noteList: []),
             reducer: noteListReducer,
-            middleware: [
+            modules: [
               ///
               /// [WorkerMiddleware] is a wrapper for a group of workers allowing them to receive actions on one channel
               /// (see [NoteListWorker] and its [NoteListWatcher])
               ///
-              workerMiddleware([
+              workerModule([
                 noteListWatcher(noteListWorker)
               ]),
-              storeLogger
+              computedModule<NoteListState>({
+                'count': Computed<NoteListState, int>((NoteListState state, int previousValue) => state.noteList.length)
+              }),
+              storeLoggerModule('noteListStore')
             ]
           ),
       )

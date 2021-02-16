@@ -1,7 +1,8 @@
 import 'package:meowchannel/core/actions.dart';
 import 'package:meowchannel/core/dispatcher.dart';
-import 'package:meowchannel/core/middleware.dart';
+import 'package:meowchannel/core/module.dart';
 import 'package:meowchannel/core/reducer.dart';
+import 'package:meowchannel/core/state_action.dart';
 import 'package:meowchannel/extensions/channel.dart';
 
 import '_store.dart';
@@ -9,30 +10,46 @@ import '_store.dart';
 class Store<S> extends AbstractStore<S> {
   final Reducer<S> reducer;
   final S initialState;
-  final List<Middleware> middleware;
+  final List<Module<S>> modules;
+  final Map<String, dynamic> _moduleInitialValues = Map();
 
-  final StateChannel<S> _stateChannel = StateChannel();
+  final StateChannel<StateAction<S, dynamic>> _stateChannel = StateChannel();
 
   Dispatcher _dispatcher;
 
   Store({
     this.reducer,
     this.initialState,
-    this.middleware = const <Middleware>[]
+    this.modules = const []
   }) {
     if(initialState != null)
-      _stateChannel.send(initialState);
-
-    _dispatcher = middleware.reversed.fold<Dispatcher>((action) async {
-      return _stateChannel.send(await reducer(action, _stateChannel.valueOrNull()));
-    }, (previousDispatcher, nextMiddleware) => 
-      nextMiddleware(_dispatchRoot, _stateChannel.valueOrNull, previousDispatcher)
-    );
+      _stateChannel.send(StateAction(initialState, null));
 
     channel = _stateChannel.asStream();
 
+    _dispatcher = modules.reversed.fold<Dispatcher>(
+      (action) async => _stateChannel.send(
+        StateAction(
+          await reducer(action, _stateChannel.valueOrNull()?.state),
+          action
+        )
+      ),
+      (previousDispatcher, nextModule) => nextModule(
+        _dispatchRoot,
+        (registrar) => _registerInitialValueForModule(nextModule, registrar(this.initialState)),
+        _stateChannel,
+        previousDispatcher
+      )
+    );
+
     dispatch(MeowChannelInit()); 
   }
+
+  void _registerInitialValueForModule(Module module, dynamic value) {
+    _moduleInitialValues[module.id] = value;
+  }
+
+  T getInitialValueForModule<T>(String id) => _moduleInitialValues[id] as T;
 
   Future<void> _dispatchRoot(dynamic action) async {
     await _dispatcher(action);
@@ -44,19 +61,18 @@ class Store<S> extends AbstractStore<S> {
   }
 
   @override
-  S getPreviousStateUnsafe() {
+  StateAction<S, dynamic> getPreviousStateUnsafe() {
     return _stateChannel.previousValueOrNull();
   }
 
   @override
-  S getStateUnsafe() {
+  StateAction<S, dynamic> getStateUnsafe() {
     return _stateChannel.valueOrNull();
   }
 
   @override
-  Future<S> getState() async {
-    S state = await _stateChannel.receive();
-    return state;
+  Future<StateAction<S, dynamic>> getState() async {
+    return await _stateChannel.receive();
   }
 
   @override

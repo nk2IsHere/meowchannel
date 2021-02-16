@@ -3,7 +3,7 @@ library meowchannel;
 export 'core/action.dart';
 export 'core/actions.dart';
 export 'core/dispatcher.dart';
-export 'core/middleware.dart';
+export 'core/module.dart';
 export 'core/reducer.dart';
 export 'core/store.dart';
 
@@ -12,7 +12,7 @@ export 'extensions/typed_reducer.dart';
 
 export 'worker/worker.dart';
 export 'worker/worker_context.dart';
-export 'worker/worker_middleware.dart';
+export 'worker/worker_module.dart';
 export 'worker/watcher.dart';
 
 export 'extensions/flutter/store_provider_mixin.dart';
