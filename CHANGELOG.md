@@ -64,3 +64,7 @@
 * add `computedModule`: vue-like computed variables accessible on build
 * add `storeLoggerModule`
 * migrate `Middleware` -> `Module`
+
+## [1.4.1]
+* export computed from library
+* generify StateChannel

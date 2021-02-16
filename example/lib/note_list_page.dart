@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:meowchannel/computed/flutter/store_state_mixin.dart';
 import 'package:meowchannel/core/store.dart';
 import 'package:meowchannel/meowchannel.dart';
 
@@ -41,10 +40,9 @@ class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with Compu
     /// Every declared store's state can be accessed by using [getState<State>()]
     ///
     NoteListState state = getState<NoteListState>();
-    print(getComputed<NoteListState, int>('count'));
 
     return Scaffold(
-      appBar: AppBar(title: Text("Notes!"),),
+      appBar: AppBar(title: Text("Notes! (Count: ${getComputed<NoteListState, int>('count')})"),),
       body: ListView.builder(
         itemCount: state.noteList.length,
         itemBuilder: (context, index) =>

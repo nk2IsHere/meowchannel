@@ -14,7 +14,7 @@ Module<S> workerModule<S>(
   List<Watcher<dynamic, S>> watchers
 ) => Module('workerModule', (dispatcher, initialize, state, next) {
   final context = WorkerContext<S>(dispatcher, () => state.valueOrNull().state);
-  final channel = StateChannel<dynamic>();
+  final MutableStateChannel<dynamic> channel = StateChannelImpl<dynamic>();
 
   watchers.forEach((Watcher<dynamic, S> watcher) {
     watcher.watch(channel.asStream(), context);

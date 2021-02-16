@@ -13,7 +13,7 @@ class Store<S> extends AbstractStore<S> {
   final List<Module<S>> modules;
   final Map<String, dynamic> _moduleInitialValues = Map();
 
-  final StateChannel<StateAction<S, dynamic>> _stateChannel = StateChannel();
+  final MutableStateChannel<StateAction<S, dynamic>> _stateChannel = StateChannelImpl();
 
   Dispatcher _dispatcher;
 

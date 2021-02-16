@@ -34,3 +34,7 @@ export 'extensions/cached_worker/cached_action.dart';
 export 'extensions/cached_worker/store_cache_registry.dart';
 
 export 'extensions/synced_reducer.dart';
+
+export 'computed/computed.dart';
+export 'computed/computed_module.dart';
+export 'computed/flutter/computed_store_state_mixin.dart';

@@ -3,10 +3,24 @@ import 'dart:collection';
 
 import 'package:rxdart/subjects.dart';
 
+import '_stack.dart';
+
 const _kDefaultCachedStates = 5;
 
-class StateChannel<T> {
-  final _data = _Stack<T>(
+abstract class StateChannel<T> {
+  T previousValueOrNull();
+  T valueOrNull();
+  Future<T> receive();
+  Stream<T> asStream();
+}
+
+abstract class MutableStateChannel<T> extends StateChannel<T> {
+  void send(T value);
+  void close();
+}
+
+class StateChannelImpl<T> extends MutableStateChannel<T> {
+  final _data = Stack<T>(
     cachedItems: _kDefaultCachedStates
   );
   final _completers = Queue<Completer<T>>();
@@ -29,21 +43,21 @@ class StateChannel<T> {
     }
   }
 
-  void send(T value) {
+  @override void send(T value) {
     if (isClosed) throw Exception('Channel is closed');
     _data.push(value);
     _send();
   }
-  
-  T previousValueOrNull() {
+
+  @override T previousValueOrNull() {
     return _data.beforeTop();
   }
 
-  T valueOrNull() {
+  @override T valueOrNull() {
     return _data.top();
   }
 
-  Future<T> receive() async {
+  @override Future<T> receive() async {
     if (_isClosed && _data.isEmpty) {
       return null;
     }
@@ -58,14 +72,14 @@ class StateChannel<T> {
     return completer.future;
   }
 
-  Stream<T> asStream() {
+  @override Stream<T> asStream() {
     StreamController<T> controller = BehaviorSubject();
 
     this._streams.add(controller);
     return controller.stream;
   }
 
-  void close() {
+  @override void close() {
     _isClosed = true;
     _send();
 
@@ -81,48 +95,5 @@ class StateChannel<T> {
       final controller = _streams.removeFirst();
       controller.close();
     }
-  }
-}
-
-//
-// Like really? 
-// This lang does not have stack implementation?!
-//
-class _Stack<T> {
-  final int cachedItems;
-  
-  _Stack({
-    this.cachedItems = -1
-  });
-
-  final ListQueue<T> _list = ListQueue();
-
-  bool get isEmpty => _list.isEmpty;
-  bool get isNotEmpty => _list.isNotEmpty;
-
-  List<T> get data => _list.toList();
-
-  void push(T e) {
-    _list.addLast(e);
-
-    if(this.cachedItems != -1 && _list.length > this.cachedItems) {
-      this._list.removeFirst();
-    }
-  }
-  
-  T pop() {
-    T res = _list.last;
-    _list.removeLast();
-    return res;
-  }
-
-  T top() {
-    return _list.last;
-  }
-
-  T beforeTop() {
-    return _list.length >= 2?
-      _list.elementAt(_list.length - 2)
-      : null;
   }
 }
