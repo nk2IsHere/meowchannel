@@ -304,7 +304,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.4.0"
+    version: "1.4.2"
   meta:
     dependency: transitive
     description:

@@ -66,5 +66,10 @@
 * migrate `Middleware` -> `Module`
 
 ## [1.4.1]
+
 * export computed from library
 * generify StateChannel
+
+## [1.4.2]
+
+* fix store logger
