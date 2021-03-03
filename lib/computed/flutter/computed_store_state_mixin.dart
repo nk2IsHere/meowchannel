@@ -10,13 +10,14 @@ mixin ComputedStoreStateMixin<W extends StatefulWidget> on StoreState<W> {
 
   @override
   void initState() {
-    mixinGlobalHooks.addAll([
-      StoreHook((store, state, action) {
-        if(action is ComputedStorageUpdateAction) setState(() {
-          _computedLocalStorage[state.runtimeType.toString()] = action.data;
-        });
-      })
-    ]);
+    mixinGlobalHooks.putIfAbsent(
+        ComputedStorageUpdateAction,
+        () => StoreHook((store, state, action) {
+          setState(() {
+            _computedLocalStorage[state.runtimeType.toString()] = action.data;
+          });
+        })
+    );
     super.initState();
   }
 

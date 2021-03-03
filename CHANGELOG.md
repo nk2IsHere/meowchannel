@@ -73,3 +73,8 @@
 ## [1.4.2]
 
 * fix store logger
+
+## [1.4.3]
+
+* fix computedmixin's actions affecting storehooks
+* add previous state storehook
