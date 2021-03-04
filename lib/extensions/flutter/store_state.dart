@@ -45,8 +45,8 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
 
       _subscriptions.add(
         store.channel.listen((stateAction) {
-          if(mixinGlobalHooks[stateAction.action] != null) {
-            mixinGlobalHooks[stateAction.action].apply(store, stateAction.state, stateAction.action);
+          if(mixinGlobalHooks[stateAction.action.runtimeType] != null) {
+            mixinGlobalHooks[stateAction.action.runtimeType].apply(store, stateAction.state, stateAction.action);
             return;
           }
 

@@ -78,3 +78,7 @@
 
 * fix computedmixin's actions affecting storehooks
 * add previous state storehook
+
+## [1.4.4]
+
+* fix storestate mixinglobalhooks
