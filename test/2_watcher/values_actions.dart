@@ -6,7 +6,7 @@ class ValuesAddValueAction extends ValuesAction {
   final String value;
 
   ValuesAddValueAction({
-    this.value
+    required this.value
   });
 }
 
@@ -16,6 +16,6 @@ class ValuesTesterAddValueAction extends ValuesTesterAction {
   final String value;
 
   ValuesTesterAddValueAction({
-    this.value
+    required this.value
   });
 }

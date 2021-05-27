@@ -24,7 +24,7 @@ class _NoteDetailsPageWidgetState extends StoreState<NoteDetailsPageWidget> {
   @override
   Widget build(BuildContext context) {
     final Store<NoteListState> store = getStore<NoteListState>();
-    final NoteDetailsParams noteDetails = ModalRoute.of(context).settings.arguments;
+    final NoteDetailsParams noteDetails = ModalRoute.of(context)!.settings.arguments as NoteDetailsParams;
     _title = noteDetails.note.title;
     _text = noteDetails.note.text;
 

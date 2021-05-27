@@ -13,32 +13,30 @@ class NoteListAddAction extends NoteListAction {
   final String text;
 
   NoteListAddAction({
-    this.id,
-    this.title,
-    this.text
-  }): assert(id != null),
-    assert(title != null),
-    assert(text != null);
+    required this.id,
+    required this.title,
+    required this.text
+  });
 }
 
 class NoteListRemoveAction extends NoteListAction {
   final int id;
 
   NoteListRemoveAction({
-    this.id
-  }): assert(id != null);
+    required this.id
+  });
 }
 
 class NoteListEditAction extends NoteListAction {
   final int id;
-  final String title;
-  final String text;
+  final String? title;
+  final String? text;
 
   NoteListEditAction({
-    this.id,
+    required this.id,
     this.title,
     this.text
-  }): assert(id != null);
+  });
 }
 
 class NoteListStateAction extends Action {}
@@ -47,6 +45,6 @@ class NoteListUpdateStateAction extends NoteListStateAction {
   final List<Note> noteList;
 
   NoteListUpdateStateAction({
-    this.noteList
+    required this.noteList
   });
 }

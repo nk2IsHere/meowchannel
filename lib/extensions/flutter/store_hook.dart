@@ -7,20 +7,19 @@ class StoreHook<S> {
 
   final StoreHookBody<S> _closure;
 
-  StoreHook(this._closure):
-    assert(_closure != null);
+  StoreHook(this._closure);
 
-  String get storeType => typeOf<Store<S>>().toString();
-  String get stateType => typeOf<S>().toString();
+  Type get storeType => typeOf<Store<S>>();
+  Type get stateType => typeOf<S>();
 
   void apply(Store<S> store, S state, dynamic action) => _closure(store, state, action);
 }
 
-typedef StoreHookPreviousStateBody<S> = Function(S previousState, S state, dynamic action);
+typedef StoreHookPreviousStateBody<S> = Function(S? previousState, S state, dynamic action);
 
 class StoreHookPreviousState<S> extends StoreHook<S> {
 
   StoreHookPreviousState(StoreHookPreviousStateBody<S> closure) : super(
-    (store, state, action) => closure(store.getPreviousStateUnsafe().state, state, action)
+    (store, state, action) => closure(store.getPreviousStateUnsafe()?.state, state, action)
   );
 }

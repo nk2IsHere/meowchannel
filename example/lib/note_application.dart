@@ -12,8 +12,8 @@ class NoteDetailsParams {
   final Note note;
 
   NoteDetailsParams({
-    this.note,
-    this.exists
+    required this.note,
+    required this.exists
   });
 }
 

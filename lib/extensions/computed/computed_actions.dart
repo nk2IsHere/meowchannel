@@ -3,7 +3,7 @@ class ComputedStorageUpdateAction {
   final Map<String, dynamic> data;
 
   ComputedStorageUpdateAction({
-    this.data
+    required this.data
   });
 
   @override

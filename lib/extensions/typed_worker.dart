@@ -1,4 +1,4 @@
-import 'package:meowchannel/worker/worker.dart';
+import 'package:meowchannel/extensions/worker/worker.dart';
 
 Worker<A, S> typedWorker<A, TA extends A, S>(
   Worker<TA, S> _worker

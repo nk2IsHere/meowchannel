@@ -7,7 +7,7 @@ class ValuesTester {
   String _values = "";
 
   void showValue(String value) {
-    this._values = this._values + (value ?? "");
+    this._values = this._values + (value);
   }
 
   String render() {

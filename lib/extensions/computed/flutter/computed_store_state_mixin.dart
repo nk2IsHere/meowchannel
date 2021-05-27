@@ -1,6 +1,6 @@
 
 import 'package:flutter/widgets.dart';
-import 'package:meowchannel/computed/computed_actions.dart';
+import 'package:meowchannel/extensions/computed/computed_actions.dart';
 import 'package:meowchannel/extensions/flutter/store_hook.dart';
 import 'package:meowchannel/extensions/flutter/store_state.dart';
 import 'package:meowchannel/utils/type_utils.dart';
@@ -21,7 +21,7 @@ mixin ComputedStoreStateMixin<W extends StatefulWidget> on StoreState<W> {
     super.initState();
   }
 
-  T getComputed<S, T>(String id) {
+  T? getComputed<S, T>(String id) {
     final storeType = typeOf<S>().toString();
 
     final localStorageForStore = _computedLocalStorage[storeType];

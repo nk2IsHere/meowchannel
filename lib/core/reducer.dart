@@ -1,2 +1,4 @@
 
-typedef Reducer<S> = Future<S> Function(dynamic action, S previousState);
+import 'dart:async';
+
+typedef Reducer<S> = FutureOr<S> Function(dynamic action, S previousState);

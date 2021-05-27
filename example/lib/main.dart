@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meowchannel/computed/computed.dart';
-import 'package:meowchannel/computed/computed_module.dart';
 import 'package:meowchannel/extensions/flutter/logger/store_logger_module.dart';
 import 'package:meowchannel/meowchannel.dart';
 

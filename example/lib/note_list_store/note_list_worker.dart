@@ -7,7 +7,7 @@ import 'note_model.dart';
 
 ///
 /// This is a [Worker<ActionType, State>]
-/// It recieves [Action] filtered by [Watcher] does heavy work (database manipulations, api calls, etc.) and dispatches [Action]
+/// It receives [Action] filtered by [Watcher] does heavy work (database manipulations, api calls, etc.) and dispatches [Action]
 /// Multiple workers can be chained by dispatching [Action] accepted by another [Watcher] and [Worker] pair
 /// It is asynchronous
 ///

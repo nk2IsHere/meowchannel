@@ -9,11 +9,11 @@ part 'note_list_state.g.dart';
 /// It can basically be anything
 /// (even [bool])
 ///
-@dataClass
-class NoteListState extends _$NoteListState {
+@DataClass()
+class NoteListState with _$NoteListState {
   final List<Note> noteList;
 
   NoteListState({
-    this.noteList
+    required this.noteList
   });
 }

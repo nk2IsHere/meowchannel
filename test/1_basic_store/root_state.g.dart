@@ -6,9 +6,7 @@ part of 'root_state.dart';
 // DataClassGenerator
 // **************************************************************************
 
-abstract class _$RootState {
-  const _$RootState();
-
+mixin _$RootState {
   int get value;
   bool operator ==(other) {
     if (identical(this, other)) return true;
@@ -22,10 +20,10 @@ abstract class _$RootState {
   }
 
   String toString() {
-    return 'RootState(value=${this.value},)';
+    return 'RootState(value=${this.value})';
   }
 
-  RootState copyWith({int value}) {
+  RootState copyWith({int? value}) {
     return RootState(
       value: value ?? this.value,
     );

@@ -6,21 +6,21 @@ import 'todo_fakes.dart';
 
 part 'todo_store.g.dart';
 
-@dataClass 
-class Todo extends _$Todo {
+@DataClass()
+class Todo with _$Todo {
   final int id;
   final String title;
   final String text;
 
   Todo({
-    this.id,
-    this.title,
-    this.text
+    required this.id,
+    required this.title,
+    required this.text
   });
 }
 
-@dataClass
-class TodoState extends _$TodoState {
+@DataClass()
+class TodoState with _$TodoState {
   final List<Todo> todos;
 
   TodoState({

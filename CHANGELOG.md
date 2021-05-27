@@ -54,20 +54,20 @@
 
 ## [1.3.4, 1.3.4+0]
 
-* add computeN function to worker
+* add computeN function to extensions.worker
 * add initialize function
 * bump rxdart version
 
 ## [1.4.0]
 
 * fix `WorkerContext` compute* functions
-* add `computedModule`: vue-like computed variables accessible on build
+* add `computedModule`: vue-like extensions.computed variables accessible on build
 * add `storeLoggerModule`
 * migrate `Middleware` -> `Module`
 
 ## [1.4.1]
 
-* export computed from library
+* export extensions.computed from library
 * generify StateChannel
 
 ## [1.4.2]

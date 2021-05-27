@@ -20,7 +20,7 @@ class _ApplicationWidgetState extends State<BuilderApplicationWidget> {
 
     return StoreBuilder<RootState>(
       store: rootStore,
-      condition: (previous, current) => previous?.state?.value != current?.state?.value,
+      condition: (previous, current) => previous?.state.value != current.state.value,
       builder: (context, state, action) {
         return Scaffold(
           body: Column(
@@ -49,5 +49,4 @@ class _ApplicationWidgetState extends State<BuilderApplicationWidget> {
       },
     );
   }
-
 }

@@ -6,9 +6,7 @@ part of 'values_state.dart';
 // DataClassGenerator
 // **************************************************************************
 
-abstract class _$ValuesState {
-  const _$ValuesState();
-
+mixin _$ValuesState {
   List<String> get values;
   bool operator ==(other) {
     if (identical(this, other)) return true;
@@ -22,10 +20,10 @@ abstract class _$ValuesState {
   }
 
   String toString() {
-    return 'ValuesState(values=${this.values},)';
+    return 'ValuesState(values=${this.values})';
   }
 
-  ValuesState copyWith({List<String> values}) {
+  ValuesState copyWith({List<String>? values}) {
     return ValuesState(
       values: values ?? this.values,
     );

@@ -38,9 +38,9 @@ class Stack<T> {
     return _list.last;
   }
 
-  T beforeTop() {
+  T? beforeTop() {
     return _list.length >= 2?
-    _list.elementAt(_list.length - 2)
-        : null;
+      _list.elementAt(_list.length - 2)
+      : null;
   }
 }

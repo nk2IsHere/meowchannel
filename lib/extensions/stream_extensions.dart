@@ -1,5 +1,5 @@
-import 'package:meowchannel/worker/worker.dart';
-import 'package:meowchannel/worker/worker_context.dart';
+import 'package:meowchannel/extensions/worker/worker.dart';
+import 'package:meowchannel/extensions/worker/worker_context.dart';
 
 Future applyWorker<A, S>(
   Stream<A> actionStream,

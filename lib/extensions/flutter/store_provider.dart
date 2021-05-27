@@ -4,31 +4,32 @@ import 'package:meowchannel/extensions/flutter/store_provider_mixin.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+
 class StoreProvider<_S> extends SingleChildStatelessWidget with StoreProviderSingleChildWidget {
-  final Widget child;
+  final Widget? child;
   final bool lazy;
   final Create<Store<_S>> _create;
-  final Dispose<Store<_S>> _dispose;
+  final Dispose<Store<_S>>? _dispose;
 
   StoreProvider({
-    Key key,
-    @required Create<Store<_S>> create,
-    Widget child,
-    bool lazy,
+    Key? key,
+    required Create<Store<_S>> create,
+    Widget? child,
+    bool? lazy,
   }): this._(
     key: key,
     create: create,
-    dispose: (_, store) => store?.close(),
+    dispose: (_, store) => store.close(),
     child: child,
-    lazy: lazy,
+    lazy: lazy ?? false,
   );
 
   StoreProvider._({
-    Key key,
-    @required Create<Store<_S>> create,
-    Dispose<Store<_S>> dispose,
+    Key? key,
+    required Create<Store<_S>> create,
+    Dispose<Store<_S>>? dispose,
     this.child,
-    this.lazy,
+    required this.lazy,
   }): _create = create,
     _dispose = dispose,
     super(key: key, child: child);
@@ -47,7 +48,7 @@ class StoreProvider<_S> extends SingleChildStatelessWidget with StoreProviderSin
   }
 
   @override
-  Widget buildWithChild(BuildContext context, Widget child) =>
+  Widget buildWithChild(BuildContext context, Widget? child) =>
     InheritedProvider<Store<_S>>(
       create: _create,
       dispose: _dispose,

@@ -77,5 +77,4 @@ class _MultiApplicationWidgetState extends StoreState<MultiApplicationWidget> {
       )
     );
   }
-
 }

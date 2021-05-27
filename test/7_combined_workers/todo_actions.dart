@@ -10,8 +10,8 @@ class TodoGetAction extends TodoAction {
   final int id;
 
   TodoGetAction({
-    this.id
-  }): assert(id != null);
+    required this.id
+  });
 }
 
 class TodoAddAction extends TodoAction {
@@ -20,32 +20,30 @@ class TodoAddAction extends TodoAction {
   final String text;
 
   TodoAddAction({
-    this.id,
-    this.title,
-    this.text
-  }): assert(id != null),
-    assert(title != null),
-    assert(text != null);
+    required this.id,
+    required this.title,
+    required this.text
+  });
 }
 
 class TodoEditAction extends TodoAction {
   final int id;
-  final String title;
-  final String text;
+  final String? title;
+  final String? text;
 
   TodoEditAction({
-    this.id,
+    required this.id,
     this.title,
     this.text
-  }): assert(id != null);
+  });
 }
 
 class TodoRemoveAction extends TodoAction {
   final int id;
 
   TodoRemoveAction({
-    this.id
-  }): assert(id != null);
+    required this.id
+  });
 }
 
 class TodoUiAction extends Action {}
@@ -54,16 +52,16 @@ class TodoUpdateUiAction extends TodoUiAction {
   final List<Todo> todos;
 
   TodoUpdateUiAction({
-    this.todos
-  }): assert(todos != null);
+    required this.todos
+  });
 }
 
 class TodoAddUiAction extends TodoUiAction {
   final Todo todo;
 
   TodoAddUiAction({
-    this.todo
-  }): assert(todo != null);
+    required this.todo
+  });
 }
 
 class TodoEditUiAction extends TodoUiAction {
@@ -71,16 +69,15 @@ class TodoEditUiAction extends TodoUiAction {
   final Todo todo;
 
   TodoEditUiAction({
-    this.id,
-    this.todo
-  }): assert(id != null),
-    assert(todo != null);
+    required this.id,
+    required this.todo
+  });
 }
 
 class TodoRemoveUiAction extends TodoUiAction {
   final int id;
 
   TodoRemoveUiAction({
-    this.id
-  }): assert(id != null);
+    required this.id
+  });
 }

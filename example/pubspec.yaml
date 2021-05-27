@@ -14,12 +14,12 @@ description: meowchannel example
 version: 1.0.0+1
 
 environment:
-  sdk: ">2.9.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  dataclass_beta: ^0.4.0
+  dataclass_beta: ^1.0.1
   meowchannel:
     path: ../
 
@@ -30,8 +30,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.7.4
-  dataclass_beta_generator: ^0.4.0
+  build_runner: ^2.0.0
+  dataclass_beta_generator: ^1.0.0
 
 
 # For information on the generic Dart part of this file, see the

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:rxdart/subjects.dart';
 
@@ -8,8 +9,8 @@ import '_stack.dart';
 const _kDefaultCachedStates = 5;
 
 abstract class StateChannel<T> {
-  T previousValueOrNull();
-  T valueOrNull();
+  T? previousValueOrNull();
+  T? valueOrNull();
   Future<T> receive();
   Stream<T> asStream();
 }
@@ -17,6 +18,24 @@ abstract class StateChannel<T> {
 abstract class MutableStateChannel<T> extends StateChannel<T> {
   void send(T value);
   void close();
+}
+
+class ChannelException implements IOException {
+
+  final String message;
+  const ChannelException(this.message);
+
+  const ChannelException.closed()
+      : message = 'Channel has been closed';
+
+  String toString() {
+    StringBuffer sb = new StringBuffer();
+    sb.write("ChannelException");
+    if (message.isNotEmpty) {
+      sb.write(": $message");
+    }
+    return sb.toString();
+  }
 }
 
 class StateChannelImpl<T> extends MutableStateChannel<T> {
@@ -44,22 +63,22 @@ class StateChannelImpl<T> extends MutableStateChannel<T> {
   }
 
   @override void send(T value) {
-    if (isClosed) throw Exception('Channel is closed');
+    if (isClosed) throw ChannelException.closed();
     _data.push(value);
     _send();
   }
 
-  @override T previousValueOrNull() {
+  @override T? previousValueOrNull() {
     return _data.beforeTop();
   }
 
-  @override T valueOrNull() {
+  @override T? valueOrNull() {
     return _data.top();
   }
 
   @override Future<T> receive() async {
     if (_isClosed && _data.isEmpty) {
-      return null;
+      throw ChannelException.closed();
     }
 
     if (_data.isNotEmpty) {

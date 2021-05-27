@@ -1,4 +1,4 @@
-import 'package:meowchannel/worker/worker.dart';
+import 'package:meowchannel/extensions/worker/worker.dart';
 
 Worker<A, S> combinedWorker<A, S>(
   Iterable<Worker<A, S>> workers

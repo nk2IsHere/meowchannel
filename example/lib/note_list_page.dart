@@ -61,12 +61,12 @@ class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with Compu
                           style: TextStyle(fontSize: 16.0, color: Colors.black54),
                         ),
                         Text(
-                          state?.noteList[index].title,
+                          state.noteList[index].title,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w800),
                         ),
                         Text(
-                          state?.noteList[index]?.text,
+                          state.noteList[index].text,
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                           maxLines: 1,
@@ -83,7 +83,7 @@ class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with Compu
                         Navigator.pushNamed(
                           context, 
                           NOTE_DETAILS_ROUTE,
-                          arguments: NoteDetailsParams(exists: true, note: state?.noteList[index])
+                          arguments: NoteDetailsParams(exists: true, note: state.noteList[index])
                         );
                       },
                     ),
@@ -99,7 +99,7 @@ class _NoteListPageWidgetState extends StoreState<NoteListPageWidget> with Compu
                         /// [Store.dispatch] is used to send action to store
                         ///
                         store.dispatch(NoteListRemoveAction(
-                          id: state?.noteList[index]?.id
+                          id: state.noteList[index].id
                         ));
                       },
                     ),

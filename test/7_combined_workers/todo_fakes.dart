@@ -9,18 +9,17 @@ class TodoRepository {
   }
 
   Future<Todo> getTodo({
-    int id
+    required int id
   }) async {
     return _todos.firstWhere(
-      (todo) => todo.id == id,
-      orElse: () => null
+      (todo) => todo.id == id
     );
   }
 
   Future<Todo> add({
-    int id,
-    String title,
-    String text
+    required int id,
+    required String title,
+    required String text
   }) async {
     final todo = Todo(
       id: id,
@@ -33,9 +32,9 @@ class TodoRepository {
   }
 
   Future<Todo> edit({
-    int id,
-    String title,
-    String text
+    required int id,
+    String? title,
+    String? text
   }) async {
     final oldTodo = await this.getTodo(
       id: id
@@ -52,7 +51,7 @@ class TodoRepository {
   }
 
   Future<Null> remove({
-    int id
+    required int id
   }) async {
     _todos = _todos.where((_todo) => _todo.id != id)
       .toList();

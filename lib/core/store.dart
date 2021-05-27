@@ -15,11 +15,11 @@ class Store<S> extends AbstractStore<S> {
 
   final MutableStateChannel<StateAction<S, dynamic>> _stateChannel = StateChannelImpl();
 
-  Dispatcher _dispatcher;
+  late Dispatcher _dispatcher;
 
   Store({
-    this.reducer,
-    this.initialState,
+    required this.reducer,
+    required this.initialState,
     this.modules = const []
   }) {
     if(initialState != null)
@@ -30,7 +30,7 @@ class Store<S> extends AbstractStore<S> {
     _dispatcher = modules.reversed.fold<Dispatcher>(
       (action) async => _stateChannel.send(
         StateAction(
-          await reducer(action, _stateChannel.valueOrNull()?.state),
+          await reducer(action, _stateChannel.valueOrNull()?.state ?? initialState),
           action
         )
       ),
@@ -61,12 +61,12 @@ class Store<S> extends AbstractStore<S> {
   }
 
   @override
-  StateAction<S, dynamic> getPreviousStateUnsafe() {
+  StateAction<S, dynamic>? getPreviousStateUnsafe() {
     return _stateChannel.previousValueOrNull();
   }
 
   @override
-  StateAction<S, dynamic> getStateUnsafe() {
+  StateAction<S, dynamic>? getStateUnsafe() {
     return _stateChannel.valueOrNull();
   }
 

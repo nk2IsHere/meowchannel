@@ -7,12 +7,10 @@ class MultiStoreProvider extends StatelessWidget {
   final List<StoreProviderSingleChildWidget> providers;
 
   const MultiStoreProvider({
-    Key key,
-    @required this.providers,
-    @required this.child,
-  })  : assert(providers != null),
-        assert(child != null),
-        super(key: key);
+    Key? key,
+    required this.providers,
+    required this.child,
+  }): super(key: key);
 
   @override
   Widget build(BuildContext context) {

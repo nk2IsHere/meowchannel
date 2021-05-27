@@ -6,11 +6,10 @@ class StoreInitializer<S> {
 
   final Function(Store<S>) _closure;
 
-  StoreInitializer(this._closure):
-        assert(_closure != null);
+  StoreInitializer(this._closure);
 
-  String get storeType => typeOf<Store<S>>().toString();
-  String get stateType => typeOf<S>().toString();
+  Type get storeType => typeOf<Store<S>>();
+  Type get stateType => typeOf<S>();
 
   void apply(Store<S> store) => _closure(store);
 }

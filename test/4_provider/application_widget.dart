@@ -48,5 +48,4 @@ class _ApplicationWidgetState extends StoreState<ApplicationWidget> {
       ),
     );
   }
-
 }

@@ -74,7 +74,7 @@ void main() {
       ]
     );
 
-    print('TEST run worker:');
+    print('TEST run extensions.worker:');
     await store.dispatch(ValuesAddValueAction(value: "apple"));
     await store.dispatch(ValuesAddValueAction(value: "koala"));
     await store.dispatch(ValuesAddValueAction(value: "browney"));
@@ -88,7 +88,7 @@ void main() {
     expect(tester.render(), "APPLEKOALABROWNEYWATCH");
   });
 
-  test('3. worker and ui listening test', () async {
+  test('3. extensions.worker and ui listening test', () async {
     // await initializeMeowChannel();
 
     //

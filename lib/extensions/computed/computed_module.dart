@@ -1,6 +1,6 @@
 
-import 'package:meowchannel/computed/computed.dart';
-import 'package:meowchannel/computed/computed_actions.dart';
+import 'package:meowchannel/extensions/computed/computed.dart';
+import 'package:meowchannel/extensions/computed/computed_actions.dart';
 import 'package:meowchannel/core/actions.dart';
 import 'package:meowchannel/core/module.dart';
 

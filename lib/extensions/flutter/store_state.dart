@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:meowchannel/extensions/flutter/store_exception.dart';
 import 'package:meowchannel/extensions/flutter/store_initializer.dart';
 import 'package:meowchannel/extensions/flutter/store_repeater.dart';
 import 'package:meowchannel/meowchannel.dart';
@@ -8,12 +9,12 @@ import 'package:meowchannel/utils/iterable_utils.dart';
 import 'package:meowchannel/utils/type_utils.dart';
 
 abstract class StoreState<W extends StatefulWidget> extends State<W> {
-  final Map<String, Store> _storeByType = Map();
-  final Map<String, dynamic> _stateByType = Map();
+  final Map<Type, Store> _storeByType = Map();
+  final Map<Type, dynamic> _stateByType = Map();
   final List<StreamSubscription> _subscriptions = [];
 
   final List<StoreInitializer> _storeInitializers = [];
-  final Map<String, List<StoreHook>> _storeHooks = Map();
+  final Map<Type, List<StoreHook>> _storeHooks = Map();
   final List<StoreRepeater> _storeRepeatedHooks = [];
 
   @protected final Map<Type, StoreHook> mixinGlobalHooks = {};
@@ -28,38 +29,38 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
     );
 
     requireStores(context).forEach((store) {
-      _storeByType.putIfAbsent(store.runtimeType.toString(), () => store);
+      _storeByType.putIfAbsent(store.runtimeType, () => store);
 
       if(store.getStateUnsafe() != null) {
         _stateByType.putIfAbsent(
-          store.initialState.runtimeType.toString(),
-          () => store.getStateUnsafe().state
+          store.initialState.runtimeType,
+          () => store.getStateUnsafe()?.state
         );
       } else if(store.initialState != null) {
         _stateByType.putIfAbsent(
-          store.initialState.runtimeType.toString(),
+          store.initialState.runtimeType,
           () => store.initialState
         );
       }
-      _storeHooks.putIfAbsent(store.runtimeType.toString(), () => []);
+      _storeHooks.putIfAbsent(store.runtimeType, () => []);
 
       _subscriptions.add(
         store.channel.listen((stateAction) {
           if(mixinGlobalHooks[stateAction.action.runtimeType] != null) {
-            mixinGlobalHooks[stateAction.action.runtimeType].apply(store, stateAction.state, stateAction.action);
+            mixinGlobalHooks[stateAction.action.runtimeType]?.apply(store, stateAction.state, stateAction.action);
             return;
           }
 
           if(this.mounted) {
             setState(() {
               _stateByType.update(
-                  stateAction.state.runtimeType.toString(),
+                stateAction.state.runtimeType,
                 (_) => stateAction.state,
                 ifAbsent: () => stateAction.state
               );
             });
 
-            _storeHooks[store.runtimeType.toString()]?.forEach((hook) {
+            _storeHooks[store.runtimeType]?.forEach((hook) {
               hook.apply(store, stateAction.state, stateAction.action);
             });
           }
@@ -69,12 +70,12 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
 
     _storeInitializers.addAll(
       requireInitializers(context)
-        .map((e) => e..apply(_storeByType[e.storeType]))
+        .map((e) => e..apply(_getStoreByType(e.storeType)))
     );
 
     _storeRepeatedHooks.addAll(
       requireRepeatedHooks(context)
-        .map((e) => e..apply(_storeByType[e.storeType], () => _stateByType[e.stateType]))
+        .map((e) => e..apply(_getStoreByType(e.storeType), () => _stateByType[e.stateType]))
     );
   }
 
@@ -91,8 +92,18 @@ abstract class StoreState<W extends StatefulWidget> extends State<W> {
   }
 
 
-  S getState<S>() => _stateByType[typeOf<S>().toString()];
-  Store<S> getStore<S>() => _storeByType[typeOf<Store<S>>().toString()];
+  S getState<S>() => _stateByType[typeOf<S>()];
+
+  Store<S> _getStoreByType<S>(Type storeType) {
+    final Store? store = _storeByType[storeType];
+
+    if(store == null)
+      throw StoreException.noStoreFound(storeType);
+
+    return store as Store<S>;
+  }
+
+  Store<S> getStore<S>() => _getStoreByType(typeOf<Store<S>>());
 
   List<Store> requireStores(BuildContext context);
 

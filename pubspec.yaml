@@ -1,25 +1,25 @@
 name: meowchannel
 description: Simple&Async state manager with middlewares and workers! And yes, you CAN have more than one store in state without depth struggles!
-version: 1.4.4
+version: 2.0.0
 author: nk2 <nikkoz893@gmail.com>
 homepage: https://github.com/nk2ishere/meowchannel
 
 environment:
-  sdk: ">2.9.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  dataclass_beta: ^0.4.0
-  rxdart: ^0.25.0
-  provider: ^4.0.4
-  worker_manager: ^3.2.5
+  dataclass_beta: ^1.0.1
+  rxdart: ^0.27.0
+  provider: ^5.0.0
+  worker_manager: ^4.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.10.13
-  dataclass_beta_generator: ^0.4.0+3
+  build_runner: ^2.0.0
+  dataclass_beta_generator: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

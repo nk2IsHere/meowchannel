@@ -8,12 +8,10 @@ class StoreRepeater<S> {
 
   bool _shouldStop = false;
 
-  StoreRepeater(this._closure, this._duration):
-    assert(_closure != null),
-    assert(_duration != null);
+  StoreRepeater(this._closure, this._duration);
 
-  String get storeType => typeOf<Store<S>>().toString();
-  String get stateType => typeOf<S>().toString();
+  Type get storeType => typeOf<Store<S>>();
+  Type get stateType => typeOf<S>();
 
   void stop() => _shouldStop = true;
 

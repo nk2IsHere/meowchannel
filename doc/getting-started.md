@@ -1,7 +1,12 @@
-# meowchannel `v1.3.4`
+# meowchannel `v2.0.0`
 
 Lightweight [Redux](https://redux.js.org/) implementation for Flutter with workers  
 ... and *cats*! 😼
+
+## Migration from `v.1.3.0`
+  `package:meowchannel/worker/*` -> `package:meowchannel/extensions/worker/*`
+  `package:meowchannel/computed/*` -> `package:meowchannel/extensions/computed/*`
+  migrate to null-safety
 
 ## Migration from `v1.2.0`
   `await initializeMeowChannel();` should be added to initialize meowchannel
@@ -44,7 +49,7 @@ Middleware<State> example = (Dispatcher dispatcher, Function<State> getState, Di
 
   In pseudo-code:
   ```
-  Worker<Action, State> example = worker<Action, State>((context, action) async {
+  Worker<Action, State> example = extensions.worker<Action, State>((context, action) async {
     await doSomething();
     context.put(ResultAction());
   })
@@ -220,9 +225,9 @@ final Reducer<TodoState> TodoReducer = combinedReducer<TodoState>([
 /// Watcher is a distinct stream manipulator which then will be send to Worker
 /// Its job is to filter and cast stream of Actions to match this specific Worker
 Watcher<TodoAction, TodoState> TodoWatcher(
-  Worker<TodoAction, TodoState> worker
+  Worker<TodoAction, TodoState> extensions.worker
 ) =>
-  watcher(worker, (actionStream, context) {
+  watcher(extensions.worker, (actionStream, context) {
     return actionStream.where((action) => action is TodoAction)
       .cast<TodoAction>();
   });
@@ -234,14 +239,14 @@ Worker<TodoAction, TodoState> TodoWorker(
   TodoRepository todoRepository
 ) =>
   combinedWorker([
-    typedWorker<TodoAction, TodoListAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoListAction, TodoState>(extensions.worker((context, action) async {
       final todos = await todoRepository.list();
 
       await context.put(TodoUpdateUiAction(
         todos: todos
       ));
     })),
-    typedWorker<TodoAction, TodoAddAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoAddAction, TodoState>(extensions.worker((context, action) async {
       final todo = await todoRepository.add(
         title: action.title,
         text: action.text
@@ -251,7 +256,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         todo: todo
       ));
     })),
-    typedWorker<TodoAction, TodoEditAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoEditAction, TodoState>(extensions.worker((context, action) async {
       final todo = await todoRepository.edit(
         id: action.id,
         title: action.title,
@@ -263,7 +268,7 @@ Worker<TodoAction, TodoState> TodoWorker(
         todo: todo
       ));
     })),
-    typedWorker<TodoAction, TodoRemoveAction, TodoState>(worker((context, action) async {
+    typedWorker<TodoAction, TodoRemoveAction, TodoState>(extensions.worker((context, action) async {
       await todoRepository.remove(
         id: action.id
       );
