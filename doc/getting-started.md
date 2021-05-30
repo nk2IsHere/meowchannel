@@ -72,8 +72,8 @@ Let's build a todos app!
 First, we definitely need a model of our TODO
 ```
 //I use https://pub.dev/packages/dataclass to define  .== and .copyWith and other useful functions on entity (just like kotlin data class!)
-@dataClass 
-class Todo {
+@DataClass() 
+class Todo with _$Todo {
   final int id;
   final String title;
   final String text;

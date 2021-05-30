@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meowchannel/core/initialization.dart';
 import 'package:meowchannel/extensions/flutter/logger/store_logger_module.dart';
+import 'package:meowchannel/extensions/isolate_worker/isolate_worker_module.dart';
 
 import 'package:meowchannel/meowchannel.dart';
 
@@ -29,10 +30,17 @@ import '8_store_builder/application_widget.dart';
 import '1_basic_store/root_actions.dart';
 import '1_basic_store/root_reducer.dart';
 import '1_basic_store/root_state.dart';
+import '9_isolate_workers/todo_isolate_worker.dart';
 
-void main() {
+Future<List<dynamic>> initializeWorkerIsolate() async {
+  return [];
+}
+
+Future<void> main() async {
+  await initializeMeowChannel();
+  await initializeIsolateWorkerModule(initializeWorkerIsolate);
+
   test('1. basic counter test', () async {
-    // await initializeMeowChannel();
 
     final store = Store<RootState>(
       reducer: rootReducer,
@@ -393,5 +401,21 @@ void main() {
     print('TEST value: ${valueText.data}');
 
     expect(valueText.data, "4");
+  });
+
+  test('9. isolate workers', () async {
+    final store = Store<TodoState>(
+      reducer: todoReducer,
+      initialState: TodoState(),
+      modules: [
+        isolateWorkerModule<TodoIsolateAction, TodoState>(initializeIsolateWorkers),
+        storeLoggerModule('todoState')
+      ]
+    );
+
+    store.dispatch(TodoIsolateGenerateAction());
+    await Future.delayed(Duration(seconds: 3));
+
+    expect((await store.getState()).state.todos.length, 10);
   });
 }

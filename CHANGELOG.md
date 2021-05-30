@@ -82,3 +82,8 @@
 ## [1.4.4]
 
 * fix storestate mixinglobalhooks
+
+## [2.0.0]
+
+* migrate to null-safety
+* minor refactor
