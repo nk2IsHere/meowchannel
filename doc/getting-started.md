@@ -390,3 +390,4 @@ class SomeWidget extends StatelessWidget {
 
 * This page has many connections with [Redux docs](https://redux.js.org/basics/actions)
 * Shoutouts to `flutter_bloc` for lots of cool and working ideas that I've ported here [Link](https://github.com/felangel/bloc/tree/master/packages/flutter_bloc)
+* Shoutouts to `isolate_blocs` for having a fine implementation of isolate communications I've used here [Link](https://github.com/Maksimka101/isolate-bloc)
