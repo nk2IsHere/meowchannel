@@ -12,13 +12,15 @@ import 'package:meowchannel/extensions/isolate_worker/isolate_worker_manager.dar
 import 'package:meowchannel/extensions/isolate_worker/isolate_worker_wrapper.dart';
 import 'package:uuid/uuid.dart';
 
-Future<void> initializeIsolateWorkerModule(
-  IsolateInitializer initializer
+Future<void> initializeIsolateWorkerModule<T>(
+  IsolateInitializer initializer,
+  [T? args]
 ) async {
-  await IsolateWorkerManager.initialize(
+  await IsolateWorkerManager.initialize<T>(
     initializer,
     kIsWeb? WebIsolateManagerImpl.createIsolate
-      : IsolateManagerImpl.createIsolate
+      : IsolateManagerImpl.createIsolate,
+    args
   );
 }
 

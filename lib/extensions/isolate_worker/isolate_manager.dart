@@ -4,9 +4,10 @@ import 'package:meowchannel/extensions/isolate_worker/isolate_messenger.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_wrapper.dart';
 
 /// Signature for function which will run in isolate
-typedef IsolateRun = void Function(
+typedef IsolateRun<T> = void Function<T>(
   IsolateMessenger messager,
-  IsolateInitializer initializer,
+  IsolateInitializer<T> initializer,
+  [T? args]
 );
 
 /// Abstract class for [IsolateManagerImpl] which implement work with real [Isolate],

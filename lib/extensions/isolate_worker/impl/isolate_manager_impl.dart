@@ -19,9 +19,10 @@ class IsolateManagerImpl extends IsolateManager {
 
   /// Create Isolate, initialize messages and run your function
   /// with [IsolateMessenger] and user's [IsolateInitializer] func
-  static Future<IsolateManagerImpl> createIsolate(
-    IsolateRun run,
-    IsolateInitializer initializer,
+  static Future<IsolateManagerImpl> createIsolate<T>(
+    IsolateRun<T> run,
+    IsolateInitializer<T> initializer,
+    [T? args]
   ) async {
     assert(
       '$initializer'.contains(' static'),
@@ -32,10 +33,11 @@ class IsolateManagerImpl extends IsolateManager {
     final toIsolateCompleter = Completer<SendPort>();
     final isolate = await Isolate.spawn<_IsolateSetup>(
       _runInIsolate,
-      _IsolateSetup(
+      _IsolateSetup<T>(
         fromIsolate.sendPort,
         run,
         initializer,
+        args
       ),
       errorsAreFatal: false,
     );
@@ -73,18 +75,20 @@ class IsolateManagerImpl extends IsolateManager {
 
     // Initialize platform channel in isolate
     IsolateBinding();
-    setup.task(isolateMessenger, setup.userInitializer);
+    setup.task(isolateMessenger, setup.userInitializer, setup.args);
   }
 }
 
-class _IsolateSetup {
+class _IsolateSetup<T> {
+  final SendPort fromIsolate;
+  final IsolateInitializer userInitializer;
+  final IsolateRun task;
+  final T? args;
+
   _IsolateSetup(
     this.fromIsolate,
     this.task,
     this.userInitializer,
+    this.args
   );
-
-  final SendPort fromIsolate;
-  final IsolateInitializer userInitializer;
-  final IsolateRun task;
 }

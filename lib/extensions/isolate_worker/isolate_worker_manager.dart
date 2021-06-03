@@ -23,15 +23,17 @@ class IsolateWorkerManager {
   final _wrappers = <String, IsolateWorkerWrapper>{};
   final _registrationCompleters = <String, Completer<List<Type>>>{};
 
-  static Future<void> initialize(
-    IsolateInitializer initializer,
-    IsolateManagerCreator createIsolate
+  static Future<void> initialize<T>(
+    IsolateInitializer<T> initializer,
+    IsolateManagerCreator<T> createIsolate,
+    [T? args]
   ) async {
     instance?.dispose();
 
     final isolateManager = await createIsolate(
       _isolatedWorkerRunner,
       initializer,
+      args
     );
 
     instance = IsolateWorkerManager._(
@@ -85,13 +87,14 @@ class IsolateWorkerManager {
     _wrappers[id]!.add(event);
   }
 
-  static Future<void> _isolatedWorkerRunner(
+  static Future<void> _isolatedWorkerRunner<T>(
     IsolateMessenger messenger,
-    IsolateInitializer userInitializer,
+    IsolateInitializer<T> userInitializer,
+    [T? args]
   ) async {
     try {
       final Map<Type, dynamic> dependencies = Map.fromIterable(
-        await userInitializer(),
+        await userInitializer(args),
         key: (dependency) => dependency.runtimeType
       );
 

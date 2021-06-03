@@ -15,9 +15,10 @@ class WebIsolateManagerImpl extends IsolateManager {
   WebIsolateManagerImpl(IsolateWrapper isolate, IsolateMessenger messenger)
       : super(isolate, messenger);
 
-  static Future<WebIsolateManagerImpl> createIsolate(
-    IsolateRun run,
-    IsolateInitializer initializer
+  static Future<WebIsolateManagerImpl> createIsolate<T>(
+    IsolateRun<T> run,
+    IsolateInitializer<T> initializer,
+    [T? args]
   ) async {
     final fromIsolate = StreamController<Event>.broadcast();
     final toIsolate = StreamController<Event>.broadcast();
@@ -29,7 +30,7 @@ class WebIsolateManagerImpl extends IsolateManager {
     final isolateMessenger = IsolateMessenger(fromIsolateStream, sendToIsolate);
 
     // this function run isolated function (IsolateRun)
-    run(IsolateMessenger(toIsolateStream, sendFromIsolate), initializer);
+    run<T>(IsolateMessenger(toIsolateStream, sendFromIsolate), initializer, args);
 
     return WebIsolateManagerImpl(
       WebIsolateWrapper(),
