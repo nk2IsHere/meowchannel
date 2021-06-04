@@ -25,7 +25,7 @@ class IsolateWorkerWrapper<A, S> extends Stream<Event> implements Sink<Event> {
       .cast<WorkerEvent>()
       .listen((event) {
         if (_workerId != null) {
-          _eventReceiver(event);
+          _eventReceiver(event.withId(_workerId!));
         } else {
           _unsentEvents.add(event);
         }
