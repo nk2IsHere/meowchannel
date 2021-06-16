@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meowchannel/core/initialization.dart';
 import 'package:meowchannel/extensions/flutter/logger/store_logger_module.dart';
+import 'package:meowchannel/extensions/isolate_worker/isolate_initialize_arguments.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_worker_module.dart';
 
 import 'package:meowchannel/meowchannel.dart';
@@ -34,14 +35,14 @@ import '1_basic_store/root_reducer.dart';
 import '1_basic_store/root_state.dart';
 import '9_isolate_workers/todo_isolate_worker.dart';
 
-Future<List<dynamic>> initializeWorkerIsolate<int>([int? value]) async {
-  assert(value == 5);
+Future<List<dynamic>> initializeWorkerIsolate(IsolateInitializeArguments args) async {
+  assert(args.get<int>('test') == 5);
   return [];
 }
 
 Future<void> main() async {
   await initializeMeowChannel();
-  await initializeIsolateWorkerModule<int>(initializeWorkerIsolate, 5);
+  await initializeIsolateWorkerModule(initializeWorkerIsolate, IsolateInitializeArguments({'test': 5}));
 
   test('1. basic counter test', () async {
 

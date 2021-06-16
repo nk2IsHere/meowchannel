@@ -2,12 +2,11 @@
 import 'dart:async';
 import 'dart:isolate';
 
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:meowchannel/extensions/isolate_worker/impl/isolate_wrapper_impl.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_events.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_functions.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_binding.dart';
+import 'package:meowchannel/extensions/isolate_worker/isolate_initialize_arguments.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_manager.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_messenger.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_wrapper.dart';
@@ -19,10 +18,10 @@ class IsolateManagerImpl extends IsolateManager {
 
   /// Create Isolate, initialize messages and run your function
   /// with [IsolateMessenger] and user's [IsolateInitializer] func
-  static Future<IsolateManagerImpl> createIsolate<T>(
-    IsolateRun<T> run,
-    IsolateInitializer<T> initializer,
-    [T? args]
+  static Future<IsolateManagerImpl> createIsolate(
+    IsolateRun run,
+    IsolateInitializer initializer,
+    IsolateInitializeArguments args,
   ) async {
     assert(
       '$initializer'.contains(' static'),
@@ -33,7 +32,7 @@ class IsolateManagerImpl extends IsolateManager {
     final toIsolateCompleter = Completer<SendPort>();
     final isolate = await Isolate.spawn<_IsolateSetup>(
       _runInIsolate,
-      _IsolateSetup<T>(
+      _IsolateSetup(
         fromIsolate.sendPort,
         run,
         initializer,
@@ -79,11 +78,11 @@ class IsolateManagerImpl extends IsolateManager {
   }
 }
 
-class _IsolateSetup<T> {
+class _IsolateSetup {
   final SendPort fromIsolate;
   final IsolateInitializer userInitializer;
   final IsolateRun task;
-  final T? args;
+  final IsolateInitializeArguments args;
 
   _IsolateSetup(
     this.fromIsolate,

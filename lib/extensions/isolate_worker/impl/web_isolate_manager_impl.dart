@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:meowchannel/extensions/isolate_worker/impl/web_isolate_wrapper_impl.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_events.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_functions.dart';
+import 'package:meowchannel/extensions/isolate_worker/isolate_initialize_arguments.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_manager.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_messenger.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_wrapper.dart';
@@ -15,10 +16,10 @@ class WebIsolateManagerImpl extends IsolateManager {
   WebIsolateManagerImpl(IsolateWrapper isolate, IsolateMessenger messenger)
       : super(isolate, messenger);
 
-  static Future<WebIsolateManagerImpl> createIsolate<T>(
-    IsolateRun<T> run,
-    IsolateInitializer<T> initializer,
-    [T? args]
+  static Future<WebIsolateManagerImpl> createIsolate(
+    IsolateRun run,
+    IsolateInitializer initializer,
+    IsolateInitializeArguments args
   ) async {
     final fromIsolate = StreamController<Event>.broadcast();
     final toIsolate = StreamController<Event>.broadcast();
@@ -30,7 +31,7 @@ class WebIsolateManagerImpl extends IsolateManager {
     final isolateMessenger = IsolateMessenger(fromIsolateStream, sendToIsolate);
 
     // this function run isolated function (IsolateRun)
-    run<T>(IsolateMessenger(toIsolateStream, sendFromIsolate), initializer, args);
+    run(IsolateMessenger(toIsolateStream, sendFromIsolate), initializer, args);
 
     return WebIsolateManagerImpl(
       WebIsolateWrapper(),

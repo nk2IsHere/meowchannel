@@ -7,16 +7,16 @@ import 'package:meowchannel/extensions/isolate_worker/impl/isolate_manager_impl.
 import 'package:meowchannel/extensions/isolate_worker/impl/web_isolate_manager_impl.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_events.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_functions.dart';
-import 'package:meowchannel/extensions/isolate_worker/isolate_worker.dart';
+import 'package:meowchannel/extensions/isolate_worker/isolate_initialize_arguments.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_worker_manager.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_worker_wrapper.dart';
 import 'package:uuid/uuid.dart';
 
-Future<void> initializeIsolateWorkerModule<T>(
+Future<void> initializeIsolateWorkerModule(
   IsolateInitializer initializer,
-  [T? args]
+  [IsolateInitializeArguments args = const IsolateInitializeArguments({})]
 ) async {
-  await IsolateWorkerManager.initialize<T>(
+  await IsolateWorkerManager.initialize(
     initializer,
     kIsWeb? WebIsolateManagerImpl.createIsolate
       : IsolateManagerImpl.createIsolate,

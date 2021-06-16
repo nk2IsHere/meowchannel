@@ -4,6 +4,7 @@ import 'dart:isolate';
 
 import 'package:meowchannel/extensions/isolate_worker/isolate_connector.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_events.dart';
+import 'package:meowchannel/extensions/isolate_worker/isolate_initialize_arguments.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolated_connector.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolated_worker_manager.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_functions.dart';
@@ -23,10 +24,10 @@ class IsolateWorkerManager {
   final _wrappers = <String, IsolateWorkerWrapper>{};
   final _registrationCompleters = <String, Completer<List<Type>>>{};
 
-  static Future<void> initialize<T>(
-    IsolateInitializer<T> initializer,
-    IsolateManagerCreator<T> createIsolate,
-    [T? args]
+  static Future<void> initialize(
+    IsolateInitializer initializer,
+    IsolateManagerCreator createIsolate,
+    IsolateInitializeArguments args
   ) async {
     instance?.dispose();
 
@@ -87,10 +88,10 @@ class IsolateWorkerManager {
     _wrappers[id]!.add(event);
   }
 
-  static Future<void> _isolatedWorkerRunner<T>(
+  static Future<void> _isolatedWorkerRunner(
     IsolateMessenger messenger,
-    IsolateInitializer<T> userInitializer,
-    [T? args]
+    IsolateInitializer userInitializer,
+    IsolateInitializeArguments args
   ) async {
     try {
       final Map<Type, dynamic> dependencies = Map.fromIterable(
