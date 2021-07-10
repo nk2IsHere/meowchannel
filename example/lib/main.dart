@@ -44,7 +44,7 @@ void main() => runApp(MaterialApp(
                 noteListWatcher(noteListWorker)
               ]),
               computedModule<NoteListState>({
-                'count': Computed<NoteListState, int>((NoteListState state, int previousValue) => state.noteList.length)
+                'count': Computed<NoteListState, int>((NoteListState state, int? previousValue) => state.noteList.length)
               }),
               storeLoggerModule('noteListStore')
             ]
