@@ -6,9 +6,7 @@ part of 'cache_state.dart';
 // DataClassGenerator
 // **************************************************************************
 
-abstract class _$CacheState {
-  const _$CacheState();
-
+mixin _$CacheState {
   Map<List<String>, DateTime> get caches;
   bool operator ==(other) {
     if (identical(this, other)) return true;
@@ -22,7 +20,7 @@ abstract class _$CacheState {
   }
 
   String toString() {
-    return 'CacheState(caches=${this.caches},)';
+    return 'CacheState(caches=${this.caches})';
   }
 
   CacheState copyWith({Map<List<String>, DateTime> caches}) {

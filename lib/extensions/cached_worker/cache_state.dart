@@ -8,8 +8,8 @@ import '_cache_action.dart';
 
 part 'cache_state.g.dart';
 
-@dataClass
-class CacheState extends _$CacheState {
+@DataClass()
+class CacheState with _$CacheState {
   final Map<List<String>, DateTime> caches;
   
   CacheState({

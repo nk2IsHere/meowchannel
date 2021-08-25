@@ -6,9 +6,7 @@ part of 'note_model.dart';
 // DataClassGenerator
 // **************************************************************************
 
-abstract class _$Note {
-  const _$Note();
-
+mixin _$Note {
   int get id;
   String get title;
   String get text;
@@ -27,7 +25,7 @@ abstract class _$Note {
   }
 
   String toString() {
-    return 'Note(id=${this.id},title=${this.title},text=${this.text},)';
+    return 'Note(id=${this.id},title=${this.title},text=${this.text})';
   }
 
   Note copyWith({int id, String title, String text}) {

@@ -6,9 +6,7 @@ part of 'todo_store.dart';
 // DataClassGenerator
 // **************************************************************************
 
-abstract class _$Todo {
-  const _$Todo();
-
+mixin _$Todo {
   int get id;
   String get title;
   String get text;
@@ -27,7 +25,7 @@ abstract class _$Todo {
   }
 
   String toString() {
-    return 'Todo(id=${this.id},title=${this.title},text=${this.text},)';
+    return 'Todo(id=${this.id},title=${this.title},text=${this.text})';
   }
 
   Todo copyWith({int id, String title, String text}) {
@@ -39,9 +37,7 @@ abstract class _$Todo {
   }
 }
 
-abstract class _$TodoState {
-  const _$TodoState();
-
+mixin _$TodoState {
   List<Todo> get todos;
   bool operator ==(other) {
     if (identical(this, other)) return true;
@@ -55,7 +51,7 @@ abstract class _$TodoState {
   }
 
   String toString() {
-    return 'TodoState(todos=${this.todos},)';
+    return 'TodoState(todos=${this.todos})';
   }
 
   TodoState copyWith({List<Todo> todos}) {

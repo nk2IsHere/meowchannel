@@ -6,9 +6,7 @@ part of 'note_list_state.dart';
 // DataClassGenerator
 // **************************************************************************
 
-abstract class _$NoteListState {
-  const _$NoteListState();
-
+mixin _$NoteListState {
   List<Note> get noteList;
   bool operator ==(other) {
     if (identical(this, other)) return true;
@@ -22,7 +20,7 @@ abstract class _$NoteListState {
   }
 
   String toString() {
-    return 'NoteListState(noteList=${this.noteList},)';
+    return 'NoteListState(noteList=${this.noteList})';
   }
 
   NoteListState copyWith({List<Note> noteList}) {

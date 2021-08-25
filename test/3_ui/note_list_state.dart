@@ -4,8 +4,8 @@ import 'note_model.dart';
 
 part 'note_list_state.g.dart';
 
-@dataClass
-class NoteListState extends _$NoteListState {
+@DataClass()
+class NoteListState with _$NoteListState {
   final List<Note> noteList;
 
   NoteListState({

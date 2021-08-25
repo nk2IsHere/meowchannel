@@ -1,4 +1,4 @@
-# meowchannel `v1.3.4`
+# meowchannel `v1.4.5`
 
 Lightweight [Redux](https://redux.js.org/) implementation for Flutter with workers  
 ... and *cats*! 😼

@@ -19,7 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  dataclass_beta: ^0.4.0
+  dataclass_beta: ^1.0.1
   meowchannel:
     path: ../
 
@@ -27,11 +27,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
+dependency_overrides:
+  meta: ^1.7.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.7.4
-  dataclass_beta_generator: ^0.4.0
+  build_runner: ^2.1.0
+  dataclass_beta_generator: ^1.1.1
 
 
 # For information on the generic Dart part of this file, see the
