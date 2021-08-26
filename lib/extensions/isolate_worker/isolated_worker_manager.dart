@@ -53,7 +53,7 @@ class IsolatedWorkerManager {
       _freeWorkers.containsKey(isolateWorkerType),
       'You must register worker or worker wrapper to create it.',
     );
-    print('Initialized worker in ${Isolate.current.debugName}');
+    print('[meowchannel] Initialized worker in ${Isolate.current.debugName}');
 
     // ignore: close_sinks
     final worker = _getFreeWorkerByType(isolateWorkerType);

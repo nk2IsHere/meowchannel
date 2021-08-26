@@ -11,7 +11,7 @@ import 'package:meowchannel/extensions/isolate_worker/isolate_messenger.dart';
 import 'package:meowchannel/extensions/isolate_worker/isolate_wrapper.dart';
 
 /// Web [IsolateManager]'s implementation.
-/// It doesn't creates [Isolate].
+/// It doesn't create [Isolate].
 class WebIsolateManagerImpl extends IsolateManager {
   WebIsolateManagerImpl(IsolateWrapper isolate, IsolateMessenger messenger)
       : super(isolate, messenger);

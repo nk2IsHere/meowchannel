@@ -23,9 +23,9 @@ class IsolatedConnector {
         IsolatedWorkerManager.instance!.workerEventReceiver(event.id!, event);
       }
     } catch(e, stacktrace) {
-      print("Error in IsolatedWorkerManager function.");
-      print('Error message: ${e.toString()}');
-      print('Last stacktrace: $stacktrace');
+      print("[meowchannel] Error in IsolatedWorkerManager function.");
+      print('[meowchannel] Error message: ${e.toString()}');
+      print('[meowchannel] Last stacktrace: $stacktrace');
     }
   }
 }

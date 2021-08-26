@@ -66,12 +66,12 @@ Module<S> isolateWorkerModule<A, S>(
 
   state.asStream()
     .listen((state) {
-      if(workerWrappers == null) {
-        unsentStates.add(state.state);
-      } else {
+      if(workerWrappers != null) {
         for (final worker in workerWrappers!) {
           worker.add(IsolateWorkerStateEvent<S>(null, state.state));
         }
+      } else {
+        unsentStates.add(state.state);
       }
     });
 
@@ -89,7 +89,6 @@ Module<S> isolateWorkerModule<A, S>(
     });
 
   return (dynamic action) async {
-
     if(action is MeowChannelClose) {
       channel.close();
     } else {

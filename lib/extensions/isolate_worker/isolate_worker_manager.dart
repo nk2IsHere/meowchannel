@@ -56,7 +56,7 @@ class IsolateWorkerManager {
     }
     _freeWrappers[isolateWorkerType]!.add(wrapper);
 
-    print('Created wrapper in ${Isolate.current.debugName}');
+    print('[meowchannel] Created wrapper in ${Isolate.current.debugName}');
     _isolateConnector.sendEvent(CreateIsolateWorkerEvent(isolateWorkerType));
     return wrapper;
   }
@@ -108,9 +108,9 @@ class IsolateWorkerManager {
         )
       );
     } catch (e, stacktrace) {
-      print("Error in user's IsolateInitializer function.");
-      print('Error message: ${e.toString()}');
-      print('Last stacktrace: $stacktrace');
+      print("[meowchannel] Error in user's IsolateInitializer function.");
+      print('[meowchannel] Error message: ${e.toString()}');
+      print('[meowchannel] Last stacktrace: $stacktrace');
     }
 
     IsolatedWorkerManager.instance?.initializeCompleted();
